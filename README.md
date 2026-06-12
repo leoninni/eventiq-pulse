@@ -34,7 +34,7 @@ Built as a fully self-contained frontend prototype with zero backend dependencie
 
 ## Local Setup
 
-**Prerequisites:** Node.js v18+ (v22 recommended)
+**Prerequisites:** Node.js v18+ (v22 recommended), [Bun](https://bun.sh/) (recommended) or npm
 
 ```bash
 # 1. Clone the repository
@@ -42,10 +42,10 @@ git clone https://github.com/leoninni/eventiq-pulse.git
 cd eventiq-pulse
 
 # 2. Install dependencies
-npm install
+bun install        # or: npm install
 
 # 3. Start the development server
-npm run dev
+bun run dev        # or: npm run dev
 ```
 
 The app will be available at **http://localhost:5173**
@@ -54,16 +54,16 @@ The app will be available at **http://localhost:5173**
 
 ```bash
 # Production build
-npm run build
+bun run build
 
 # Preview the production build locally
-npm run preview
+bun run preview
 
 # Lint the codebase
-npm run lint
+bun run lint
 
 # Format code with Prettier
-npm run format
+bun run format
 ```
 
 ---
@@ -100,21 +100,32 @@ src/
 
 ## Design System
 
-The UI uses a dark design language inspired by Linear and Vercel:
+The UI uses a light, nature-inspired design language built around sage green tones:
 
 | Token | Value |
 |---|---|
-| Background | `#09090B` |
-| Card | `#111118` |
-| Border | `#1E1E2E` |
-| Primary (Indigo) | `#6366F1` |
-| Accent (Cyan) | `#22D3EE` |
-| Success | `#22C55E` |
-| Warning | `#F59E0B` |
-| Danger | `#EF4444` |
-| Font | Inter (Google Fonts) |
+| Background | `#EEF3EE` (sage green-tinted) |
+| Card | `#FFFFFF` |
+| Border | `#E3E8E3` |
+| Primary | `#0F1410` (near-black) |
+| Accent / Success / Cyan | `#2F7A47` (forest green) |
+| Mint | `#B8E0C2` (soft green, used for active states and highlights) |
+| Warning | `#B07A1F` |
+| Danger | `#C2410C` |
+| Body font | Inter |
+| Display font | Instrument Serif / DM Serif Display (used for headings and KPI numbers) |
 
-Candidate pipeline statuses are color-coded consistently across every view: Interested (cyan), In Review (amber), Interviewed (indigo), Offer Extended (green), Rejected (gray).
+A `highlight-marker` CSS utility applies a translucent mint background to inline text — used in the Overview headline.
+
+Candidate pipeline statuses are color-coded consistently across every view:
+
+| Status | Background | Dot |
+|---|---|---|
+| Interested | Sage `#DCEFE2` | `#6BAE82` |
+| In Review | Amber `#F5E7CC` | `#C99A3E` |
+| Interviewed | Slate `#E2E8F0` | `#64748B` |
+| Offer Extended | Mint `#B8E0C2` | `#2F7A47` |
+| Rejected | Terracotta `#EFE3DC` | `#B07A5A` |
 
 ---
 
