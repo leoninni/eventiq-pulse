@@ -14,11 +14,11 @@ export function Sidebar() {
   return (
     <aside className="w-[220px] shrink-0 bg-sidebar border-r border-border flex flex-col h-screen sticky top-0">
       <div className="px-5 py-5 flex items-center gap-2">
-        <div className="w-7 h-7 rounded-md bg-gradient-to-br from-primary to-cyan flex items-center justify-center">
-          <Sparkles className="w-4 h-4 text-white" />
+        <div className="w-7 h-7 rounded-md bg-[#1A1F1A] flex items-center justify-center">
+          <Sparkles className="w-3.5 h-3.5 text-[#B8E0C2]" />
         </div>
-        <span className="text-base font-semibold tracking-tight">EventIQ</span>
-        <span className="ml-1 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-primary/15 text-primary font-medium">beta</span>
+        <span className="font-display text-xl tracking-tight text-foreground">EventIQ</span>
+        <span className="ml-1 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-mint text-mint-ink font-medium">beta</span>
       </div>
       <nav className="flex-1 px-2 mt-2 space-y-0.5">
         {items.map((it) => {
@@ -30,11 +30,11 @@ export function Sidebar() {
               onClick={() => setView(it.id)}
               className={`relative w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-colors ${
                 active
-                  ? "bg-card text-foreground"
-                  : "text-muted-foreground hover:text-foreground hover:bg-card/50"
+                  ? "bg-mint/40 text-foreground font-medium"
+                  : "text-muted-foreground hover:text-foreground hover:bg-muted"
               }`}
             >
-              {active && <span className="absolute left-0 top-1.5 bottom-1.5 w-[2px] rounded-r bg-primary" />}
+              {active && <span className="absolute left-0 top-1.5 bottom-1.5 w-[2px] rounded-r bg-mint-ink" />}
               <Icon className="w-4 h-4" />
               {it.label}
             </button>
@@ -42,7 +42,7 @@ export function Sidebar() {
         })}
       </nav>
       <div className="p-3 border-t border-border flex items-center gap-2.5">
-        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-cyan flex items-center justify-center text-xs font-semibold">
+        <div className="w-8 h-8 rounded-full bg-[#1A1F1A] text-[#B8E0C2] flex items-center justify-center text-xs font-semibold">
           SE
         </div>
         <div className="flex-1 min-w-0">
