@@ -103,9 +103,9 @@ export const recommendations = [
 ];
 
 export const statusColors: Record<Status, { bg: string; text: string; dot: string }> = {
-  "Interested": { bg: "bg-cyan/10", text: "text-cyan", dot: "#22D3EE" },
-  "In Review": { bg: "bg-warning/10", text: "text-warning", dot: "#F59E0B" },
-  "Interviewed": { bg: "bg-primary/15", text: "text-primary", dot: "#6366F1" },
-  "Offer Extended": { bg: "bg-success/10", text: "text-success", dot: "#22C55E" },
-  "Rejected": { bg: "bg-muted-foreground/10", text: "text-muted-foreground", dot: "#64748B" },
+  "Interested": { bg: "bg-[#DCEFE2]", text: "text-[#1F4A2E]", dot: "#6BAE82" },
+  "In Review": { bg: "bg-[#F5E7CC]", text: "text-[#7A5712]", dot: "#C99A3E" },
+  "Interviewed": { bg: "bg-[#E2E8F0]", text: "text-[#334155]", dot: "#64748B" },
+  "Offer Extended": { bg: "bg-[#B8E0C2]", text: "text-[#1F4A2E]", dot: "#2F7A47" },
+  "Rejected": { bg: "bg-[#EFE3DC]", text: "text-[#7A3B1F]", dot: "#B07A5A" },
 };
