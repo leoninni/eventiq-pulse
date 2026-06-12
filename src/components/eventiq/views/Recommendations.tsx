@@ -5,10 +5,10 @@ import { Sparkles, Check, TrendingUp, Brain, RefreshCw } from "lucide-react";
 export function Recommendations() {
   const { shortlist, toggleShortlist } = useStore();
   return (
-    <div className="p-8 max-w-[1200px]">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight">Recommendations</h1>
-        <p className="text-sm text-muted-foreground mt-1">AI-powered event suggestions based on your hiring history</p>
+    <div className="p-10 max-w-[1200px]">
+      <div className="mb-8">
+        <h1 className="font-display text-4xl tracking-tight">Recommendations</h1>
+        <p className="text-sm text-muted-foreground mt-2">AI-powered event suggestions based on your hiring history.</p>
       </div>
 
       <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 mb-6 flex gap-3 items-start">

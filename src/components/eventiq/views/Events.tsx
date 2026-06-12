@@ -12,10 +12,10 @@ export function Events() {
   const openCandidates = openEvent ? eventCandidateMap[openEvent.id].map((id) => candidates.find((c) => c.id === id)!).filter(Boolean) : [];
 
   return (
-    <div className="p-8 max-w-[1400px]">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight">Events</h1>
-        <p className="text-sm text-muted-foreground mt-1">5 events sponsored · Q4 2024 – Q2 2025</p>
+    <div className="p-10 max-w-[1400px]">
+      <div className="mb-8">
+        <h1 className="font-display text-4xl tracking-tight">Events</h1>
+        <p className="text-sm text-muted-foreground mt-2">5 events sponsored · Q4 2024 – Q2 2025</p>
       </div>
 
       <div className="bg-card border border-border rounded-lg overflow-hidden">
