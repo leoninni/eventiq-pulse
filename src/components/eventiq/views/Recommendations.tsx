@@ -5,18 +5,18 @@ import { Sparkles, Check, TrendingUp, Brain, RefreshCw } from "lucide-react";
 export function Recommendations() {
   const { shortlist, toggleShortlist } = useStore();
   return (
-    <div className="p-8 max-w-[1200px]">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight">Recommendations</h1>
-        <p className="text-sm text-muted-foreground mt-1">AI-powered event suggestions based on your hiring history</p>
+    <div className="p-10 max-w-[1200px]">
+      <div className="mb-8">
+        <h1 className="font-display text-4xl tracking-tight">Recommendations</h1>
+        <p className="text-sm text-muted-foreground mt-2">AI-powered event suggestions based on your hiring history.</p>
       </div>
 
-      <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 mb-6 flex gap-3 items-start">
-        <div className="w-8 h-8 rounded-md bg-primary/20 text-primary flex items-center justify-center shrink-0">
+      <div className="bg-mint/40 border border-mint rounded-xl p-4 mb-6 flex gap-3 items-start">
+        <div className="w-8 h-8 rounded-md bg-mint text-mint-ink flex items-center justify-center shrink-0">
           <Sparkles className="w-4 h-4" />
         </div>
         <p className="text-sm">
-          Based on <span className="font-semibold">5 sponsored events</span>, <span className="font-semibold">247 candidates</span>, and your current pipeline data, here are the top events we recommend for <span className="font-semibold text-primary">Q3 2025</span>.
+          Based on <span className="font-semibold">5 sponsored events</span>, <span className="font-semibold">247 candidates</span>, and your current pipeline data, here are the top events we recommend for <span className="font-semibold text-mint-ink">Q3 2025</span>.
         </p>
       </div>
 

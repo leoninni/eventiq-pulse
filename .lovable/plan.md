@@ -1,85 +1,47 @@
-# EventIQ Prototype Build Plan
+# Redesign EventIQ in the "Jump" Visual Language
 
-A self-contained, fully interactive recruiter SaaS dashboard with 5 views, hardcoded mock data, and a Linear/Vercel-style dark design system.
+Reskin the existing dashboard (sidebar + 5 views) to match the attached reference: a light, airy, editorial aesthetic with serif display type, a soft mint-tinted background, and charcoal/green accents. No structural or functional changes — same views, same data, same interactions.
 
-## Design System (src/styles.css)
+## Visual language (from reference)
 
-Add EventIQ tokens to `@theme`:
-- `--color-background: #09090B`
-- `--color-sidebar: #0F0F14`
-- `--color-card: #111118`
-- `--color-border: #1E1E2E`
-- `--color-primary: #6366F1` (indigo)
-- `--color-cyan: #22D3EE`
-- `--color-success: #22C55E`
-- `--color-warning: #F59E0B`
-- `--color-danger: #EF4444`
-- `--color-foreground: #F8FAFC`
-- `--color-muted: #64748B`
-- Radius 8px, Inter font (loaded via `<link>` in `__root.tsx`)
+- **Background**: very light mint/cream (`#EEF3EE` app bg, `#FFFFFF` cards)
+- **Surfaces**: white cards with subtle 1px border `#E3E8E3` and soft shadow
+- **Text**: charcoal `#1A1F1A` headings, muted `#5C6660` body
+- **Accent green** (highlight pill / chart bars): `#B8E0C2` fill, `#2F7A47` ink
+- **Primary CTA**: charcoal `#0F1410` with white text, pill radius
+- **Highlight**: signature green "marker" rectangle behind a key word in serif headings
+- **Type**: serif display (Instrument Serif / DM Serif Display) for H1/H2/KPI numbers; Inter for UI and body
+- **Radius**: 12–16px on cards, full pill on buttons
+- **Density**: more whitespace than current dense Linear feel — generous padding
 
-Map shadcn tokens (`--background`, `--primary`, etc.) to these via `@theme inline` so existing UI primitives inherit the look.
+## Token changes (`src/styles.css`)
 
-## File Structure
+Swap dark tokens for the light palette above. Re-map shadcn vars (`--background`, `--card`, `--primary`, `--border`, `--muted`, etc.) and keep `@theme inline` mapping. Add `--font-display` for the serif. Load Instrument Serif via the `<link>` in `__root.tsx` alongside Inter. Update Sonner to `theme="light"`.
 
-```
-src/
-  routes/
-    __root.tsx          # Inter font link, root meta
-    index.tsx           # Renders <AppLayout> with view switcher
-  components/eventiq/
-    AppLayout.tsx       # Sidebar + main content, holds active-view state
-    Sidebar.tsx         # Logo, nav items, company footer
-    views/
-      Overview.tsx      # KPIs, bar chart, donut, activity feed
-      Events.tsx        # Table + slide-in event detail
-      Candidates.tsx    # Filter bar, candidate cards, slide-in profile, email modal
-      Reports.tsx       # Report card list + full-screen HackTUM report
-      Recommendations.tsx
-    SlidePanel.tsx      # Reusable right-slide drawer (translateX 200ms)
-    StatusBadge.tsx
-    KpiCard.tsx
-  lib/eventiq/
-    mockData.ts         # Events, candidates, mappings, activity feed
-    store.ts            # Zustand store (candidate statuses, shortlist set, toasts) — keeps changes reactive across views
-```
+## Component restyle (no logic changes)
 
-A single shared store lets the candidate-detail status dropdown update the Candidates list and Overview donut in real time, and the Recommendations shortlist persist across nav switches.
+- **Sidebar** (`Sidebar.tsx`): white panel, charcoal text, green left-accent on active item, serif "EventIQ" wordmark, soft border
+- **KPI cards** (Overview): serif numerals, small uppercase label, green delta chip
+- **Overview headline**: add a serif H1 "Hiring intelligence for technical talent" with green highlight behind one phrase, matching the reference's marker effect (using a `<span>` with `bg-accent-green/60` and slight padding)
+- **Charts** (Recharts): swap indigo `#6366F1` → green `#2F7A47`; donut palette to green/charcoal/sand tones; tooltip surface white with border
+- **Status badges**: lighter pastel fills (mint, sand, blush, slate) instead of saturated dark-mode chips
+- **Tables / candidate cards**: white surface, hover `bg-muted/40`, charcoal text
+- **Buttons**: primary = charcoal pill; secondary = white pill with border
+- **Slide panel + dialogs**: white surface, soft shadow, charcoal headings in serif
+- **Reports / Recommendations**: same restyle — serif section titles, green accent for "Add to Shortlist" active state
 
-## View Switching
+## Files touched
 
-Single-page app: `AppLayout` holds `activeView` state ("overview" | "events" | "candidates" | "reports" | "recommendations"). Sidebar buttons set state — no routing changes, no reloads. Active item gets indigo left border + brighter text.
+- `src/styles.css` — token overhaul + serif font family
+- `src/routes/__root.tsx` — add Instrument Serif `<link>`
+- `src/components/eventiq/AppLayout.tsx` — Sonner `theme="light"`
+- `src/components/eventiq/Sidebar.tsx` — light surface, serif wordmark
+- `src/components/eventiq/StatusBadge.tsx` — pastel color map
+- `src/components/eventiq/SlidePanel.tsx` — light surface
+- `src/components/eventiq/views/Overview.tsx` — serif headline w/ green highlight, chart colors, KPI typography
+- `src/components/eventiq/views/Events.tsx`, `Candidates.tsx`, `Reports.tsx`, `Recommendations.tsx` — serif section headings, button/card restyle
+- `src/lib/eventiq/mockData.ts` — update `statusColors` to pastel set (values only; keys unchanged)
 
-The HackTUM full-screen report is a sub-state inside Reports (`selectedReport` local state with a back link), not a route.
+## Out of scope
 
-## Mock Data
-
-All 5 events, 12 candidates, event→candidate mapping, recent activity feed, and 3 recommendations exactly per spec, in `mockData.ts`. Pipeline status counts on Overview donut derive from live candidate statuses in the store (so changes reflect immediately).
-
-## Charts
-
-Recharts (already supportable):
-- Overview: horizontal `BarChart` (indigo bars, hover tooltip with candidates / sponsorship / cost per candidate), `PieChart` donut with legend.
-- HackTUM report: small vertical `BarChart` for pipeline breakdown.
-
-## Interactions
-
-- Slide-in panels: fixed right drawer with `translate-x` transition (200ms), backdrop click closes.
-- Candidate detail: status `Select` updates store → list badge + donut update instantly.
-- Email modal: shadcn `Dialog`, pre-filled subject/body with candidate + event interpolation, Send triggers sonner success toast.
-- "Add to ATS" → sonner info toast.
-- "Add to Shortlist" → toggles to "✓ Shortlisted" green state, persisted in store.
-- "View all candidates" inside event detail → closes drawer, switches to Candidates view with event filter preset.
-- Table rows + candidate cards: `hover:bg-card/60` highlight. CODE Berlin row gets a subtle cyan left border (best cost per lead).
-
-## Polish
-
-- All buttons functional (toast fallback where no real action).
-- Status badge color map: Interested cyan, In Review amber, Interviewed indigo, Offer Extended green, Rejected muted gray.
-- Sonner `<Toaster />` mounted in root (theme=dark, position top-right).
-- Sidebar fixed 220px, main content scrollable.
-- Dense, data-rich spacing (Linear/Vercel feel): tight padding, small text sizes, monospaced numerics for KPIs via `tabular-nums`.
-
-## Deliverable
-
-After build: load app → Overview renders by default with live KPIs/charts; all 5 nav items work; candidate status changes propagate; email modal + toasts fire; shortlist toggles persist; HackTUM report fully rendered. No backend, no API calls.
+No changes to navigation, state, mock data shape, or interactions. The "Jump"-style hero illustration/product mockup is not added — this is a dashboard, not a marketing page.

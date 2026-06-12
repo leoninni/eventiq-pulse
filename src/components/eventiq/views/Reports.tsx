@@ -59,10 +59,10 @@ export function Reports() {
           <div className="h-[200px] mb-4">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={padded} margin={{ left: 0, right: 12, top: 8, bottom: 8 }}>
-                <XAxis dataKey="name" tick={{ fill: "#64748B", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis tick={{ fill: "#64748B", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <Tooltip cursor={{ fill: "#1E1E2E" }} contentStyle={{ background: "#111118", border: "1px solid #1E1E2E", borderRadius: 8, fontSize: 12 }} />
-                <Bar dataKey="v" radius={[4, 4, 0, 0]}>
+                <XAxis dataKey="name" tick={{ fill: "#5C6660", fontSize: 11 }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fill: "#5C6660", fontSize: 11 }} axisLine={false} tickLine={false} />
+                <Tooltip cursor={{ fill: "#F4F7F4" }} contentStyle={{ background: "#FFFFFF", border: "1px solid #E3E8E3", borderRadius: 8, fontSize: 12, color: "#1A1F1A" }} />
+                <Bar dataKey="v" radius={[6, 6, 0, 0]}>
                   {padded.map((d) => <Cell key={d.name} fill={statusColors[d.name as Status].dot} />)}
                 </Bar>
               </BarChart>
@@ -119,9 +119,9 @@ export function Reports() {
 
   return (
     <div className="p-8 max-w-[1100px]">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight">Reports</h1>
-        <p className="text-sm text-muted-foreground mt-1">Auto-generated ROI reports for each event</p>
+      <div className="mb-8">
+        <h1 className="font-display text-4xl tracking-tight">Reports</h1>
+        <p className="text-sm text-muted-foreground mt-2">Auto-generated ROI reports for each sponsored event.</p>
       </div>
       <div className="space-y-3">
         {events.map((e) => (

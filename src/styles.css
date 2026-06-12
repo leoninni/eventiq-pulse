@@ -35,37 +35,42 @@
   --color-success: var(--success);
   --color-warning: var(--warning);
   --color-danger: var(--danger);
+  --color-mint: var(--mint);
+  --color-mint-ink: var(--mint-ink);
   --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Instrument Serif", "DM Serif Display", Georgia, serif;
 }
 
 :root {
-  --radius: 0.5rem;
-  --background: #09090B;
-  --foreground: #F8FAFC;
-  --card: #111118;
-  --card-foreground: #F8FAFC;
-  --popover: #111118;
-  --popover-foreground: #F8FAFC;
-  --primary: #6366F1;
-  --primary-foreground: #F8FAFC;
-  --secondary: #1E1E2E;
-  --secondary-foreground: #F8FAFC;
-  --muted: #1E1E2E;
-  --muted-foreground: #64748B;
-  --accent: #1E1E2E;
-  --accent-foreground: #F8FAFC;
-  --destructive: #EF4444;
-  --destructive-foreground: #F8FAFC;
-  --border: #1E1E2E;
-  --input: #1E1E2E;
-  --ring: #6366F1;
-  --sidebar: #0F0F14;
-  --sidebar-foreground: #F8FAFC;
-  --sidebar-border: #1E1E2E;
-  --cyan: #22D3EE;
-  --success: #22C55E;
-  --warning: #F59E0B;
-  --danger: #EF4444;
+  --radius: 0.75rem;
+  --background: #EEF3EE;
+  --foreground: #1A1F1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1F1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1F1A;
+  --primary: #0F1410;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F4F7F4;
+  --secondary-foreground: #1A1F1A;
+  --muted: #F4F7F4;
+  --muted-foreground: #5C6660;
+  --accent: #B8E0C2;
+  --accent-foreground: #1F4A2E;
+  --destructive: #C2410C;
+  --destructive-foreground: #FFFFFF;
+  --border: #E3E8E3;
+  --input: #E3E8E3;
+  --ring: #2F7A47;
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #1A1F1A;
+  --sidebar-border: #E3E8E3;
+  --cyan: #2F7A47;
+  --success: #2F7A47;
+  --warning: #B07A1F;
+  --danger: #C2410C;
+  --mint: #B8E0C2;
+  --mint-ink: #1F4A2E;
 }
 
 @layer base {
@@ -78,4 +83,18 @@
     font-family: "Inter", system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
   }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+}
+
+@utility highlight-marker {
+  background-color: color-mix(in oklab, var(--mint) 85%, transparent);
+  padding: 0 0.15em;
+  border-radius: 2px;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }

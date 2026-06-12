@@ -33,10 +33,10 @@ export function Candidates() {
   }, [candidates, eventFilter, statusFilter, query]);
 
   return (
-    <div className="p-8 max-w-[1400px]">
-      <div className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight">Candidates</h1>
-        <p className="text-sm text-muted-foreground mt-1">247 total · 34 in active pipeline</p>
+    <div className="p-10 max-w-[1400px]">
+      <div className="mb-8">
+        <h1 className="font-display text-4xl tracking-tight">Candidates</h1>
+        <p className="text-sm text-muted-foreground mt-2">247 total · 34 in active pipeline</p>
       </div>
 
       <div className="flex gap-2 mb-4">

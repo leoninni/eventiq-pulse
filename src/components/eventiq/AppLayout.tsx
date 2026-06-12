@@ -27,7 +27,7 @@ export function AppLayout() {
   return (
     <StoreProvider>
       <Main />
-      <Toaster theme="dark" position="top-right" richColors />
+      <Toaster theme="light" position="top-right" richColors />
     </StoreProvider>
   );
 }
