@@ -78,13 +78,13 @@ export function Ecosystem() {
       height: GLOBE_SIZE * 2,
       phi:   phiRef.current,
       theta: thetaRef.current,
-      dark: 1,
-      diffuse: 1.2,
+      dark: 0,
+      diffuse: 1.0,
       mapSamples: 16000,
-      mapBrightness: 5,
-      baseColor:   [0.12, 0.16, 0.12],
-      markerColor: [0.69, 0.87, 0.76],
-      glowColor:   [0.18, 0.47, 0.28],
+      mapBrightness: 1.2,
+      baseColor:   [0.93, 0.96, 0.93],
+      markerColor: [0.18, 0.47, 0.28],
+      glowColor:   [0.93, 0.96, 0.93],
       markers: cityMarkers.map((c) => ({
         location: [c.lat, c.lng] as [number, number],
         size: 0.04,
@@ -125,10 +125,10 @@ export function Ecosystem() {
     const dx = e.clientX - pointerStart.current.x;
     const dy = e.clientY - pointerStart.current.y;
     const scale = GLOBE_SIZE * zoomRef.current;
-    phiRef.current = pointerStart.current.phi - (dx / scale) * Math.PI * 2;
+    phiRef.current = pointerStart.current.phi + (dx / scale) * Math.PI * 2;
     thetaRef.current = Math.max(
       -THETA_LIMIT,
-      Math.min(THETA_LIMIT, pointerStart.current.theta + (dy / scale) * Math.PI * 2)
+      Math.min(THETA_LIMIT, pointerStart.current.theta - (dy / scale) * Math.PI * 2)
     );
   }
   function onPointerUp() {
@@ -181,7 +181,7 @@ export function Ecosystem() {
       <div className="flex flex-1 min-h-0">
 
         {/* Left: Globe */}
-        <div className="flex-1 flex items-center justify-center bg-[#0A0D0A] relative overflow-hidden">
+        <div className="flex-1 flex items-center justify-center bg-background relative overflow-hidden">
           <div
             className="relative"
             style={{ width: GLOBE_SIZE, height: GLOBE_SIZE, overflow: "hidden" }}
@@ -229,15 +229,15 @@ export function Ecosystem() {
                   <div
                     className={`rounded-full transition-all duration-150 ${
                       isSelected
-                        ? "w-3 h-3 bg-white ring-2 ring-[#B0DEBB] ring-offset-1 ring-offset-black scale-150"
-                        : "w-2.5 h-2.5 bg-[#6BAE82] group-hover:bg-white group-hover:scale-125"
+                        ? "w-3 h-3 bg-[#1A1F1A] ring-2 ring-[#2F7A47] ring-offset-1 ring-offset-background scale-150"
+                        : "w-2.5 h-2.5 bg-[#2F7A47] group-hover:bg-[#1F4A2E] group-hover:scale-125"
                     }`}
                   />
                   <span
-                    className={`text-[9px] font-medium px-1 py-0.5 rounded whitespace-nowrap leading-none transition-opacity ${
+                    className={`text-[9px] font-medium px-1 py-0.5 rounded whitespace-nowrap leading-none transition-opacity border ${
                       isSelected
-                        ? "text-white bg-black/70 opacity-100"
-                        : "text-[#B0DEBB] opacity-0 group-hover:opacity-100 bg-black/50"
+                        ? "text-[#1A1F1A] bg-white/90 border-border opacity-100"
+                        : "text-[#1A1F1A] opacity-0 group-hover:opacity-100 bg-white/80 border-border"
                     }`}
                   >
                     {city.name}
@@ -251,14 +251,14 @@ export function Ecosystem() {
           <div className="absolute bottom-4 right-4 flex flex-col gap-1.5">
             <button
               onClick={() => applyZoom(1.2)}
-              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-lg leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-lg leading-none flex items-center justify-center shadow-sm"
               aria-label="Zoom in"
             >
               +
             </button>
             <button
               onClick={() => applyZoom(1 / 1.2)}
-              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-lg leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-lg leading-none flex items-center justify-center shadow-sm"
               aria-label="Zoom out"
             >
               −
@@ -270,14 +270,14 @@ export function Ecosystem() {
                 zoomRef.current = 1;
                 setZoom(1);
               }}
-              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-[10px] leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-[12px] leading-none flex items-center justify-center shadow-sm"
               aria-label="Reset view"
             >
               ⟳
             </button>
           </div>
 
-          <div className="absolute bottom-4 left-4 text-[10px] text-white/50">
+          <div className="absolute bottom-4 left-4 text-[10px] text-muted-foreground">
             Drag to rotate · Scroll to zoom · Click a city
           </div>
         </div>

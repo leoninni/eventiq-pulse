@@ -1,31 +1,35 @@
-# Globe Interaction Fix
+# Globe: Fix Drag Direction + Light Theme
 
-Update `src/components/eventiq/views/Ecosystem.tsx` so the globe behaves like a real interactive map: no auto-rotation, and zoomable to inspect continents/cities.
+Two small adjustments to `src/components/eventiq/views/Ecosystem.tsx`. I'm **not** swapping in the pasted `globe.tsx` snippet — its body is empty (just keyframes, no actual sphere or markers), so it would regress the working interactive globe. Instead, restyle the existing cobe globe to match the rest of the page and invert the drag.
 
 ## Changes
 
-### 1. Remove auto-rotation
-In the `onRender`/frame loop, delete `phiRef.current += 0.003`. The globe stays put until the user drags. Initial `phi`/`theta` stay centered on Europe.
+### 1. Invert drag direction
+Currently dragging right rotates the globe the wrong way (and vertical drag tilts the wrong way too). In `onPointerMove`, flip the signs:
 
-### 2. Add zoom
-Introduce a `zoomRef` (default `1`, clamped `0.6` – `4`) controlling effective globe size.
+- `phi = start.phi + (dx / scale) * 2π` (was `−`)
+- `theta = start.theta − (dy / scale) * 2π` (was `+`)
 
-- **Wheel zoom**: `onWheel` on the canvas wrapper — `zoomRef.current *= e.deltaY < 0 ? 1.1 : 0.9`, clamp, `preventDefault`.
-- **Pinch zoom** (trackpad/touch): handle via pointer events with 2 active pointers, tracking distance delta. (Optional polish — wheel covers the main case.)
-- **+/− buttons**: small floating controls bottom-right of the globe panel for discoverability, each stepping zoom by ×1.2 / ÷1.2.
+So dragging right spins the globe rightward (content under the cursor follows the cursor), and dragging down tilts the north pole away from the viewer — standard map/globe behavior.
 
-### 3. Apply zoom to globe + overlays
-cobe doesn't expose a zoom prop, so we scale the rendered canvas:
-- Keep canvas internal resolution at `GLOBE_SIZE * 2`.
-- Render canvas at CSS size `GLOBE_SIZE * zoom`.
-- Wrapper stays `GLOBE_SIZE` square with `overflow: hidden`, canvas centered with transform.
-- Pass the same `zoom` factor into `projectToScreen` (multiply `radius` by zoom, offset by zoom-adjusted center) so city marker buttons track the visible globe.
+### 2. Light background that blends with the page
+Today the globe panel is `bg-[#0A0D0A]` (near-black). Restyle it to match the app's mint/cream surface so the globe sits on the page instead of inside a dark box.
 
-### 4. Vertical drag (tilt)
-Since auto-spin is gone, extend drag to also update `thetaRef` from vertical pointer movement (clamped to ±π/2 minus a small epsilon) so users can look at different latitudes.
+- Globe panel background: `bg-background` (the app's `#EEF3EE` mint).
+- Drop the `dark: 1` cobe option (use light render).
+- Recolor cobe:
+  - `baseColor:   [0.93, 0.96, 0.93]` — pale mint to match `--background`
+  - `markerColor: [0.18, 0.47, 0.28]` — `#2F7A47` accent green, visible on light base
+  - `glowColor:   [0.93, 0.96, 0.93]` — same as base so the halo blends into the page (no dark vignette)
+  - `mapBrightness: 1.2`, `diffuse: 1.0` — softer shading for a light surface
+- City marker dots: switch from white-on-dark to charcoal/green on light:
+  - Default: `bg-[#2F7A47]`, hover `bg-[#1F4A2E]`
+  - Selected: `bg-[#1A1F1A] ring-2 ring-[#2F7A47] ring-offset-1 ring-offset-background`
+- City label chip: `text-[#1A1F1A] bg-white/80 border border-border` (replaces `text-white bg-black/70`).
+- Zoom +/−/reset buttons: light surface — `bg-white border border-border text-foreground hover:bg-muted`.
+- Hint text bottom-left: `text-muted-foreground`.
 
-### 5. Drag cursor + hint
-Update empty-state hint copy in the right panel to: "Drag to rotate · Scroll to zoom · Click a city".
+No layout, data, interaction-model, or other-view changes. Drag/zoom/click behavior stays as-is apart from the inverted drag signs.
 
-## Out of scope
-No changes to data, layout, right panel content, or other views.
+## Files
+- `src/components/eventiq/views/Ecosystem.tsx` — drag math + theme/colors only.
