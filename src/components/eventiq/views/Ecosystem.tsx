@@ -48,7 +48,7 @@ export function Ecosystem() {
                 <div className="text-sm font-semibold">{u.shortName}</div>
                 <div className="text-[10px] text-muted-foreground">{u.location}</div>
               </div>
-              <div className="text-2xl font-bold tabular-nums mt-2">{u.candidates}</div>
+              <div className="text-2xl font-bold tabular-nums mt-2">{u.candidates.toLocaleString()}</div>
               <div className="text-xs text-muted-foreground mb-3">candidates</div>
               <div className="flex flex-wrap gap-1 mb-3">
                 {u.topSkills.slice(0, 3).map((s) => (
