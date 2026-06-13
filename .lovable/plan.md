@@ -1,67 +1,28 @@
-# Globe: Continent → City Drill-In, Fixed Markers, Darker Sphere
 
-Three fixes to `src/components/eventiq/views/Ecosystem.tsx` (+ small additions to `src/lib/eventiq/mockData.ts`).
+# Make the world view an actual globe
 
-## 1. Fix marker alignment (Europe clicks)
+The flat SVG dot-map reads as colored rectangles, not a globe. Replace it with the same cobe 3D globe already used in continent mode, restyled light so it matches the page.
 
-The overlay buttons are misaligned with the dots cobe draws on the sphere — that's why European markers don't catch clicks and others appear in wrong spots. cobe rotates the globe with the opposite phi convention from what `projectToScreen` currently assumes (we flipped drag-direction last turn without flipping projection).
+## World mode (default)
 
-Fix in `projectToScreen`:
-- `x1 = x0 * cosPhi − z0 * sinPhi`
-- `z1 = x0 * sinPhi + z0 * cosPhi`
+- Render a light cobe globe centered at phi≈0, theta≈0.3, zoom≈1, with slow auto-rotate (paused while dragging).
+- Light palette: `dark: 0`, `baseColor [0.92, 0.96, 0.93]`, `markerColor [0.18, 0.48, 0.28]`, `glowColor [0.85, 0.92, 0.86]`, `mapBrightness 1.5`. Globe sits on the mint page background with a soft halo, no hard edge.
+- Markers on the globe: one big dot per interactive continent (Europe, NA, Asia) at its centroid, plus muted small dots for Africa/SA/Oceania (visual only, not clickable).
+- HTML overlay buttons on top of the canvas at each interactive continent's projected position: a label chip ("EUROPE · 247 candidates · 7 cities") + larger clickable dot. Hidden on the back hemisphere (`z2 > 0.05`). Clicking a continent transitions to continent mode.
+- Drag to rotate, scroll to zoom (same handlers as continent mode).
 
-(Sign of the phi rotation matrix flipped.) Verified by tracing: Munich (lat 48.14, lng 11.58) with phi=−0.20, theta=0.25 then lands directly under the cobe-rendered dot. Initial `phiRef` becomes `−0.20` (was `+0.25`) so Europe sits centered at load.
+## Continent mode (unchanged behavior, smoother transition)
 
-## 2. Continent → City drill-in
+- Same globe instance keeps rendering; on continent select, animate `phi → -lng`, `theta → lat`, `zoom → continent.zoom` via a lerp loop (k=0.08). Auto-rotate stops.
+- City markers (HTML overlays + cobe dots) appear for the selected continent only.
+- "← Back to world" in the right panel clears selection and animates back to phi=0, theta=0.3, zoom=1; auto-rotate resumes.
 
-### Data (`mockData.ts`)
-- Add `continent: "europe" | "north-america" | "asia"` to `UniversityProfile`, `StudentCommunity`, and `CityMarker`. Existing 8 DACH cities → `"europe"`.
-- Add 3 demo cities so the continent interaction reads with more than one option (small numbers, flagged as "Expanding network"):
-  - North America: `boston` (45 candidates, MIT/Harvard hackathons), `sf-bay` (38)
-  - Asia: `singapore` (22)
-  - Add matching `universityProfiles` entries (MIT, Stanford, NUS) and one community each.
-- Export `continents`:
-  ```ts
-  [
-    { id: "europe",        name: "Europe",        lat: 50,  lng: 10,   zoom: 2.6 },
-    { id: "north-america", name: "North America", lat: 40,  lng: -95,  zoom: 2.4 },
-    { id: "asia",          name: "Asia",          lat: 20,  lng: 100,  zoom: 2.2 },
-  ]
-  ```
+## Right panel
 
-### Interaction model
-Add `selectedContinentId` state. Three modes:
-
-| Mode | Trigger | Renders |
-|---|---|---|
-| **World** (default) | none selected | Continent markers only (large dot + label + candidate count) at each continent centroid |
-| **Continent** | click continent marker | Animate phi/theta/zoom toward `continents[id]`, hide continent dots, render that continent's city markers |
-| **City** | click city marker (continent already selected) | Same as Continent + right-panel detail (existing behavior) |
-
-Animated transition: in a `useEffect` watching `selectedContinentId`, set a `targetPhi/targetTheta/targetZoom`; the existing rAF frame loop lerps `phiRef/thetaRef/zoomRef` toward targets at 0.08/frame until close enough. Manual drag/scroll cancels the lerp (clears target).
-
-Back navigation:
-- Right panel gains a "← Back to world" button when a continent is selected (clears `selectedContinentId` and `selectedCityId`, animates back to phi=−0.20, theta=0.25, zoom=1).
-- Empty-state right panel in world mode lists the continents with their candidate totals, clickable as an alternative to globe dots.
-
-Continent dots styled larger than city dots: `w-4 h-4` charcoal with green ring, label always visible. City dots stay as today.
-
-## 3. Darker globe
-
-Globe panel keeps light page background, but the sphere itself gets contrast against it:
-- `baseColor:   [0.18, 0.24, 0.20]` — deep forest, reads as a globe object on the mint page
-- `markerColor: [0.72, 0.90, 0.78]` — pale mint dots, visible against dark sphere
-- `glowColor:   [0.55, 0.75, 0.62]` — soft mint halo bleeds into background without a hard edge
-- `mapBrightness: 4`, `diffuse: 1.2`, `dark: 1` — restored for proper shading on a dark base
-
-Overlay marker dots restyled for visibility on the now-dark sphere:
-- City default: `bg-white` w/ subtle ring; hover scales up
-- City selected: `bg-[#B8E0C2] ring-2 ring-white`
-- Continent: `bg-white ring-2 ring-[#2F7A47]`, label chip `bg-[#1A1F1A]/80 text-white`
-
-## Out of scope
-No changes to other views, store, layout shell, or candidate/event data.
+No changes — same "Continents" list in world mode, same continent/city detail panels in continent mode.
 
 ## Files
-- `src/components/eventiq/views/Ecosystem.tsx` — projection sign, continent state machine, lerp, dot restyle, cobe color tweak
-- `src/lib/eventiq/mockData.ts` — `continent` field, `continents` export, 3 demo cities + universities + communities
+
+- `src/components/eventiq/views/Ecosystem.tsx` — delete the `WorldMap` SVG component and the flat-projection / dot-grid helpers; collapse `ContinentGlobe` back into the main component so a single cobe instance handles both modes with a lerp-driven target; restyle markers (continent vs city) accordingly.
+
+No changes to mock data, routing, or other views.
