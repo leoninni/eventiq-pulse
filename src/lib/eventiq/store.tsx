@@ -12,6 +12,8 @@ interface StoreCtx {
   setEventFilter: (id: string) => void;
   shortlist: Set<string>;
   toggleShortlist: (id: string) => void;
+  atsSync: Record<string, string>;
+  syncToAts: (candidateId: string, atsName: string) => void;
 }
 
 const Ctx = createContext<StoreCtx | null>(null);
@@ -21,6 +23,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [candidates, setCandidates] = useState<Candidate[]>(initialCandidates);
   const [eventFilter, setEventFilter] = useState<string>("all");
   const [shortlist, setShortlist] = useState<Set<string>>(new Set());
+  const [atsSync, setAtsSync] = useState<Record<string, string>>({});
 
   const value = useMemo<StoreCtx>(() => ({
     view,
@@ -38,7 +41,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         else next.add(id);
         return next;
       }),
-  }), [view, candidates, eventFilter, shortlist]);
+    atsSync,
+    syncToAts: (id, atsName) => setAtsSync((prev) => ({ ...prev, [id]: atsName })),
+  }), [view, candidates, eventFilter, shortlist, atsSync]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
