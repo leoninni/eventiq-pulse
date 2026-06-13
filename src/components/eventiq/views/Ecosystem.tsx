@@ -67,7 +67,7 @@ export function Ecosystem() {
   const zoomRef   = useRef(DEFAULT_ZOOM);
 
   const targetRef = useRef<{ phi: number; theta: number; zoom: number } | null>(null);
-  const autoRotateRef = useRef(true);
+  const autoRotateRef = useRef(false);
 
   const isDragging   = useRef(false);
   const pointerStart = useRef<{ x: number; y: number; phi: number; theta: number } | null>(null);
