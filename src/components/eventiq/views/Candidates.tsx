@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
-import { events, type Status, type Candidate } from "@/lib/eventiq/mockData";
+import { events, openRoles, type Status, type Candidate } from "@/lib/eventiq/mockData";
 import { useStore } from "@/lib/eventiq/store";
 import { StatusBadge } from "../StatusBadge";
 import { SlidePanel } from "../SlidePanel";
 import { Search, Mail, PlusCircle } from "lucide-react";
 import { toast } from "sonner";
+import { matchScore } from "@/lib/utils";
 
 const statuses: Status[] = ["Interested", "In Review", "Interviewed", "Offer Extended", "Rejected"];
 
@@ -88,6 +89,16 @@ export function Candidates() {
                 <div className="text-xs italic text-muted-foreground mt-1 truncate">{c.projectTitle}</div>
               </div>
               <div className="flex flex-col items-end gap-1.5 shrink-0">
+                {(() => {
+                  const best = matchScore(c, openRoles)[0];
+                  return best && best.score >= 40 ? (
+                    <div className="flex items-center gap-1.5 bg-[#DCEFE2] border border-[#B8E0C2] rounded px-2 py-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#2F7A47] shrink-0" />
+                      <span className="text-[11px] font-semibold text-[#1F4A2E] tabular-nums">{best.score}%</span>
+                      <span className="text-[10px] text-[#2F7A47]">{best.roleTitle}</span>
+                    </div>
+                  ) : null;
+                })()}
                 <StatusBadge status={c.status} />
                 <div className="text-[10px] text-muted-foreground">{ev?.name}</div>
                 <button
@@ -122,6 +133,29 @@ export function Candidates() {
               {open.skills.map((s) => (
                 <span key={s} className="text-xs px-2 py-0.5 rounded border border-primary/30 text-primary">{s}</span>
               ))}
+            </div>
+
+            <div className="mb-5">
+              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Role Match</div>
+              <div className="space-y-1.5">
+                {matchScore(open, openRoles).map((m, i) => (
+                  <div
+                    key={m.roleId}
+                    className={`flex items-center justify-between px-3 py-1.5 rounded-md border ${
+                      i === 0
+                        ? "bg-[#DCEFE2] border-[#B8E0C2]"
+                        : "bg-secondary/40 border-border"
+                    }`}
+                  >
+                    <span className={`text-xs ${i === 0 ? "font-medium text-[#1F4A2E]" : "text-muted-foreground"}`}>
+                      {m.roleTitle}
+                    </span>
+                    <span className={`text-sm font-semibold tabular-nums ${i === 0 ? "text-[#2F7A47]" : "text-muted-foreground"}`}>
+                      {m.score}%
+                    </span>
+                  </div>
+                ))}
+              </div>
             </div>
 
             <div className="mb-5">
