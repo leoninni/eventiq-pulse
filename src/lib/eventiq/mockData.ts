@@ -22,6 +22,8 @@ export interface Candidate {
   projectDescription: string;
   status: Status;
   eventId: string;
+  skillProofs?: { skill: string; source: string }[];
+  communityRoles?: string[];
 }
 
 export const events: EventItem[] = [
@@ -33,18 +35,130 @@ export const events: EventItem[] = [
 ];
 
 export const candidates: Candidate[] = [
-  { id: "c1", name: "Felix M.", university: "TU Munich", skills: ["Python", "ML", "LLMs"], projectTitle: "Real-time RAG pipeline for enterprise docs", projectDescription: "An end-to-end retrieval pipeline that indexes internal documentation and serves grounded answers with sub-second latency. Built with hybrid search and a fine-tuned reranker.", status: "Interviewed", eventId: "hacktum" },
-  { id: "c2", name: "Anika S.", university: "ETH Zürich", skills: ["C++", "Systems", "CUDA"], projectTitle: "GPU-accelerated graph traversal", projectDescription: "A CUDA implementation of frontier-based BFS that outperforms standard CPU baselines on billion-edge graphs. Submitted to a systems track at ETH Build Night.", status: "Interested", eventId: "hacktum" },
-  { id: "c3", name: "Jonas W.", university: "TU Berlin", skills: ["React", "TypeScript", "Node"], projectTitle: "Collaborative whiteboard with CRDT sync", projectDescription: "A multiplayer whiteboard built on Yjs with offline-first sync. Designed for low-bandwidth classrooms with conflict-free merges across devices.", status: "Interested", eventId: "starthack" },
-  { id: "c4", name: "Lena K.", university: "KIT", skills: ["Python", "Data Engineering", "Spark"], projectTitle: "Stream processing pipeline for IoT sensors", projectDescription: "A Spark-streaming pipeline ingesting telemetry from 10k sensors with windowed aggregation and anomaly detection. Production-grade backpressure handling.", status: "In Review", eventId: "kithack" },
-  { id: "c5", name: "Markus B.", university: "LMU Munich", skills: ["Rust", "WebAssembly", "Systems"], projectTitle: "WASM-based in-browser SQL engine", projectDescription: "A SQLite-compatible query engine compiled to WebAssembly, enabling rich analytics without a backend. Won the systems track at START Hack.", status: "Interviewed", eventId: "starthack" },
-  { id: "c6", name: "Priya N.", university: "TU Munich", skills: ["ML", "PyTorch", "Computer Vision"], projectTitle: "Real-time defect detection for manufacturing", projectDescription: "A lightweight vision model running at 60fps on edge hardware, trained with synthetic data augmentation. Already piloted at a Bavarian auto supplier.", status: "Offer Extended", eventId: "hacktum" },
-  { id: "c7", name: "Tim R.", university: "Uni Stuttgart", skills: ["Go", "Kubernetes", "DevOps"], projectTitle: "Self-healing k8s cluster management tool", projectDescription: "An operator that detects failing nodes via custom probes and automatically reschedules workloads with zero downtime. Tested on a 200-node cluster.", status: "In Review", eventId: "starthack" },
-  { id: "c8", name: "Clara V.", university: "RWTH Aachen", skills: ["Python", "NLP", "APIs"], projectTitle: "Multilingual intent classifier for B2B chatbots", projectDescription: "Fine-tuned multilingual transformer reaching 94% F1 on a custom enterprise intent dataset across 6 languages.", status: "Rejected", eventId: "codeberlin" },
-  { id: "c9", name: "Daniel H.", university: "TU Munich", skills: ["Java", "Spring", "Microservices"], projectTitle: "Event-driven inventory sync system", projectDescription: "A Kafka-backed inventory service synchronizing stock across 50 warehouses with exactly-once delivery semantics.", status: "In Review", eventId: "hacktum" },
-  { id: "c10", name: "Sophie A.", university: "ETH Zürich", skills: ["Python", "Reinforcement Learning"], projectTitle: "RL agent for dynamic pricing optimization", projectDescription: "A PPO agent that learns dynamic pricing strategies in simulated marketplaces, outperforming rule-based baselines by 18% revenue.", status: "Interested", eventId: "hacktum" },
-  { id: "c11", name: "Lukas F.", university: "TU Darmstadt", skills: ["C++", "Embedded", "RTOS"], projectTitle: "Low-latency sensor fusion for robotics", projectDescription: "A real-time sensor fusion stack on FreeRTOS combining LIDAR and IMU at sub-millisecond latency for autonomous robotics.", status: "Interested", eventId: "codeberlin" },
-  { id: "c12", name: "Mia T.", university: "Uni Hamburg", skills: ["TypeScript", "GraphQL", "React"], projectTitle: "Real-time collaborative code editor", projectDescription: "A browser-based code editor with sub-100ms multiplayer sync, Monaco integration, and language-server protocol support.", status: "Rejected", eventId: "codeberlin" },
+  {
+    id: "c1", name: "Felix M.", university: "TU Munich",
+    skills: ["Python", "ML", "LLMs"],
+    projectTitle: "Real-time RAG pipeline for enterprise docs",
+    projectDescription: "An end-to-end retrieval pipeline that indexes internal documentation and serves grounded answers with sub-second latency. Built with hybrid search and a fine-tuned reranker.",
+    status: "Interviewed", eventId: "hacktum",
+    skillProofs: [
+      { skill: "Python", source: "1st place · HackTUM 2025" },
+      { skill: "ML",     source: "HackTUM best AI project award" },
+    ],
+    communityRoles: ["TUM AI Society"],
+  },
+  {
+    id: "c2", name: "Anika S.", university: "ETH Zürich",
+    skills: ["C++", "Systems", "CUDA"],
+    projectTitle: "GPU-accelerated graph traversal",
+    projectDescription: "A CUDA implementation of frontier-based BFS that outperforms standard CPU baselines on billion-edge graphs. Submitted to a systems track at ETH Build Night.",
+    status: "Interested", eventId: "hacktum",
+    skillProofs: [
+      { skill: "C++",    source: "ETH Build Night systems track winner" },
+      { skill: "CUDA",   source: "ETH HPC Seminar — top project" },
+    ],
+    communityRoles: ["TUM Robotics Club", "ETH Women in Tech"],
+  },
+  {
+    id: "c3", name: "Jonas W.", university: "TU Berlin",
+    skills: ["React", "TypeScript", "Node"],
+    projectTitle: "Collaborative whiteboard with CRDT sync",
+    projectDescription: "A multiplayer whiteboard built on Yjs with offline-first sync. Designed for low-bandwidth classrooms with conflict-free merges across devices.",
+    status: "Interested", eventId: "starthack",
+  },
+  {
+    id: "c4", name: "Lena K.", university: "KIT",
+    skills: ["Python", "Data Engineering", "Spark"],
+    projectTitle: "Stream processing pipeline for IoT sensors",
+    projectDescription: "A Spark-streaming pipeline ingesting telemetry from 10k sensors with windowed aggregation and anomaly detection. Production-grade backpressure handling.",
+    status: "In Review", eventId: "kithack",
+    skillProofs: [
+      { skill: "Python", source: "KIT Innovation Hack finalist" },
+      { skill: "Spark",  source: "KIT Data Engineering seminar — top project" },
+    ],
+    communityRoles: ["KIT Data Science Club"],
+  },
+  {
+    id: "c5", name: "Markus B.", university: "LMU Munich",
+    skills: ["Rust", "WebAssembly", "Systems"],
+    projectTitle: "WASM-based in-browser SQL engine",
+    projectDescription: "A SQLite-compatible query engine compiled to WebAssembly, enabling rich analytics without a backend. Won the systems track at START Hack.",
+    status: "Interviewed", eventId: "starthack",
+    skillProofs: [
+      { skill: "Rust",          source: "START Hack systems track winner" },
+      { skill: "WebAssembly",   source: "Mozilla Hacks open-source contributor" },
+    ],
+    communityRoles: ["TU Darmstadt OS Lab"],
+  },
+  {
+    id: "c6", name: "Priya N.", university: "TU Munich",
+    skills: ["ML", "PyTorch", "Computer Vision"],
+    projectTitle: "Real-time defect detection for manufacturing",
+    projectDescription: "A lightweight vision model running at 60fps on edge hardware, trained with synthetic data augmentation. Already piloted at a Bavarian auto supplier.",
+    status: "Offer Extended", eventId: "hacktum",
+    skillProofs: [
+      { skill: "ML",             source: "HackTUM computer vision track — 1st place" },
+      { skill: "PyTorch",        source: "NeurIPS 2024 student workshop paper" },
+    ],
+    communityRoles: ["TUM ML Society", "Women in AI Munich"],
+  },
+  {
+    id: "c7", name: "Tim R.", university: "Uni Stuttgart",
+    skills: ["Go", "Kubernetes", "DevOps"],
+    projectTitle: "Self-healing k8s cluster management tool",
+    projectDescription: "An operator that detects failing nodes via custom probes and automatically reschedules workloads with zero downtime. Tested on a 200-node cluster.",
+    status: "In Review", eventId: "starthack",
+    skillProofs: [
+      { skill: "Go",          source: "START Hack infrastructure track winner" },
+      { skill: "Kubernetes",  source: "CNCF Student Contributor — open-source" },
+    ],
+    communityRoles: ["Uni Stuttgart Cloud Native Club"],
+  },
+  {
+    id: "c8", name: "Clara V.", university: "RWTH Aachen",
+    skills: ["Python", "NLP", "APIs"],
+    projectTitle: "Multilingual intent classifier for B2B chatbots",
+    projectDescription: "Fine-tuned multilingual transformer reaching 94% F1 on a custom enterprise intent dataset across 6 languages.",
+    status: "Rejected", eventId: "codeberlin",
+  },
+  {
+    id: "c9", name: "Daniel H.", university: "TU Munich",
+    skills: ["Java", "Spring", "Microservices"],
+    projectTitle: "Event-driven inventory sync system",
+    projectDescription: "A Kafka-backed inventory service synchronizing stock across 50 warehouses with exactly-once delivery semantics.",
+    status: "In Review", eventId: "hacktum",
+    skillProofs: [
+      { skill: "Java",          source: "TUM Software Engineering Excellence Award" },
+      { skill: "Microservices", source: "HackTUM enterprise track — finalist" },
+    ],
+    communityRoles: ["TUM Enterprise Software Group"],
+  },
+  {
+    id: "c10", name: "Sophie A.", university: "ETH Zürich",
+    skills: ["Python", "Reinforcement Learning"],
+    projectTitle: "RL agent for dynamic pricing optimization",
+    projectDescription: "A PPO agent that learns dynamic pricing strategies in simulated marketplaces, outperforming rule-based baselines by 18% revenue.",
+    status: "Interested", eventId: "hacktum",
+  },
+  {
+    id: "c11", name: "Lukas F.", university: "TU Darmstadt",
+    skills: ["C++", "Embedded", "RTOS"],
+    projectTitle: "Low-latency sensor fusion for robotics",
+    projectDescription: "A real-time sensor fusion stack on FreeRTOS combining LIDAR and IMU at sub-millisecond latency for autonomous robotics.",
+    status: "Interested", eventId: "codeberlin",
+    skillProofs: [
+      { skill: "C++",      source: "CODE Berlin embedded track — 1st place" },
+      { skill: "Embedded", source: "TUM Robotics team technical lead" },
+    ],
+    communityRoles: ["TUM Robotics Club Lead", "FIRST Robotics Germany"],
+  },
+  {
+    id: "c12", name: "Mia T.", university: "Uni Hamburg",
+    skills: ["TypeScript", "GraphQL", "React"],
+    projectTitle: "Real-time collaborative code editor",
+    projectDescription: "A browser-based code editor with sub-100ms multiplayer sync, Monaco integration, and language-server protocol support.",
+    status: "Rejected", eventId: "codeberlin",
+  },
 ];
 
 export const eventCandidateMap: Record<string, string[]> = {
