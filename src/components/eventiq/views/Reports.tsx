@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { events, eventCandidateMap } from "@/lib/eventiq/mockData";
+import { events, eventCandidateMap, type EventItem } from "@/lib/eventiq/mockData";
 import { useStore } from "@/lib/eventiq/store";
 import { ArrowLeft, FileText, Check } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
@@ -123,6 +123,7 @@ export function Reports() {
         <h1 className="font-display text-4xl tracking-tight">Reports</h1>
         <p className="text-sm text-muted-foreground mt-2">Auto-generated ROI reports for each sponsored event.</p>
       </div>
+      <EventROIComparison evs={events} />
       <div className="space-y-3">
         {events.map((e) => (
           <div key={e.id} className="bg-card border border-border rounded-lg p-4 flex items-center gap-5 hover:border-primary/30 transition-colors">
@@ -153,6 +154,64 @@ function Stat({ label, value }: { label: string; value: string | number }) {
     <div className="text-right">
       <div className="text-[10px] uppercase tracking-wide text-muted-foreground">{label}</div>
       <div className="text-sm font-semibold tabular-nums">{value}</div>
+    </div>
+  );
+}
+
+function EventROIComparison({ evs }: { evs: EventItem[] }) {
+  const withCost = evs.map((e) => ({
+    ...e,
+    costPerHire: Math.round(e.sponsorship / e.hires),
+  }));
+  const minCPH = Math.min(...withCost.map((e) => e.costPerHire));
+  const maxCPH = Math.max(...withCost.map((e) => e.costPerHire));
+
+  return (
+    <div className="mb-8">
+      <h2 className="text-sm font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+        Event ROI Comparison
+      </h2>
+      <div className="bg-card border border-border rounded-lg overflow-hidden">
+        <table className="w-full text-sm">
+          <thead>
+            <tr className="border-b border-border">
+              <th className="text-left font-medium text-xs text-muted-foreground px-4 py-2.5">Event</th>
+              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">Opt-ins</th>
+              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">Pipeline</th>
+              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">Hires</th>
+              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">Cost/Hire</th>
+              <th className="text-left font-medium text-xs text-muted-foreground px-4 py-2.5 w-36">Performance</th>
+            </tr>
+          </thead>
+          <tbody>
+            {withCost.map((e) => {
+              const isBest  = e.costPerHire === minCPH;
+              const isWorst = e.costPerHire === maxCPH;
+              const barWidth = Math.round((minCPH / e.costPerHire) * 100);
+              const barColor = isBest ? "bg-[#2F7A47]" : isWorst ? "bg-[#C99A3E]" : "bg-[#6BAE82]";
+              const borderColor = isBest ? "border-l-[#2F7A47]" : isWorst ? "border-l-[#C99A3E]" : "border-l-transparent";
+              return (
+                <tr key={e.id} className="border-b border-border last:border-0 hover:bg-secondary/30 transition-colors">
+                  <td className={`px-4 py-3 font-medium border-l-2 ${borderColor}`}>{e.name}</td>
+                  <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">{e.optIns}</td>
+                  <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">{e.pipeline}</td>
+                  <td className={`px-4 py-3 text-right tabular-nums font-semibold ${isBest ? "text-[#2F7A47]" : "text-foreground"}`}>
+                    {e.hires}
+                  </td>
+                  <td className={`px-4 py-3 text-right tabular-nums font-semibold ${isBest ? "text-[#2F7A47]" : isWorst ? "text-[#C99A3E]" : "text-foreground"}`}>
+                    €{e.costPerHire.toLocaleString()}
+                  </td>
+                  <td className="px-4 py-3">
+                    <div className="w-32 bg-secondary rounded-full h-1.5">
+                      <div className={`${barColor} h-1.5 rounded-full`} style={{ width: `${barWidth}%` }} />
+                    </div>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
