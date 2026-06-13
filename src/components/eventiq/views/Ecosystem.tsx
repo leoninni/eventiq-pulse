@@ -229,15 +229,15 @@ export function Ecosystem() {
                   <div
                     className={`rounded-full transition-all duration-150 ${
                       isSelected
-                        ? "w-3 h-3 bg-white ring-2 ring-[#B0DEBB] ring-offset-1 ring-offset-black scale-150"
-                        : "w-2.5 h-2.5 bg-[#6BAE82] group-hover:bg-white group-hover:scale-125"
+                        ? "w-3 h-3 bg-[#1A1F1A] ring-2 ring-[#2F7A47] ring-offset-1 ring-offset-background scale-150"
+                        : "w-2.5 h-2.5 bg-[#2F7A47] group-hover:bg-[#1F4A2E] group-hover:scale-125"
                     }`}
                   />
                   <span
-                    className={`text-[9px] font-medium px-1 py-0.5 rounded whitespace-nowrap leading-none transition-opacity ${
+                    className={`text-[9px] font-medium px-1 py-0.5 rounded whitespace-nowrap leading-none transition-opacity border ${
                       isSelected
-                        ? "text-white bg-black/70 opacity-100"
-                        : "text-[#B0DEBB] opacity-0 group-hover:opacity-100 bg-black/50"
+                        ? "text-[#1A1F1A] bg-white/90 border-border opacity-100"
+                        : "text-[#1A1F1A] opacity-0 group-hover:opacity-100 bg-white/80 border-border"
                     }`}
                   >
                     {city.name}
