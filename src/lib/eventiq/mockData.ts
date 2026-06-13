@@ -11,6 +11,7 @@ export interface EventItem {
   pipeline: number;
   sponsorship: number;
   costPerLead: number;
+  hires: number;
 }
 
 export interface Candidate {
@@ -27,11 +28,11 @@ export interface Candidate {
 }
 
 export const events: EventItem[] = [
-  { id: "hacktum", name: "HackTUM 2025", date: "Apr 12, 2025", shortDate: "Apr 12", location: "Munich", attendees: 600, optIns: 89, pipeline: 12, sponsorship: 8000, costPerLead: 667 },
-  { id: "starthack", name: "START Hack 2025", date: "Mar 1, 2025", shortDate: "Mar 1", location: "St. Gallen", attendees: 450, optIns: 61, pipeline: 8, sponsorship: 5000, costPerLead: 625 },
-  { id: "codeberlin", name: "CODE Berlin Hackathon", date: "Feb 14, 2025", shortDate: "Feb 14", location: "Berlin", attendees: 280, optIns: 48, pipeline: 7, sponsorship: 3500, costPerLead: 500 },
-  { id: "ethbuild", name: "ETH Build Night", date: "Jan 18, 2025", shortDate: "Jan 18", location: "Zürich", attendees: 190, optIns: 17, pipeline: 4, sponsorship: 2500, costPerLead: 625 },
-  { id: "kithack", name: "KIT Innovation Hack", date: "Nov 22, 2024", shortDate: "Nov 22", location: "Karlsruhe", attendees: 240, optIns: 32, pipeline: 3, sponsorship: 4000, costPerLead: 1333 },
+  { id: "hacktum",    name: "HackTUM 2025",         date: "Apr 12, 2025", shortDate: "Apr 12", location: "Munich",     attendees: 600, optIns: 89, pipeline: 12, sponsorship: 8000, costPerLead: 667,  hires: 5 },
+  { id: "starthack",  name: "START Hack 2025",       date: "Mar 1, 2025",  shortDate: "Mar 1",  location: "St. Gallen", attendees: 450, optIns: 61, pipeline: 8,  sponsorship: 5000, costPerLead: 625,  hires: 3 },
+  { id: "codeberlin", name: "CODE Berlin Hackathon", date: "Feb 14, 2025", shortDate: "Feb 14", location: "Berlin",     attendees: 280, optIns: 48, pipeline: 7,  sponsorship: 3500, costPerLead: 500,  hires: 2 },
+  { id: "ethbuild",   name: "ETH Build Night",       date: "Jan 18, 2025", shortDate: "Jan 18", location: "Zürich",     attendees: 190, optIns: 17, pipeline: 4,  sponsorship: 2500, costPerLead: 625,  hires: 1 },
+  { id: "kithack",    name: "KIT Innovation Hack",   date: "Nov 22, 2024", shortDate: "Nov 22", location: "Karlsruhe",  attendees: 240, optIns: 32, pipeline: 3,  sponsorship: 4000, costPerLead: 1333, hires: 1 },
 ];
 
 export const candidates: Candidate[] = [
