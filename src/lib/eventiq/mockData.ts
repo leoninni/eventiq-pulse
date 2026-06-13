@@ -254,12 +254,29 @@ export const funnelData: FunnelStage[] = [
   { label: "Offers",      value: 3,    pct: "25%", widthPct: 5  },
 ];
 
+export type ContinentId = "europe" | "north-america" | "asia";
+
+export interface Continent {
+  id: ContinentId;
+  name: string;
+  lat: number;
+  lng: number;
+  zoom: number;
+}
+
+export const continents: Continent[] = [
+  { id: "europe",        name: "Europe",        lat: 50, lng:  10, zoom: 2.6 },
+  { id: "north-america", name: "North America", lat: 40, lng: -95, zoom: 2.4 },
+  { id: "asia",          name: "Asia",          lat: 20, lng: 100, zoom: 2.2 },
+];
+
 export interface UniversityProfile {
   id: string;
   name: string;
   shortName: string;
   location: string;
   city: string;
+  continent: ContinentId;
   lat: number;
   lng: number;
   candidates: number;
@@ -273,47 +290,59 @@ export interface StudentCommunity {
   type: "AI/ML" | "Robotics" | "Entrepreneurship" | "Cloud/DevOps" | "Data" | "Open Source" | "Community";
   university: string;
   city: string;
+  continent: ContinentId;
   members: number;
   topSkills: string[];
 }
 
 export const universityProfiles: UniversityProfile[] = [
-  { id: "tum",          name: "TU Munich",     shortName: "TUM",          location: "Munich",    city: "munich",    lat: 48.14, lng: 11.58, candidates: 67, topSkills: ["ML", "Python", "Robotics"],      roleAffinity: "ML/AI · Systems" },
-  { id: "eth",          name: "ETH Zürich",    shortName: "ETH",          location: "Zürich",    city: "zurich",    lat: 47.38, lng:  8.54, candidates: 48, topSkills: ["C++", "CUDA", "Rust"],           roleAffinity: "Systems · Research" },
-  { id: "tuberlin",     name: "TU Berlin",     shortName: "TU Berlin",    location: "Berlin",    city: "berlin",    lat: 52.52, lng: 13.41, candidates: 31, topSkills: ["React", "TypeScript", "Go"],      roleAffinity: "Frontend · Backend" },
-  { id: "kit",          name: "KIT",           shortName: "KIT",          location: "Karlsruhe", city: "karlsruhe", lat: 49.01, lng:  8.40, candidates: 29, topSkills: ["Python", "Spark", "Embedded"],    roleAffinity: "Data · Embedded" },
-  { id: "rwth",         name: "RWTH Aachen",   shortName: "RWTH",         location: "Aachen",    city: "aachen",    lat: 50.78, lng:  6.08, candidates: 24, topSkills: ["Java", "NLP", "Systems"],         roleAffinity: "Backend" },
-  { id: "unistuttgart", name: "Uni Stuttgart", shortName: "Stuttgart",    location: "Stuttgart", city: "stuttgart", lat: 48.78, lng:  9.18, candidates: 18, topSkills: ["Go", "Kubernetes", "DevOps"],     roleAffinity: "Backend · Infra" },
-  { id: "tudarmstadt",  name: "TU Darmstadt",  shortName: "TU Darmstadt", location: "Darmstadt", city: "darmstadt", lat: 49.88, lng:  8.66, candidates: 16, topSkills: ["C++", "Embedded", "RTOS"],        roleAffinity: "Systems" },
-  { id: "lmu",          name: "LMU Munich",    shortName: "LMU",          location: "Munich",    city: "munich",    lat: 48.14, lng: 11.58, candidates: 14, topSkills: ["Rust", "WebAssembly", "Systems"], roleAffinity: "Systems" },
+  { id: "tum",          name: "TU Munich",     shortName: "TUM",          location: "Munich",    city: "munich",    continent: "europe",        lat: 48.14, lng:  11.58, candidates: 67, topSkills: ["ML", "Python", "Robotics"],      roleAffinity: "ML/AI · Systems" },
+  { id: "eth",          name: "ETH Zürich",    shortName: "ETH",          location: "Zürich",    city: "zurich",    continent: "europe",        lat: 47.38, lng:   8.54, candidates: 48, topSkills: ["C++", "CUDA", "Rust"],           roleAffinity: "Systems · Research" },
+  { id: "tuberlin",     name: "TU Berlin",     shortName: "TU Berlin",    location: "Berlin",    city: "berlin",    continent: "europe",        lat: 52.52, lng:  13.41, candidates: 31, topSkills: ["React", "TypeScript", "Go"],     roleAffinity: "Frontend · Backend" },
+  { id: "kit",          name: "KIT",           shortName: "KIT",          location: "Karlsruhe", city: "karlsruhe", continent: "europe",        lat: 49.01, lng:   8.40, candidates: 29, topSkills: ["Python", "Spark", "Embedded"],   roleAffinity: "Data · Embedded" },
+  { id: "rwth",         name: "RWTH Aachen",   shortName: "RWTH",         location: "Aachen",    city: "aachen",    continent: "europe",        lat: 50.78, lng:   6.08, candidates: 24, topSkills: ["Java", "NLP", "Systems"],        roleAffinity: "Backend" },
+  { id: "unistuttgart", name: "Uni Stuttgart", shortName: "Stuttgart",    location: "Stuttgart", city: "stuttgart", continent: "europe",        lat: 48.78, lng:   9.18, candidates: 18, topSkills: ["Go", "Kubernetes", "DevOps"],    roleAffinity: "Backend · Infra" },
+  { id: "tudarmstadt",  name: "TU Darmstadt",  shortName: "TU Darmstadt", location: "Darmstadt", city: "darmstadt", continent: "europe",        lat: 49.88, lng:   8.66, candidates: 16, topSkills: ["C++", "Embedded", "RTOS"],       roleAffinity: "Systems" },
+  { id: "lmu",          name: "LMU Munich",    shortName: "LMU",          location: "Munich",    city: "munich",    continent: "europe",        lat: 48.14, lng:  11.58, candidates: 14, topSkills: ["Rust", "WebAssembly", "Systems"], roleAffinity: "Systems" },
+  { id: "mit",          name: "MIT",           shortName: "MIT",          location: "Boston",    city: "boston",    continent: "north-america", lat: 42.36, lng: -71.09, candidates: 28, topSkills: ["ML", "Systems", "Research"],     roleAffinity: "ML/AI · Research" },
+  { id: "harvard",      name: "Harvard",       shortName: "Harvard",      location: "Boston",    city: "boston",    continent: "north-america", lat: 42.37, lng: -71.12, candidates: 17, topSkills: ["CS Theory", "Python"],           roleAffinity: "Research" },
+  { id: "stanford",     name: "Stanford",      shortName: "Stanford",     location: "SF Bay",    city: "sf-bay",    continent: "north-america", lat: 37.43, lng: -122.17, candidates: 38, topSkills: ["ML", "LLMs", "TypeScript"],    roleAffinity: "ML/AI · Frontend" },
+  { id: "nus",          name: "NUS",           shortName: "NUS",          location: "Singapore", city: "singapore", continent: "asia",          lat:  1.30, lng: 103.77, candidates: 22, topSkills: ["Python", "ML", "Cloud"],         roleAffinity: "ML/AI · Backend" },
 ];
 
 export const studentCommunities: StudentCommunity[] = [
-  { id: "tum-ai",          name: "TUM AI Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    members: 280, topSkills: ["Python", "LLMs"] },
-  { id: "tum-ml",          name: "TUM ML Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    members: 210, topSkills: ["PyTorch", "ML"] },
-  { id: "tum-robotics",    name: "TUM Robotics Club",               type: "Robotics",         university: "TU Munich",     city: "munich",    members: 145, topSkills: ["C++", "ROS"] },
-  { id: "eth-robotics",    name: "ETH Robotics Society",            type: "Robotics",         university: "ETH Zürich",    city: "zurich",    members: 120, topSkills: ["C++", "CUDA"] },
-  { id: "eth-women",       name: "ETH Women in Tech",               type: "Community",        university: "ETH Zürich",    city: "zurich",    members: 340, topSkills: ["Python", "ML"] },
-  { id: "eth-entre",       name: "ETH Entrepreneurship Club",       type: "Entrepreneurship", university: "ETH Zürich",    city: "zurich",    members: 190, topSkills: ["React", "TypeScript"] },
-  { id: "kit-data",        name: "KIT Data Science Club",           type: "Data",             university: "KIT",           city: "karlsruhe", members:  95, topSkills: ["Python", "Spark"] },
-  { id: "tud-robotics",    name: "TU Darmstadt Robotics Club",      type: "Robotics",         university: "TU Darmstadt",  city: "darmstadt", members: 110, topSkills: ["C++", "Embedded"] },
-  { id: "stuttgart-cloud", name: "Uni Stuttgart Cloud Native Club", type: "Cloud/DevOps",     university: "Uni Stuttgart", city: "stuttgart", members:  75, topSkills: ["Go", "Kubernetes"] },
-  { id: "lmu-oss",         name: "LMU Open Source Lab",             type: "Open Source",      university: "LMU Munich",    city: "munich",    members:  85, topSkills: ["Rust", "WebAssembly"] },
+  { id: "tum-ai",          name: "TUM AI Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    continent: "europe",        members: 280, topSkills: ["Python", "LLMs"] },
+  { id: "tum-ml",          name: "TUM ML Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    continent: "europe",        members: 210, topSkills: ["PyTorch", "ML"] },
+  { id: "tum-robotics",    name: "TUM Robotics Club",               type: "Robotics",         university: "TU Munich",     city: "munich",    continent: "europe",        members: 145, topSkills: ["C++", "ROS"] },
+  { id: "eth-robotics",    name: "ETH Robotics Society",            type: "Robotics",         university: "ETH Zürich",    city: "zurich",    continent: "europe",        members: 120, topSkills: ["C++", "CUDA"] },
+  { id: "eth-women",       name: "ETH Women in Tech",               type: "Community",        university: "ETH Zürich",    city: "zurich",    continent: "europe",        members: 340, topSkills: ["Python", "ML"] },
+  { id: "eth-entre",       name: "ETH Entrepreneurship Club",       type: "Entrepreneurship", university: "ETH Zürich",    city: "zurich",    continent: "europe",        members: 190, topSkills: ["React", "TypeScript"] },
+  { id: "kit-data",        name: "KIT Data Science Club",           type: "Data",             university: "KIT",           city: "karlsruhe", continent: "europe",        members:  95, topSkills: ["Python", "Spark"] },
+  { id: "tud-robotics",    name: "TU Darmstadt Robotics Club",      type: "Robotics",         university: "TU Darmstadt",  city: "darmstadt", continent: "europe",        members: 110, topSkills: ["C++", "Embedded"] },
+  { id: "stuttgart-cloud", name: "Uni Stuttgart Cloud Native Club", type: "Cloud/DevOps",     university: "Uni Stuttgart", city: "stuttgart", continent: "europe",        members:  75, topSkills: ["Go", "Kubernetes"] },
+  { id: "lmu-oss",         name: "LMU Open Source Lab",             type: "Open Source",      university: "LMU Munich",    city: "munich",    continent: "europe",        members:  85, topSkills: ["Rust", "WebAssembly"] },
+  { id: "mit-ai",          name: "MIT AI Club",                     type: "AI/ML",            university: "MIT",           city: "boston",    continent: "north-america", members: 220, topSkills: ["ML", "PyTorch"] },
+  { id: "stanford-ml",     name: "Stanford ML Group",               type: "AI/ML",            university: "Stanford",      city: "sf-bay",    continent: "north-america", members: 310, topSkills: ["LLMs", "Python"] },
+  { id: "nus-hackers",     name: "NUS Hackers",                     type: "Open Source",      university: "NUS",           city: "singapore", continent: "asia",          members: 180, topSkills: ["Python", "Cloud"] },
 ];
 
 export interface CityMarker {
   id: string;
   name: string;
+  continent: ContinentId;
   lat: number;
   lng: number;
 }
 
 export const cityMarkers: CityMarker[] = [
-  { id: "munich",    name: "Munich",    lat: 48.14, lng: 11.58 },
-  { id: "zurich",    name: "Zürich",    lat: 47.38, lng:  8.54 },
-  { id: "berlin",    name: "Berlin",    lat: 52.52, lng: 13.41 },
-  { id: "karlsruhe", name: "Karlsruhe", lat: 49.01, lng:  8.40 },
-  { id: "aachen",    name: "Aachen",    lat: 50.78, lng:  6.08 },
-  { id: "stuttgart", name: "Stuttgart", lat: 48.78, lng:  9.18 },
-  { id: "darmstadt", name: "Darmstadt", lat: 49.88, lng:  8.66 },
+  { id: "munich",    name: "Munich",    continent: "europe",        lat: 48.14, lng:  11.58 },
+  { id: "zurich",    name: "Zürich",    continent: "europe",        lat: 47.38, lng:   8.54 },
+  { id: "berlin",    name: "Berlin",    continent: "europe",        lat: 52.52, lng:  13.41 },
+  { id: "karlsruhe", name: "Karlsruhe", continent: "europe",        lat: 49.01, lng:   8.40 },
+  { id: "aachen",    name: "Aachen",    continent: "europe",        lat: 50.78, lng:   6.08 },
+  { id: "stuttgart", name: "Stuttgart", continent: "europe",        lat: 48.78, lng:   9.18 },
+  { id: "darmstadt", name: "Darmstadt", continent: "europe",        lat: 49.88, lng:   8.66 },
+  { id: "boston",    name: "Boston",    continent: "north-america", lat: 42.36, lng: -71.09 },
+  { id: "sf-bay",    name: "SF Bay",    continent: "north-america", lat: 37.43, lng: -122.17 },
+  { id: "singapore", name: "Singapore", continent: "asia",          lat:  1.30, lng: 103.77 },
 ];
