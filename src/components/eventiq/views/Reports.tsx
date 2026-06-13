@@ -1,9 +1,8 @@
 import { useState } from "react";
-import { events, eventCandidateMap, type EventItem } from "@/lib/eventiq/mockData";
+import { events, eventCandidateMap, statusColors, type EventItem, type Status } from "@/lib/eventiq/mockData";
 import { useStore } from "@/lib/eventiq/store";
 import { ArrowLeft, FileText, Check } from "lucide-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, Cell } from "recharts";
-import { statusColors, type Status } from "@/lib/eventiq/mockData";
 
 const generatedDays: Record<string, number> = { hacktum: 3, starthack: 18, codeberlin: 30, ethbuild: 60, kithack: 100 };
 
@@ -161,10 +160,11 @@ function Stat({ label, value }: { label: string; value: string | number }) {
 function EventROIComparison({ evs }: { evs: EventItem[] }) {
   const withCost = evs.map((e) => ({
     ...e,
-    costPerHire: Math.round(e.sponsorship / e.hires),
+    costPerHire: e.hires > 0 ? Math.round(e.sponsorship / e.hires) : null,
   }));
-  const minCPH = Math.min(...withCost.map((e) => e.costPerHire));
-  const maxCPH = Math.max(...withCost.map((e) => e.costPerHire));
+  const validCosts = withCost.map((e) => e.costPerHire).filter((c): c is number => c !== null);
+  const minCPH = validCosts.length > 0 ? Math.min(...validCosts) : 0;
+  const maxCPH = validCosts.length > 0 ? Math.max(...validCosts) : 0;
 
   return (
     <div className="mb-8">
@@ -185,9 +185,9 @@ function EventROIComparison({ evs }: { evs: EventItem[] }) {
           </thead>
           <tbody>
             {withCost.map((e) => {
-              const isBest  = e.costPerHire === minCPH;
-              const isWorst = e.costPerHire === maxCPH;
-              const barWidth = Math.round((minCPH / e.costPerHire) * 100);
+              const isBest  = e.costPerHire !== null && e.costPerHire === minCPH && minCPH !== maxCPH;
+              const isWorst = e.costPerHire !== null && e.costPerHire === maxCPH && minCPH !== maxCPH;
+              const barWidth = e.costPerHire !== null && e.costPerHire > 0 ? Math.round((minCPH / e.costPerHire) * 100) : 0;
               const barColor = isBest ? "bg-[#2F7A47]" : isWorst ? "bg-[#C99A3E]" : "bg-[#6BAE82]";
               const borderColor = isBest ? "border-l-[#2F7A47]" : isWorst ? "border-l-[#C99A3E]" : "border-l-transparent";
               return (
@@ -199,7 +199,7 @@ function EventROIComparison({ evs }: { evs: EventItem[] }) {
                     {e.hires}
                   </td>
                   <td className={`px-4 py-3 text-right tabular-nums font-semibold ${isBest ? "text-[#2F7A47]" : isWorst ? "text-[#C99A3E]" : "text-foreground"}`}>
-                    €{e.costPerHire.toLocaleString()}
+                    {e.costPerHire !== null ? `€${e.costPerHire.toLocaleString()}` : "—"}
                   </td>
                   <td className="px-4 py-3">
                     <div className="w-32 bg-secondary rounded-full h-1.5">
