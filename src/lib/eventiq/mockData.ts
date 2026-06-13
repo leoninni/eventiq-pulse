@@ -296,6 +296,7 @@ export interface StudentCommunity {
 }
 
 export const universityProfiles: UniversityProfile[] = [
+  // Europe
   { id: "tum",          name: "TU Munich",     shortName: "TUM",          location: "Munich",    city: "munich",    continent: "europe",        lat: 48.14, lng:  11.58, candidates: 67, topSkills: ["ML", "Python", "Robotics"],      roleAffinity: "ML/AI · Systems" },
   { id: "eth",          name: "ETH Zürich",    shortName: "ETH",          location: "Zürich",    city: "zurich",    continent: "europe",        lat: 47.38, lng:   8.54, candidates: 48, topSkills: ["C++", "CUDA", "Rust"],           roleAffinity: "Systems · Research" },
   { id: "tuberlin",     name: "TU Berlin",     shortName: "TU Berlin",    location: "Berlin",    city: "berlin",    continent: "europe",        lat: 52.52, lng:  13.41, candidates: 31, topSkills: ["React", "TypeScript", "Go"],     roleAffinity: "Frontend · Backend" },
@@ -304,13 +305,32 @@ export const universityProfiles: UniversityProfile[] = [
   { id: "unistuttgart", name: "Uni Stuttgart", shortName: "Stuttgart",    location: "Stuttgart", city: "stuttgart", continent: "europe",        lat: 48.78, lng:   9.18, candidates: 18, topSkills: ["Go", "Kubernetes", "DevOps"],    roleAffinity: "Backend · Infra" },
   { id: "tudarmstadt",  name: "TU Darmstadt",  shortName: "TU Darmstadt", location: "Darmstadt", city: "darmstadt", continent: "europe",        lat: 49.88, lng:   8.66, candidates: 16, topSkills: ["C++", "Embedded", "RTOS"],       roleAffinity: "Systems" },
   { id: "lmu",          name: "LMU Munich",    shortName: "LMU",          location: "Munich",    city: "munich",    continent: "europe",        lat: 48.14, lng:  11.58, candidates: 14, topSkills: ["Rust", "WebAssembly", "Systems"], roleAffinity: "Systems" },
-  { id: "mit",          name: "MIT",           shortName: "MIT",          location: "Boston",    city: "boston",    continent: "north-america", lat: 42.36, lng: -71.09, candidates: 28, topSkills: ["ML", "Systems", "Research"],     roleAffinity: "ML/AI · Research" },
-  { id: "harvard",      name: "Harvard",       shortName: "Harvard",      location: "Boston",    city: "boston",    continent: "north-america", lat: 42.37, lng: -71.12, candidates: 17, topSkills: ["CS Theory", "Python"],           roleAffinity: "Research" },
-  { id: "stanford",     name: "Stanford",      shortName: "Stanford",     location: "SF Bay",    city: "sf-bay",    continent: "north-america", lat: 37.43, lng: -122.17, candidates: 38, topSkills: ["ML", "LLMs", "TypeScript"],    roleAffinity: "ML/AI · Frontend" },
-  { id: "nus",          name: "NUS",           shortName: "NUS",          location: "Singapore", city: "singapore", continent: "asia",          lat:  1.30, lng: 103.77, candidates: 22, topSkills: ["Python", "ML", "Cloud"],         roleAffinity: "ML/AI · Backend" },
+  // North America
+  { id: "mit",          name: "MIT",                  shortName: "MIT",       location: "Boston",    city: "boston",    continent: "north-america", lat: 42.36, lng:  -71.09, candidates: 42, topSkills: ["ML", "Systems", "Research"],    roleAffinity: "ML/AI · Research" },
+  { id: "harvard",      name: "Harvard",              shortName: "Harvard",   location: "Boston",    city: "boston",    continent: "north-america", lat: 42.37, lng:  -71.12, candidates: 18, topSkills: ["CS Theory", "Python"],          roleAffinity: "Research" },
+  { id: "stanford",     name: "Stanford",             shortName: "Stanford",  location: "SF Bay",    city: "sf-bay",    continent: "north-america", lat: 37.43, lng: -122.17, candidates: 51, topSkills: ["ML", "LLMs", "TypeScript"],     roleAffinity: "ML/AI · Frontend" },
+  { id: "berkeley",     name: "UC Berkeley",          shortName: "Berkeley",  location: "SF Bay",    city: "sf-bay",    continent: "north-america", lat: 37.87, lng: -122.26, candidates: 33, topSkills: ["Systems", "Rust", "ML"],        roleAffinity: "Systems · ML/AI" },
+  { id: "columbia",     name: "Columbia",             shortName: "Columbia",  location: "New York",  city: "nyc",       continent: "north-america", lat: 40.81, lng:  -73.96, candidates: 26, topSkills: ["TypeScript", "Python", "Data"], roleAffinity: "Frontend · Data" },
+  { id: "nyu",          name: "NYU",                  shortName: "NYU",       location: "New York",  city: "nyc",       continent: "north-america", lat: 40.73, lng:  -73.99, candidates: 21, topSkills: ["React", "Node", "ML"],          roleAffinity: "Frontend · Backend" },
+  { id: "uoft",         name: "Univ. of Toronto",     shortName: "UofT",      location: "Toronto",   city: "toronto",   continent: "north-america", lat: 43.66, lng:  -79.40, candidates: 24, topSkills: ["ML", "Python", "PyTorch"],      roleAffinity: "ML/AI" },
+  { id: "uwaterloo",    name: "Univ. of Waterloo",    shortName: "Waterloo",  location: "Waterloo",  city: "waterloo",  continent: "north-america", lat: 43.47, lng:  -80.54, candidates: 29, topSkills: ["Go", "Systems", "DevOps"],      roleAffinity: "Backend · Systems" },
+  { id: "utaustin",     name: "UT Austin",            shortName: "UT Austin", location: "Austin",    city: "austin",    continent: "north-america", lat: 30.29, lng:  -97.74, candidates: 19, topSkills: ["C++", "Embedded", "Systems"],   roleAffinity: "Systems · Embedded" },
+  { id: "uw",           name: "Univ. of Washington",  shortName: "UW",        location: "Seattle",   city: "seattle",   continent: "north-america", lat: 47.66, lng: -122.31, candidates: 22, topSkills: ["Cloud", "Go", "ML"],            roleAffinity: "Backend · ML/AI" },
+  // Asia
+  { id: "nus",          name: "NUS",                  shortName: "NUS",       location: "Singapore", city: "singapore", continent: "asia", lat:  1.30, lng: 103.77, candidates: 22, topSkills: ["Python", "ML", "Cloud"],        roleAffinity: "ML/AI · Backend" },
+  { id: "ntu",          name: "NTU Singapore",        shortName: "NTU",       location: "Singapore", city: "singapore", continent: "asia", lat:  1.35, lng: 103.68, candidates: 15, topSkills: ["AI", "Robotics", "C++"],        roleAffinity: "Robotics · AI" },
+  { id: "utokyo",       name: "Univ. of Tokyo",       shortName: "UTokyo",    location: "Tokyo",     city: "tokyo",     continent: "asia", lat: 35.71, lng: 139.76, candidates: 27, topSkills: ["Robotics", "C++", "ML"],        roleAffinity: "Robotics · Systems" },
+  { id: "tokyotech",    name: "Tokyo Tech",           shortName: "TokyoTech", location: "Tokyo",     city: "tokyo",     continent: "asia", lat: 35.61, lng: 139.68, candidates: 16, topSkills: ["Systems", "C++", "Embedded"],   roleAffinity: "Systems" },
+  { id: "kaist",        name: "KAIST",                shortName: "KAIST",     location: "Seoul",     city: "seoul",     continent: "asia", lat: 37.46, lng: 126.95, candidates: 24, topSkills: ["ML", "AI", "Python"],           roleAffinity: "ML/AI" },
+  { id: "snu",          name: "Seoul National Univ.", shortName: "SNU",       location: "Seoul",     city: "seoul",     continent: "asia", lat: 37.46, lng: 126.95, candidates: 18, topSkills: ["Data", "Python", "ML"],         roleAffinity: "Data · ML/AI" },
+  { id: "iisc",         name: "IISc Bangalore",       shortName: "IISc",      location: "Bangalore", city: "bangalore", continent: "asia", lat: 13.02, lng:  77.57, candidates: 30, topSkills: ["ML", "Python", "Systems"],     roleAffinity: "ML/AI · Backend" },
+  { id: "iitb",         name: "IIT Bombay",           shortName: "IITB",      location: "Bangalore", city: "bangalore", continent: "asia", lat: 13.02, lng:  77.57, candidates: 21, topSkills: ["C++", "Algorithms", "Python"], roleAffinity: "Systems · Backend" },
+  { id: "tsinghua",     name: "Tsinghua University",  shortName: "Tsinghua",  location: "Beijing",   city: "beijing",   continent: "asia", lat: 40.00, lng: 116.33, candidates: 26, topSkills: ["ML", "Systems", "C++"],        roleAffinity: "ML/AI · Systems" },
+  { id: "sjtu",         name: "Shanghai Jiao Tong",   shortName: "SJTU",      location: "Shanghai",  city: "shanghai",  continent: "asia", lat: 31.03, lng: 121.43, candidates: 19, topSkills: ["Systems", "Cloud", "Go"],      roleAffinity: "Backend · Cloud" },
 ];
 
 export const studentCommunities: StudentCommunity[] = [
+  // Europe
   { id: "tum-ai",          name: "TUM AI Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    continent: "europe",        members: 280, topSkills: ["Python", "LLMs"] },
   { id: "tum-ml",          name: "TUM ML Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    continent: "europe",        members: 210, topSkills: ["PyTorch", "ML"] },
   { id: "tum-robotics",    name: "TUM Robotics Club",               type: "Robotics",         university: "TU Munich",     city: "munich",    continent: "europe",        members: 145, topSkills: ["C++", "ROS"] },
@@ -321,9 +341,21 @@ export const studentCommunities: StudentCommunity[] = [
   { id: "tud-robotics",    name: "TU Darmstadt Robotics Club",      type: "Robotics",         university: "TU Darmstadt",  city: "darmstadt", continent: "europe",        members: 110, topSkills: ["C++", "Embedded"] },
   { id: "stuttgart-cloud", name: "Uni Stuttgart Cloud Native Club", type: "Cloud/DevOps",     university: "Uni Stuttgart", city: "stuttgart", continent: "europe",        members:  75, topSkills: ["Go", "Kubernetes"] },
   { id: "lmu-oss",         name: "LMU Open Source Lab",             type: "Open Source",      university: "LMU Munich",    city: "munich",    continent: "europe",        members:  85, topSkills: ["Rust", "WebAssembly"] },
-  { id: "mit-ai",          name: "MIT AI Club",                     type: "AI/ML",            university: "MIT",           city: "boston",    continent: "north-america", members: 220, topSkills: ["ML", "PyTorch"] },
-  { id: "stanford-ml",     name: "Stanford ML Group",               type: "AI/ML",            university: "Stanford",      city: "sf-bay",    continent: "north-america", members: 310, topSkills: ["LLMs", "Python"] },
-  { id: "nus-hackers",     name: "NUS Hackers",                     type: "Open Source",      university: "NUS",           city: "singapore", continent: "asia",          members: 180, topSkills: ["Python", "Cloud"] },
+  // North America
+  { id: "mit-ai",          name: "MIT AI Club",                     type: "AI/ML",            university: "MIT",                  city: "boston",   continent: "north-america", members: 220, topSkills: ["ML", "PyTorch"] },
+  { id: "harvard-cs",      name: "Harvard CS50 Community",          type: "Community",        university: "Harvard",              city: "boston",   continent: "north-america", members: 180, topSkills: ["Python", "C"] },
+  { id: "stanford-ml",     name: "Stanford ML Group",               type: "AI/ML",            university: "Stanford",             city: "sf-bay",   continent: "north-america", members: 310, topSkills: ["LLMs", "Python"] },
+  { id: "berkeley-rise",   name: "Berkeley RISE Lab",               type: "Data",             university: "UC Berkeley",          city: "sf-bay",   continent: "north-america", members: 140, topSkills: ["Spark", "Ray"] },
+  { id: "columbia-data",   name: "Columbia Data Science Society",   type: "Data",             university: "Columbia",             city: "nyc",      continent: "north-america", members: 160, topSkills: ["Python", "SQL"] },
+  { id: "uoft-ai",         name: "UofT AI",                         type: "AI/ML",            university: "Univ. of Toronto",     city: "toronto",  continent: "north-america", members: 230, topSkills: ["PyTorch", "ML"] },
+  { id: "waterloo-hack",   name: "Hack the North",                  type: "Entrepreneurship", university: "Univ. of Waterloo",    city: "waterloo", continent: "north-america", members: 410, topSkills: ["Full-Stack", "Go"] },
+  { id: "uw-systems",      name: "UW Systems Lab",                  type: "Cloud/DevOps",     university: "Univ. of Washington",  city: "seattle",  continent: "north-america", members:  90, topSkills: ["Cloud", "Go"] },
+  // Asia
+  { id: "nus-hackers",     name: "NUS Hackers",                     type: "Open Source",      university: "NUS",                  city: "singapore", continent: "asia", members: 180, topSkills: ["Python", "Cloud"] },
+  { id: "utokyo-robo",     name: "UTokyo Robotics Lab",             type: "Robotics",         university: "Univ. of Tokyo",       city: "tokyo",     continent: "asia", members: 130, topSkills: ["C++", "ROS"] },
+  { id: "kaist-ai",        name: "KAIST AI Society",                type: "AI/ML",            university: "KAIST",                city: "seoul",     continent: "asia", members: 200, topSkills: ["ML", "Python"] },
+  { id: "iisc-ml",         name: "IISc Machine Learning Group",     type: "AI/ML",            university: "IISc Bangalore",       city: "bangalore", continent: "asia", members: 250, topSkills: ["ML", "Python"] },
+  { id: "tsinghua-sys",    name: "Tsinghua Systems Group",          type: "Open Source",      university: "Tsinghua University",  city: "beijing",   continent: "asia", members: 170, topSkills: ["Systems", "C++"] },
 ];
 
 export interface CityMarker {
@@ -335,6 +367,7 @@ export interface CityMarker {
 }
 
 export const cityMarkers: CityMarker[] = [
+  // Europe
   { id: "munich",    name: "Munich",    continent: "europe",        lat: 48.14, lng:  11.58 },
   { id: "zurich",    name: "Zürich",    continent: "europe",        lat: 47.38, lng:   8.54 },
   { id: "berlin",    name: "Berlin",    continent: "europe",        lat: 52.52, lng:  13.41 },
@@ -342,7 +375,20 @@ export const cityMarkers: CityMarker[] = [
   { id: "aachen",    name: "Aachen",    continent: "europe",        lat: 50.78, lng:   6.08 },
   { id: "stuttgart", name: "Stuttgart", continent: "europe",        lat: 48.78, lng:   9.18 },
   { id: "darmstadt", name: "Darmstadt", continent: "europe",        lat: 49.88, lng:   8.66 },
-  { id: "boston",    name: "Boston",    continent: "north-america", lat: 42.36, lng: -71.09 },
-  { id: "sf-bay",    name: "SF Bay",    continent: "north-america", lat: 37.43, lng: -122.17 },
+  // North America
+  { id: "boston",    name: "Boston",    continent: "north-america", lat: 42.36, lng:  -71.09 },
+  { id: "sf-bay",    name: "SF Bay",    continent: "north-america", lat: 37.77, lng: -122.42 },
+  { id: "nyc",       name: "New York",  continent: "north-america", lat: 40.73, lng:  -73.99 },
+  { id: "toronto",   name: "Toronto",   continent: "north-america", lat: 43.66, lng:  -79.40 },
+  { id: "waterloo",  name: "Waterloo",  continent: "north-america", lat: 43.47, lng:  -80.54 },
+  { id: "austin",    name: "Austin",    continent: "north-america", lat: 30.29, lng:  -97.74 },
+  { id: "seattle",   name: "Seattle",   continent: "north-america", lat: 47.66, lng: -122.31 },
+  // Asia
   { id: "singapore", name: "Singapore", continent: "asia",          lat:  1.30, lng: 103.77 },
+  { id: "tokyo",     name: "Tokyo",     continent: "asia",          lat: 35.68, lng: 139.76 },
+  { id: "seoul",     name: "Seoul",     continent: "asia",          lat: 37.55, lng: 126.99 },
+  { id: "bangalore", name: "Bangalore", continent: "asia",          lat: 12.97, lng:  77.59 },
+  { id: "beijing",   name: "Beijing",   continent: "asia",          lat: 39.90, lng: 116.40 },
+  { id: "shanghai",  name: "Shanghai",  continent: "asia",          lat: 31.23, lng: 121.47 },
 ];
+
