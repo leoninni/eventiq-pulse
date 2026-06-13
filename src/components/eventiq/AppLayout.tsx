@@ -4,6 +4,7 @@ import { Sidebar } from "./Sidebar";
 import { Overview } from "./views/Overview";
 import { Events } from "./views/Events";
 import { Candidates } from "./views/Candidates";
+import { Ecosystem } from "./views/Ecosystem";
 import { Reports } from "./views/Reports";
 import { Recommendations } from "./views/Recommendations";
 
@@ -16,6 +17,7 @@ function Main() {
         {view === "overview" && <Overview />}
         {view === "events" && <Events />}
         {view === "candidates" && <Candidates />}
+        {view === "ecosystem" && <Ecosystem />}
         {view === "reports" && <Reports />}
         {view === "recommendations" && <Recommendations />}
       </main>

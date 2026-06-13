@@ -1,7 +1,7 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
 import { candidates as initialCandidates, type Candidate, type Status } from "./mockData";
 
-type View = "overview" | "events" | "candidates" | "reports" | "recommendations";
+type View = "overview" | "events" | "candidates" | "ecosystem" | "reports" | "recommendations";
 
 interface StoreCtx {
   view: View;
