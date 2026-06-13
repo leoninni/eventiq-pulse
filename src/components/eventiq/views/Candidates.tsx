@@ -170,10 +170,18 @@ export function Candidates() {
               </div>
             </div>
 
-            <div className="flex gap-1 flex-wrap mb-5">
-              {open.skills.map((s) => (
-                <span key={s} className="text-xs px-2 py-0.5 rounded border border-primary/30 text-primary">{s}</span>
-              ))}
+            <div className="flex gap-1.5 flex-wrap mb-5">
+              {open.skills.map((s) => {
+                const proof = open.skillProofs?.find((p) => p.skill === s);
+                return proof ? (
+                  <div key={s} className="flex flex-col px-2 py-1 rounded border border-[#B8E0C2] bg-[#F0F7F2]">
+                    <span className="text-xs font-medium text-[#1F4A2E]">{s}</span>
+                    <span className="text-[10px] text-[#2F7A47] mt-0.5">{proof.source}</span>
+                  </div>
+                ) : (
+                  <span key={s} className="text-xs px-2 py-0.5 rounded border border-primary/30 text-primary">{s}</span>
+                );
+              })}
             </div>
 
             <div className="mb-5">
