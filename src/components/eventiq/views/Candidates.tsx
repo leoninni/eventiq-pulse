@@ -187,6 +187,20 @@ export function Candidates() {
               })}
             </div>
 
+            {open.communityRoles && open.communityRoles.length > 0 && (
+              <div className="mb-5">
+                <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Community</div>
+                <div className="flex gap-1.5 flex-wrap items-start">
+                  {open.communityRoles.map((role) => (
+                    <div key={role} className="flex items-center gap-1.5 text-xs px-2 py-0.5 rounded border border-primary/20 bg-secondary/40 text-muted-foreground">
+                      <Users className="w-3 h-3 shrink-0" />
+                      {role}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
             <div className="mb-5">
               <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Role Match</div>
               <div className="space-y-1.5">
