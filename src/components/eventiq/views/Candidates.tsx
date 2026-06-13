@@ -3,7 +3,7 @@ import { events, openRoles, type Status, type Candidate } from "@/lib/eventiq/mo
 import { useStore } from "@/lib/eventiq/store";
 import { StatusBadge } from "../StatusBadge";
 import { SlidePanel } from "../SlidePanel";
-import { Search, Mail, PlusCircle, Check } from "lucide-react";
+import { Search, Mail, PlusCircle, Check, ShieldCheck, Users } from "lucide-react";
 import { toast } from "sonner";
 import { matchScore } from "@/lib/utils";
 
@@ -127,6 +127,14 @@ export function Candidates() {
                     </div>
                   ) : null;
                 })()}
+                {c.skillProofs && c.skillProofs.length > 0 && (
+                  <div className="flex items-center gap-1 bg-[#F0F7F2] border border-[#B8E0C2] rounded px-1.5 py-0.5">
+                    <ShieldCheck className="w-3 h-3 text-[#2F7A47] shrink-0" />
+                    <span className="text-[10px] font-medium text-[#1F4A2E]">
+                      Verified · {c.skillProofs.length} skill{c.skillProofs.length > 1 ? "s" : ""}
+                    </span>
+                  </div>
+                )}
                 <StatusBadge status={c.status} />
                 <div className="text-[10px] text-muted-foreground">{ev?.name}</div>
                 <button
