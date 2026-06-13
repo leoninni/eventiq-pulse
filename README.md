@@ -1,17 +1,22 @@
 # EventIQ Pulse
 
-**EventIQ Pulse** is a recruiter SaaS dashboard prototype for tracking candidates sourced from hackathons and student tech events. It provides a unified view of your sponsorship pipeline — from event ROI and candidate profiles to AI-powered recommendations for future events.
+**EventIQ Pulse** is a recruiter intelligence dashboard for sourcing early technical talent from university hackathons and student events — focused on the DACH region. It tracks candidates from event opt-in to hire, shows which events produce qualified candidates at what cost, and surfaces the student ecosystem (universities, communities) that companies without insider access can't see.
 
-Built as a fully self-contained frontend prototype with zero backend dependencies. All data is hardcoded mock data, making it ideal for design reviews and stakeholder demos.
+Built as a fully self-contained frontend prototype with zero backend dependencies. All data is hardcoded mock data, making it ideal for VC demos and recruiter walkthroughs.
 
 ---
 
 ## Features
 
-- **Overview** — KPI cards, bar chart of candidates by event, pipeline status donut chart, and a live activity feed
+- **Overview** — KPI cards and a hiring conversion funnel (Attendees → Opt-ins → Contacted → In Pipeline → Interviewed → Offers) showing full-funnel drop-off at a glance
 - **Events** — Sponsorship table with opt-in rates, cost-per-lead metrics, and per-event candidate breakdowns
-- **Candidates** — Searchable, filterable candidate list with skill tags, university info, status management, and email drafting
-- **Reports** — Detailed post-event reports with executive summaries, pipeline charts, and candidate tables
+- **Candidates** — Searchable, filterable candidate list with:
+  - **Match score badges** — each candidate ranked against open roles (ML/AI Working Student, Backend Intern, etc.)
+  - **Verified talent profiles** — skill tags annotated with proof sources (e.g. "Python · 1st place HackTUM 2025") and student community roles (e.g. "TUM Robotics Club Lead")
+  - **ATS integration** — 3-step sync modal to push candidates to Greenhouse, Personio, Lever, or Ashby
+  - Candidate detail drawer with role match breakdown, recruiter notes, and follow-up email drafting
+- **Ecosystem** — Interactive WebGL globe (powered by [cobe](https://github.com/shuding/cobe)) centered on Europe, with continent → city drill-down showing university talent pools and student communities per city
+- **Reports** — Cross-event ROI comparison table (opt-ins, pipeline, hires, cost-per-hire, performance bars) plus detailed per-event reports with pipeline breakdown and cost analysis
 - **Recommendations** — AI-generated event suggestions ranked by predicted ROI, with shortlisting support
 
 ---
@@ -20,21 +25,21 @@ Built as a fully self-contained frontend prototype with zero backend dependencie
 
 | Layer | Technology |
 |---|---|
-| Framework | [TanStack Start](https://tanstack.com/start) (React 19 meta-framework) |
+| Framework | [TanStack Start](https://tanstack.com/start) (React meta-framework) |
 | Routing | TanStack React Router (file-based) |
 | UI Components | [shadcn/ui](https://ui.shadcn.com/) on Radix UI primitives |
 | Charts | [Recharts](https://recharts.org/) |
+| Globe | [cobe](https://cobe.vercel.app/) — 5KB WebGL globe |
 | Styling | [Tailwind CSS](https://tailwindcss.com/) v4 |
-| Forms | React Hook Form + Zod |
 | Icons | Lucide React |
-| Build tool | Vite 7 + Nitro |
+| Build tool | Vite + Bun |
 | Language | TypeScript 5 |
 
 ---
 
 ## Local Setup
 
-**Prerequisites:** Node.js v18+ (v22 recommended), [Bun](https://bun.sh/) (recommended) or npm
+**Prerequisites:** [Bun](https://bun.sh/) (recommended) or Node.js v18+
 
 ```bash
 # 1. Clone the repository
@@ -42,10 +47,10 @@ git clone https://github.com/leoninni/eventiq-pulse.git
 cd eventiq-pulse
 
 # 2. Install dependencies
-bun install        # or: npm install
+bun install
 
 # 3. Start the development server
-bun run dev        # or: npm run dev
+bun run dev
 ```
 
 The app will be available at **http://localhost:5173**
@@ -53,17 +58,9 @@ The app will be available at **http://localhost:5173**
 ### Other commands
 
 ```bash
-# Production build
-bun run build
-
-# Preview the production build locally
-bun run preview
-
-# Lint the codebase
-bun run lint
-
-# Format code with Prettier
-bun run format
+bun run build    # Production build
+bun run preview  # Preview production build locally
+bun run lint     # Lint the codebase
 ```
 
 ---
@@ -81,18 +78,20 @@ src/
 │   │   ├── Sidebar.tsx      # Left navigation
 │   │   ├── SlidePanel.tsx   # Reusable slide-in drawer
 │   │   ├── StatusBadge.tsx  # Color-coded status pill
-│   │   └── views/           # One file per dashboard view
-│   │       ├── Overview.tsx
-│   │       ├── Events.tsx
-│   │       ├── Candidates.tsx
-│   │       ├── Reports.tsx
+│   │   └── views/
+│   │       ├── Overview.tsx       # Funnel + KPI cards
+│   │       ├── Events.tsx         # Event sponsorship table
+│   │       ├── Candidates.tsx     # Candidate list + drawer + ATS modal
+│   │       ├── Ecosystem.tsx      # Interactive globe
+│   │       ├── Reports.tsx        # ROI comparison + per-event reports
 │   │       └── Recommendations.tsx
-│   └── ui/                  # shadcn/Radix UI primitives (45+ components)
+│   └── ui/                  # shadcn/Radix UI primitives
 ├── lib/
 │   ├── eventiq/
-│   │   ├── mockData.ts      # All mock events, candidates, recommendations
-│   │   └── store.tsx        # React Context store (view state, filters, shortlist)
-│   └── utils.ts
+│   │   ├── mockData.ts      # All mock data — events, candidates, universities,
+│   │   │                    # communities, city markers, continents, funnel data
+│   │   └── store.tsx        # React Context store (view, filters, ATS sync state)
+│   └── utils.ts             # matchScore() and helpers
 └── styles.css               # Tailwind config + design tokens
 ```
 
@@ -100,54 +99,43 @@ src/
 
 ## Design System
 
-The UI uses a light, nature-inspired design language built around sage green tones:
+Nature-inspired, sage green design language:
 
 | Token | Value |
 |---|---|
 | Background | `#EEF3EE` (sage green-tinted) |
 | Card | `#FFFFFF` |
-| Border | `#E3E8E3` |
 | Primary | `#0F1410` (near-black) |
-| Accent / Success / Cyan | `#2F7A47` (forest green) |
-| Mint | `#B8E0C2` (soft green, used for active states and highlights) |
+| Forest green | `#2F7A47` (accent, verified states) |
+| Mint | `#B8E0C2` / `#DCEFE2` (highlights, badges) |
 | Warning | `#B07A1F` |
-| Danger | `#C2410C` |
 | Body font | Inter |
-| Display font | Instrument Serif / DM Serif Display (used for headings and KPI numbers) |
+| Display font | Instrument Serif / DM Serif Display |
 
-A `highlight-marker` CSS utility applies a translucent mint background to inline text — used in the Overview headline.
-
-Candidate pipeline statuses are color-coded consistently across every view:
+Candidate status colors (consistent across all views):
 
 | Status | Background | Dot |
 |---|---|---|
-| Interested | Sage `#DCEFE2` | `#6BAE82` |
-| In Review | Amber `#F5E7CC` | `#C99A3E` |
-| Interviewed | Slate `#E2E8F0` | `#64748B` |
-| Offer Extended | Mint `#B8E0C2` | `#2F7A47` |
-| Rejected | Terracotta `#EFE3DC` | `#B07A5A` |
-
----
-
-## State Management
-
-The app uses a lightweight React Context + hooks pattern (`src/lib/eventiq/store.tsx`) with no external state library. The store holds:
-
-- Active view
-- Candidate list (statuses are mutable — changing one in the detail drawer updates the Overview donut chart instantly)
-- Active event filter
-- Shortlisted recommendation IDs
+| Interested | `#DCEFE2` | `#6BAE82` |
+| In Review | `#F5E7CC` | `#C99A3E` |
+| Interviewed | `#E2E8F0` | `#64748B` |
+| Offer Extended | `#B8E0C2` | `#2F7A47` |
+| Rejected | `#EFE3DC` | `#B07A5A` |
 
 ---
 
 ## Mock Data
 
-`src/lib/eventiq/mockData.ts` contains:
+`src/lib/eventiq/mockData.ts` contains everything:
 
-- **5 events** — HackTUM, START Hack, CODE Berlin, ETH Build, KIT Hackathon
-- **12 candidates** — with university, skills, project title, project description, event ID, and pipeline status
-- **3 AI recommendations** — with predicted opt-ins, pipeline counts, estimated cost, and match score
-- **5 activity feed items**
+- **5 events** — HackTUM 2025, START Hack 2025, CODE Berlin, ETH Build Night, KIT Innovation Hack — each with sponsorship, opt-ins, pipeline, hires, and cost metrics
+- **12 candidates** — with skills, verified skill proofs, community roles, project descriptions, match scores, and ATS sync state
+- **4 open roles** — ML/AI Working Student, Backend Engineering Intern, Systems Engineering Intern, Frontend Working Student
+- **8 university profiles** — TUM, ETH, TU Berlin, KIT, RWTH, Uni Stuttgart, TU Darmstadt, LMU — with lat/lng coordinates, candidate counts, and role affinities
+- **10 student communities** — TUM AI Society, ETH Robotics Society, KIT Data Science Club, etc.
+- **7 city markers + 3 continent markers** — powering the Ecosystem globe
+- **3 event recommendations** — with predicted opt-ins, pipeline counts, and match scores
+- **Hiring funnel data** — 6-stage conversion (1,760 attendees → 3 offers)
 
 To customize the prototype, edit this file directly. No API calls, no environment variables, no database required.
 
@@ -155,6 +143,6 @@ To customize the prototype, edit this file directly. No API calls, no environmen
 
 ## Deployment
 
-Since this is a pure frontend prototype, it can be deployed to any static hosting provider after running `npm run build`. The output goes to `dist/`.
+Pure frontend — deploy after `bun run build`. Output goes to `dist/`.
 
-Suitable hosts: Vercel, Netlify, Cloudflare Pages, GitHub Pages.
+Works on: Vercel, Netlify, Cloudflare Pages, GitHub Pages.
