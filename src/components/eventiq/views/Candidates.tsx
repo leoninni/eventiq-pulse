@@ -1,21 +1,49 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import { events, openRoles, type Status, type Candidate } from "@/lib/eventiq/mockData";
 import { useStore } from "@/lib/eventiq/store";
 import { StatusBadge } from "../StatusBadge";
 import { SlidePanel } from "../SlidePanel";
-import { Search, Mail, PlusCircle } from "lucide-react";
+import { Search, Mail, PlusCircle, Check } from "lucide-react";
 import { toast } from "sonner";
 import { matchScore } from "@/lib/utils";
 
 const statuses: Status[] = ["Interested", "In Review", "Interviewed", "Offer Extended", "Rejected"];
 
+const ATS_OPTIONS = [
+  { name: "Greenhouse", color: "#23A47C", initial: "G" },
+  { name: "Personio",   color: "#1A56DB", initial: "P" },
+  { name: "Lever",      color: "#5865F2", initial: "L" },
+  { name: "Ashby",      color: "#FF6B35", initial: "A" },
+] as const;
+
 export function Candidates() {
-  const { candidates, setStatus, eventFilter, setEventFilter } = useStore();
+  const { candidates, setStatus, eventFilter, setEventFilter, atsSync, syncToAts } = useStore();
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [query, setQuery] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
   const [emailFor, setEmailFor] = useState<Candidate | null>(null);
   const [notes, setNotes] = useState<Record<string, string>>({});
+  const [atsModalFor, setAtsModalFor] = useState<Candidate | null>(null);
+  const [selectedAts, setSelectedAts] = useState<string | null>(null);
+  const [atsStep, setAtsStep] = useState<1 | 2 | 3>(1);
+
+  useEffect(() => {
+    if (atsStep !== 2) return;
+    const t = setTimeout(() => setAtsStep(3), 1200);
+    return () => clearTimeout(t);
+  }, [atsStep]);
+
+  function openAtsModal(candidate: Candidate) {
+    setAtsModalFor(candidate);
+    setSelectedAts(null);
+    setAtsStep(1);
+  }
+
+  function closeAtsModal() {
+    setAtsModalFor(null);
+    setSelectedAts(null);
+    setAtsStep(1);
+  }
 
   const open = candidates.find((c) => c.id === openId) || null;
   const openEvent = open ? events.find((e) => e.id === open.eventId) : null;
@@ -107,6 +135,11 @@ export function Candidates() {
                 >
                   View Profile
                 </button>
+                {atsSync[c.id] && (
+                  <div className="text-[10px] px-1.5 py-0.5 rounded border border-[#B8E0C2] bg-[#DCEFE2] text-[#2F7A47] font-medium">
+                    Synced · {atsSync[c.id]}
+                  </div>
+                )}
               </div>
             </div>
           );
@@ -193,12 +226,21 @@ export function Candidates() {
               >
                 <Mail className="w-3.5 h-3.5" /> Send Follow-up Email
               </button>
-              <button
-                onClick={() => toast.info("ATS integration coming soon")}
-                className="px-3 py-2 text-sm rounded-md border border-border hover:bg-secondary transition-colors inline-flex items-center gap-1.5"
-              >
-                <PlusCircle className="w-3.5 h-3.5" /> Add to ATS
-              </button>
+              {atsSync[open.id] ? (
+                <button
+                  disabled
+                  className="px-3 py-2 text-sm rounded-md border border-[#B8E0C2] bg-[#DCEFE2] text-[#2F7A47] inline-flex items-center gap-1.5 cursor-default"
+                >
+                  <Check className="w-3.5 h-3.5" /> Synced · {atsSync[open.id]}
+                </button>
+              ) : (
+                <button
+                  onClick={() => openAtsModal(open)}
+                  className="px-3 py-2 text-sm rounded-md border border-border hover:bg-secondary transition-colors inline-flex items-center gap-1.5"
+                >
+                  <PlusCircle className="w-3.5 h-3.5" /> Add to ATS
+                </button>
+              )}
             </div>
 
             <div>
@@ -260,6 +302,96 @@ export function Candidates() {
                 Send
               </button>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ATS Modal */}
+      {atsModalFor && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
+          <div onClick={closeAtsModal} className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div className="relative bg-card border border-border rounded-lg w-full max-w-sm p-6 animate-in fade-in zoom-in-95 duration-200">
+
+            {atsStep === 1 && (
+              <>
+                <h3 className="text-base font-semibold mb-4">Add to ATS</h3>
+                <div className="space-y-2 mb-5">
+                  {ATS_OPTIONS.map((ats) => (
+                    <button
+                      key={ats.name}
+                      onClick={() => setSelectedAts(ats.name)}
+                      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg border transition-colors text-left ${
+                        selectedAts === ats.name
+                          ? "border-[#2F7A47] bg-[#F5FBF7]"
+                          : "border-border hover:bg-secondary"
+                      }`}
+                    >
+                      <div
+                        className="w-7 h-7 rounded-md flex items-center justify-center text-[11px] font-bold text-white shrink-0"
+                        style={{ background: ats.color }}
+                      >
+                        {ats.initial}
+                      </div>
+                      <span className="text-sm font-medium">{ats.name}</span>
+                      {selectedAts === ats.name && (
+                        <Check className="w-4 h-4 text-[#2F7A47] ml-auto" />
+                      )}
+                    </button>
+                  ))}
+                </div>
+                <div className="flex gap-2">
+                  <button
+                    onClick={closeAtsModal}
+                    className="flex-1 px-3 py-2 text-sm rounded-md border border-border hover:bg-secondary transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    disabled={!selectedAts}
+                    onClick={() => setAtsStep(2)}
+                    className="flex-1 px-3 py-2 text-sm rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+                  >
+                    {selectedAts ? `Sync to ${selectedAts}` : "Select an ATS"}
+                  </button>
+                </div>
+              </>
+            )}
+
+            {atsStep === 2 && (
+              <div className="flex flex-col items-center justify-center py-8 gap-4">
+                <div className="w-9 h-9 rounded-full border-[3px] border-[#B8E0C2] border-t-[#2F7A47] animate-spin" />
+                <p className="text-sm text-muted-foreground text-center">
+                  Syncing {atsModalFor.name} to {selectedAts}...
+                </p>
+              </div>
+            )}
+
+            {atsStep === 3 && (
+              <>
+                <div className="flex flex-col items-center py-6 gap-3">
+                  <div className="w-12 h-12 rounded-full bg-[#DCEFE2] flex items-center justify-center">
+                    <Check className="w-6 h-6 text-[#2F7A47]" />
+                  </div>
+                  <div className="text-base font-semibold">Synced to {selectedAts}</div>
+                  <p className="text-sm text-muted-foreground text-center">
+                    {atsModalFor.name} has been added as a candidate in your {selectedAts} pipeline.
+                  </p>
+                  <div className="mt-1 px-2.5 py-1 rounded border border-[#B8E0C2] bg-[#DCEFE2] text-[10px] font-medium text-[#2F7A47]">
+                    Synced · {selectedAts}
+                  </div>
+                </div>
+                <button
+                  onClick={() => {
+                    syncToAts(atsModalFor.id, selectedAts!);
+                    closeAtsModal();
+                  }}
+                  className="w-full px-3 py-2 text-sm rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                >
+                  Done
+                </button>
+              </>
+            )}
+
           </div>
         </div>
       )}
