@@ -103,11 +103,11 @@ export function Ecosystem() {
   useEffect(() => {
     if (selectedContinentId === null) {
       targetRef.current = { phi: DEFAULT_PHI, theta: DEFAULT_THETA, zoom: DEFAULT_ZOOM };
-      autoRotateRef.current = true;
+      autoRotateRef.current = false;
     } else {
       const c = continents.find((x) => x.id === selectedContinentId)!;
       targetRef.current = {
-        phi:   -(c.lng * Math.PI) / 180,
+        phi:   (c.lng * Math.PI) / 180,
         theta: (c.lat * Math.PI) / 180,
         zoom:  c.zoom,
       };
