@@ -57,7 +57,7 @@ export const candidates: Candidate[] = [
       { skill: "C++",    source: "ETH Build Night systems track winner" },
       { skill: "CUDA",   source: "ETH HPC Seminar — top project" },
     ],
-    communityRoles: ["TUM Robotics Club", "ETH Women in Tech"],
+    communityRoles: ["ETH Robotics Society", "ETH Women in Tech"],
   },
   {
     id: "c3", name: "Jonas W.", university: "TU Berlin",
@@ -148,9 +148,9 @@ export const candidates: Candidate[] = [
     status: "Interested", eventId: "codeberlin",
     skillProofs: [
       { skill: "C++",      source: "CODE Berlin embedded track — 1st place" },
-      { skill: "Embedded", source: "TUM Robotics team technical lead" },
+      { skill: "Embedded", source: "TU Darmstadt Robotics team technical lead" },
     ],
-    communityRoles: ["TUM Robotics Club Lead", "FIRST Robotics Germany"],
+    communityRoles: ["TU Darmstadt Robotics Club Lead", "FIRST Robotics Germany"],
   },
   {
     id: "c12", name: "Mia T.", university: "Uni Hamburg",
