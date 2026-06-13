@@ -109,3 +109,32 @@ export const statusColors: Record<Status, { bg: string; text: string; dot: strin
   "Offer Extended": { bg: "bg-[#B8E0C2]", text: "text-[#1F4A2E]", dot: "#2F7A47" },
   "Rejected": { bg: "bg-[#EFE3DC]", text: "text-[#7A3B1F]", dot: "#B07A5A" },
 };
+
+export interface OpenRole {
+  id: string;
+  title: string;
+  skills: string[];
+}
+
+export const openRoles: OpenRole[] = [
+  { id: "role-ml", title: "ML/AI Working Student", skills: ["Python", "ML", "PyTorch", "LLMs"] },
+  { id: "role-backend", title: "Backend Engineering Intern", skills: ["Go", "Java", "Node", "Microservices", "Spark"] },
+  { id: "role-systems", title: "Systems Engineering Intern", skills: ["C++", "CUDA", "Rust", "Embedded", "RTOS"] },
+  { id: "role-frontend", title: "Frontend Working Student", skills: ["React", "TypeScript", "GraphQL"] },
+];
+
+export interface FunnelStage {
+  label: string;
+  value: number;
+  pct?: string;
+  widthPct: number;
+}
+
+export const funnelData: FunnelStage[] = [
+  { label: "Attendees",   value: 1760, widthPct: 100 },
+  { label: "Opt-ins",     value: 247,  pct: "14%", widthPct: 70 },
+  { label: "Contacted",   value: 178,  pct: "72%", widthPct: 50 },
+  { label: "In Pipeline", value: 34,   pct: "19%", widthPct: 20 },
+  { label: "Interviewed", value: 12,   pct: "35%", widthPct: 10 },
+  { label: "Offers",      value: 3,    pct: "25%", widthPct: 5  },
+];
