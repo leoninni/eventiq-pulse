@@ -28,8 +28,8 @@ const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
   "Community":        "bg-secondary text-muted-foreground",
 };
 
-// cobe convention: phi = -lng centers a point horizontally.
-//   x1 = x0 cosφ + z0 sinφ ; z1 = -x0 sinφ + z0 cosφ
+// cobe convention: the front-center longitude equals phi (in radians).
+// Rotate world point by -phi about Y axis: effective_lng = lng - phi.
 function projectGlobe(
   lat: number,
   lng: number,
@@ -44,8 +44,8 @@ function projectGlobe(
   const y0 = Math.sin(latR);
   const z0 = Math.cos(latR) * Math.cos(lngR);
   const cP = Math.cos(phi), sP = Math.sin(phi);
-  const x1 =  x0 * cP + z0 * sP;
-  const z1 = -x0 * sP + z0 * cP;
+  const x1 = x0 * cP - z0 * sP;
+  const z1 = x0 * sP + z0 * cP;
   const y1 = y0;
   const cT = Math.cos(theta), sT = Math.sin(theta);
   const y2 = y1 * cT - z1 * sT;
