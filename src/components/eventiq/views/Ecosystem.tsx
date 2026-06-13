@@ -8,6 +8,9 @@ import {
 } from "@/lib/eventiq/mockData";
 
 const GLOBE_SIZE = 580;
+const ZOOM_MIN = 0.6;
+const ZOOM_MAX = 4;
+const THETA_LIMIT = Math.PI / 2 - 0.05;
 
 const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
   "AI/ML":            "bg-[#DCEFE2] text-[#1F4A2E]",
@@ -24,7 +27,8 @@ function projectToScreen(
   lng: number,
   phi: number,
   theta: number,
-  size: number
+  size: number,
+  zoom: number
 ): { x: number; y: number; visible: boolean } {
   const latR = (lat * Math.PI) / 180;
   const lngR = (lng * Math.PI) / 180;
@@ -45,7 +49,7 @@ function projectToScreen(
   const y2 =  y1 * cosTheta - z1 * sinTheta;
   const z2 =  y1 * sinTheta + z1 * cosTheta;
 
-  const radius = size * 0.42;
+  const radius = size * 0.42 * zoom;
   return {
     x: size / 2 + x2 * radius,
     y: size / 2 - y2 * radius,
@@ -59,10 +63,12 @@ export function Ecosystem() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const phiRef    = useRef(0.25);
   const thetaRef  = useRef(0.25);
+  const zoomRef   = useRef(1);
   const isDragging   = useRef(false);
-  const pointerStart = useRef<{ x: number; phi: number } | null>(null);
+  const pointerStart = useRef<{ x: number; y: number; phi: number; theta: number } | null>(null);
   const [overlayPositions, setOverlayPositions] = useState<OverlayPos[]>([]);
-  const [selectedCityId, setSelectedCityId]     = useState<string | null>(null);
+  const [zoom, setZoom] = useState(1);
+  const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -87,12 +93,11 @@ export function Ecosystem() {
 
     let rafId: number;
     function frame() {
-      if (!isDragging.current) phiRef.current += 0.003;
       globe.update({ phi: phiRef.current, theta: thetaRef.current });
       setOverlayPositions(
         cityMarkers.map((c) => ({
           id: c.id,
-          ...projectToScreen(c.lat, c.lng, phiRef.current, thetaRef.current, GLOBE_SIZE),
+          ...projectToScreen(c.lat, c.lng, phiRef.current, thetaRef.current, GLOBE_SIZE, zoomRef.current),
         }))
       );
       rafId = requestAnimationFrame(frame);
@@ -107,24 +112,60 @@ export function Ecosystem() {
 
   function onPointerDown(e: React.PointerEvent) {
     isDragging.current = true;
-    pointerStart.current = { x: e.clientX, phi: phiRef.current };
+    pointerStart.current = {
+      x: e.clientX,
+      y: e.clientY,
+      phi: phiRef.current,
+      theta: thetaRef.current,
+    };
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }
   function onPointerMove(e: React.PointerEvent) {
     if (!isDragging.current || !pointerStart.current) return;
-    phiRef.current =
-      pointerStart.current.phi - ((e.clientX - pointerStart.current.x) / GLOBE_SIZE) * Math.PI * 2;
+    const dx = e.clientX - pointerStart.current.x;
+    const dy = e.clientY - pointerStart.current.y;
+    const scale = GLOBE_SIZE * zoomRef.current;
+    phiRef.current = pointerStart.current.phi - (dx / scale) * Math.PI * 2;
+    thetaRef.current = Math.max(
+      -THETA_LIMIT,
+      Math.min(THETA_LIMIT, pointerStart.current.theta + (dy / scale) * Math.PI * 2)
+    );
   }
   function onPointerUp() {
     isDragging.current = false;
     pointerStart.current = null;
   }
 
+  function applyZoom(factor: number) {
+    const next = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, zoomRef.current * factor));
+    zoomRef.current = next;
+    setZoom(next);
+  }
+
+  function onWheel(e: React.WheelEvent) {
+    e.preventDefault();
+    applyZoom(e.deltaY < 0 ? 1.1 : 0.9);
+  }
+
+  // Non-passive wheel listener so preventDefault works in Chrome
+  useEffect(() => {
+    const el = canvasRef.current;
+    if (!el) return;
+    const handler = (e: WheelEvent) => {
+      e.preventDefault();
+      applyZoom(e.deltaY < 0 ? 1.1 : 0.9);
+    };
+    el.addEventListener("wheel", handler, { passive: false });
+    return () => el.removeEventListener("wheel", handler);
+  }, []);
+
   const selectedCity      = selectedCityId ? cityMarkers.find((c) => c.id === selectedCityId) : null;
   const cityUniversities  = selectedCityId ? universityProfiles.filter((u) => u.city === selectedCityId) : [];
   const cityCommunities   = selectedCityId ? studentCommunities.filter((c) => c.city === selectedCityId) : [];
   const cityTotalCandidates = cityUniversities.reduce((s, u) => s + u.candidates, 0);
   const totalCandidates     = universityProfiles.reduce((s, u) => s + u.candidates, 0);
+
+  const canvasCssSize = GLOBE_SIZE * zoom;
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
@@ -141,17 +182,28 @@ export function Ecosystem() {
 
         {/* Left: Globe */}
         <div className="flex-1 flex items-center justify-center bg-[#0A0D0A] relative overflow-hidden">
-          <div className="relative" style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }}>
+          <div
+            className="relative"
+            style={{ width: GLOBE_SIZE, height: GLOBE_SIZE, overflow: "hidden" }}
+            onWheel={onWheel}
+          >
             <canvas
               ref={canvasRef}
-              style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }}
+              style={{
+                width: canvasCssSize,
+                height: canvasCssSize,
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+              }}
               width={GLOBE_SIZE * 2}
               height={GLOBE_SIZE * 2}
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
               onPointerUp={onPointerUp}
               onPointerCancel={onPointerUp}
-              className="cursor-grab active:cursor-grabbing select-none"
+              className="cursor-grab active:cursor-grabbing select-none touch-none"
             />
             {overlayPositions.map((pos) => {
               const city = cityMarkers.find((c) => c.id === pos.id)!;
@@ -166,7 +218,7 @@ export function Ecosystem() {
                     transform: "translate(-50%, -50%)",
                     pointerEvents: pos.visible ? "auto" : "none",
                   }}
-                  className={`group flex flex-col items-center gap-0.5 transition-all ${
+                  className={`group flex flex-col items-center gap-0.5 transition-opacity ${
                     pos.visible ? "opacity-100" : "opacity-0"
                   }`}
                   onClick={(e) => {
@@ -182,7 +234,7 @@ export function Ecosystem() {
                     }`}
                   />
                   <span
-                    className={`text-[9px] font-medium px-1 py-0.5 rounded whitespace-nowrap leading-none transition-all ${
+                    className={`text-[9px] font-medium px-1 py-0.5 rounded whitespace-nowrap leading-none transition-opacity ${
                       isSelected
                         ? "text-white bg-black/70 opacity-100"
                         : "text-[#B0DEBB] opacity-0 group-hover:opacity-100 bg-black/50"
@@ -194,6 +246,40 @@ export function Ecosystem() {
               );
             })}
           </div>
+
+          {/* Zoom controls */}
+          <div className="absolute bottom-4 right-4 flex flex-col gap-1.5">
+            <button
+              onClick={() => applyZoom(1.2)}
+              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-lg leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              aria-label="Zoom in"
+            >
+              +
+            </button>
+            <button
+              onClick={() => applyZoom(1 / 1.2)}
+              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-lg leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              aria-label="Zoom out"
+            >
+              −
+            </button>
+            <button
+              onClick={() => {
+                phiRef.current = 0.25;
+                thetaRef.current = 0.25;
+                zoomRef.current = 1;
+                setZoom(1);
+              }}
+              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-[10px] leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              aria-label="Reset view"
+            >
+              ⟳
+            </button>
+          </div>
+
+          <div className="absolute bottom-4 left-4 text-[10px] text-white/50">
+            Drag to rotate · Scroll to zoom · Click a city
+          </div>
         </div>
 
         {/* Right: Detail panel */}
@@ -203,7 +289,7 @@ export function Ecosystem() {
               <div className="text-5xl mb-2">🌍</div>
               <div className="text-sm font-semibold">Click a city on the globe</div>
               <div className="text-xs text-muted-foreground">
-                Explore universities and communities in each city
+                Drag to rotate · Scroll to zoom · Click a city
               </div>
               <div className="mt-6 flex gap-6">
                 {[
