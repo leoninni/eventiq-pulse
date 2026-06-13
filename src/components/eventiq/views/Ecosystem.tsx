@@ -150,6 +150,7 @@ export function Ecosystem() {
               onPointerDown={onPointerDown}
               onPointerMove={onPointerMove}
               onPointerUp={onPointerUp}
+              onPointerCancel={onPointerUp}
               className="cursor-grab active:cursor-grabbing select-none"
             />
             {overlayPositions.map((pos) => {
