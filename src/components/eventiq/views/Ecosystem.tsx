@@ -181,7 +181,7 @@ export function Ecosystem() {
       <div className="flex flex-1 min-h-0">
 
         {/* Left: Globe */}
-        <div className="flex-1 flex items-center justify-center bg-[#0A0D0A] relative overflow-hidden">
+        <div className="flex-1 flex items-center justify-center bg-background relative overflow-hidden">
           <div
             className="relative"
             style={{ width: GLOBE_SIZE, height: GLOBE_SIZE, overflow: "hidden" }}
