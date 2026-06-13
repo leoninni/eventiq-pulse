@@ -94,7 +94,7 @@ export function Reports() {
             <tbody className="divide-y divide-border">
               {[
                 ["Sponsorship", `€${ev.sponsorship.toLocaleString()}`],
-                ["Cost per opt-in", `€${Math.round(ev.sponsorship / ev.optIns)}`],
+                ["Cost per opt-in", `€${Math.round(ev.sponsorship / ev.optIns).toLocaleString()}`],
                 ["Cost per pipeline entry", `€${ev.costPerLead}`],
                 ["Cost per hire", ev.hires > 0 ? `€${Math.round(ev.sponsorship / ev.hires).toLocaleString()}` : "—"],
                 ["Benchmark (your 5-event avg)", "€876 per pipeline entry"],
