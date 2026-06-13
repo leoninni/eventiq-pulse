@@ -125,10 +125,10 @@ export function Ecosystem() {
     const dx = e.clientX - pointerStart.current.x;
     const dy = e.clientY - pointerStart.current.y;
     const scale = GLOBE_SIZE * zoomRef.current;
-    phiRef.current = pointerStart.current.phi - (dx / scale) * Math.PI * 2;
+    phiRef.current = pointerStart.current.phi + (dx / scale) * Math.PI * 2;
     thetaRef.current = Math.max(
       -THETA_LIMIT,
-      Math.min(THETA_LIMIT, pointerStart.current.theta + (dy / scale) * Math.PI * 2)
+      Math.min(THETA_LIMIT, pointerStart.current.theta - (dy / scale) * Math.PI * 2)
     );
   }
   function onPointerUp() {
