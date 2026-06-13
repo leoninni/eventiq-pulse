@@ -96,6 +96,7 @@ export function Reports() {
                 ["Sponsorship", `€${ev.sponsorship.toLocaleString()}`],
                 ["Cost per opt-in", `€${Math.round(ev.sponsorship / ev.optIns)}`],
                 ["Cost per pipeline entry", `€${ev.costPerLead}`],
+                ["Cost per hire", ev.hires > 0 ? `€${Math.round(ev.sponsorship / ev.hires).toLocaleString()}` : "—"],
                 ["Benchmark (your 5-event avg)", "€876 per pipeline entry"],
               ].map(([k, v]) => (
                 <tr key={k}><td className="py-2 text-muted-foreground">{k}</td><td className="py-2 text-right font-medium tabular-nums">{v}</td></tr>
@@ -136,6 +137,7 @@ export function Reports() {
             <div className="flex gap-6 text-xs">
               <Stat label="Opt-ins" value={e.optIns} />
               <Stat label="Pipeline" value={e.pipeline} />
+              <Stat label="Hires" value={e.hires} />
               <Stat label="Cost/Lead" value={`€${e.costPerLead}`} />
             </div>
             <button onClick={() => setOpenId(e.id)} className="px-3 py-1.5 text-xs rounded-md bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
