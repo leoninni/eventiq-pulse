@@ -251,14 +251,14 @@ export function Ecosystem() {
           <div className="absolute bottom-4 right-4 flex flex-col gap-1.5">
             <button
               onClick={() => applyZoom(1.2)}
-              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-lg leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-lg leading-none flex items-center justify-center shadow-sm"
               aria-label="Zoom in"
             >
               +
             </button>
             <button
               onClick={() => applyZoom(1 / 1.2)}
-              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-lg leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-lg leading-none flex items-center justify-center shadow-sm"
               aria-label="Zoom out"
             >
               −
@@ -270,14 +270,14 @@ export function Ecosystem() {
                 zoomRef.current = 1;
                 setZoom(1);
               }}
-              className="w-9 h-9 rounded-md bg-white/10 hover:bg-white/20 text-white text-[10px] leading-none flex items-center justify-center backdrop-blur border border-white/10"
+              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-[12px] leading-none flex items-center justify-center shadow-sm"
               aria-label="Reset view"
             >
               ⟳
             </button>
           </div>
 
-          <div className="absolute bottom-4 left-4 text-[10px] text-white/50">
+          <div className="absolute bottom-4 left-4 text-[10px] text-muted-foreground">
             Drag to rotate · Scroll to zoom · Click a city
           </div>
         </div>
