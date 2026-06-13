@@ -1,21 +1,12 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts";
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { ArrowUp, ArrowDown, UserCheck, FileText, Mail, Calendar, Users } from "lucide-react";
-import { events, recentActivity, type Status } from "@/lib/eventiq/mockData";
-import { useStore } from "@/lib/eventiq/store";
+import { events, recentActivity, funnelData, type FunnelStage } from "@/lib/eventiq/mockData";
 
 const chartData = [...events]
   .map((e) => ({ name: e.name.replace(" 2025", "").replace(" 2024", ""), candidates: e.optIns, sponsorship: e.sponsorship, cpl: Math.round(e.sponsorship / e.optIns) }))
   .sort((a, b) => b.candidates - a.candidates);
 
 const iconMap = { "user-check": UserCheck, "file-text": FileText, mail: Mail, calendar: Calendar, users: Users };
-
-const donutPalette: Record<Status, string> = {
-  "Interested": "#6BAE82",
-  "In Review": "#C99A3E",
-  "Interviewed": "#64748B",
-  "Offer Extended": "#2F7A47",
-  "Rejected": "#B07A5A",
-};
 
 function Kpi({ label, value, delta, deltaPositive }: { label: string; value: string; delta?: string; deltaPositive?: boolean }) {
   return (
@@ -34,18 +25,39 @@ function Kpi({ label, value, delta, deltaPositive }: { label: string; value: str
   );
 }
 
+const FUNNEL_BG = ["#E3E8E3", "#B8E0C2", "#B8E0C2", "#6BAE82", "#2F7A47", "#0F1410"];
+const FUNNEL_FG = ["#1A1F1A", "#1F4A2E", "#1F4A2E", "#ffffff", "#ffffff", "#ffffff"];
+
+function ConversionFunnel({ data }: { data: FunnelStage[] }) {
+  return (
+    <div className="space-y-2">
+      {data.map((stage, i) => (
+        <div key={stage.label} className="flex items-center gap-3">
+          <span className="text-[11px] text-muted-foreground w-[90px] shrink-0 text-right tabular-nums">
+            {stage.label}
+          </span>
+          <div className="flex-1 bg-secondary rounded h-7 overflow-hidden">
+            <div
+              className="h-full rounded flex items-center gap-2 px-3"
+              style={{ width: `${stage.widthPct}%`, background: FUNNEL_BG[i] }}
+            >
+              <span className="text-xs font-semibold tabular-nums" style={{ color: FUNNEL_FG[i] }}>
+                {stage.value.toLocaleString()}
+              </span>
+              {stage.pct && (
+                <span className="text-[10px] tabular-nums" style={{ color: FUNNEL_FG[i], opacity: 0.75 }}>
+                  {stage.pct}
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export function Overview() {
-  const { candidates } = useStore();
-
-  const statusCounts = candidates.reduce<Record<string, number>>((acc, c) => {
-    acc[c.status] = (acc[c.status] || 0) + 1;
-    return acc;
-  }, {});
-  const total = candidates.length;
-  const order: Status[] = ["Interested", "In Review", "Interviewed", "Offer Extended", "Rejected"];
-  const fixedPct: Record<Status, number> = { "Interested": 38, "In Review": 25, "Interviewed": 18, "Offer Extended": 6, "Rejected": 13 };
-  const donutData = order.map((s) => ({ name: s, value: fixedPct[s], live: statusCounts[s] || 0, color: donutPalette[s] }));
-
   const tooltipStyle = { background: "#FFFFFF", border: "1px solid #E3E8E3", borderRadius: 8, fontSize: 12, color: "#1A1F1A" };
 
   return (
@@ -60,7 +72,7 @@ export function Overview() {
       <div className="grid grid-cols-4 gap-3 mb-6">
         <Kpi label="Candidates captured" value="247" delta="18% vs last quarter" deltaPositive />
         <Kpi label="Events sponsored" value="5" />
-        <Kpi label="In active pipeline" value={String(total + 22)} />
+        <Kpi label="In active pipeline" value="35" />
         <Kpi label="Avg cost per lead" value="€312" delta="22% vs last quarter" deltaPositive />
       </div>
 
@@ -91,32 +103,10 @@ export function Overview() {
 
         <div className="col-span-2 bg-card border border-border rounded-xl p-6">
           <div className="flex items-center justify-between mb-5">
-            <h3 className="font-display text-2xl">Pipeline status</h3>
-            <span className="text-xs text-muted-foreground">{total} active</span>
+            <h3 className="font-display text-2xl">Hiring funnel</h3>
+            <span className="text-xs text-muted-foreground">All events · 2025</span>
           </div>
-          <div className="h-[180px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie data={donutData} dataKey="value" innerRadius={50} outerRadius={80} paddingAngle={2} stroke="none">
-                  {donutData.map((d) => (
-                    <Cell key={d.name} fill={d.color} />
-                  ))}
-                </Pie>
-                <Tooltip contentStyle={tooltipStyle} formatter={(v: number) => [`${v}%`, ""]} />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-3 space-y-1.5">
-            {donutData.map((d) => (
-              <div key={d.name} className="flex items-center justify-between text-xs">
-                <div className="flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full" style={{ background: d.color }} />
-                  <span className="text-foreground">{d.name}</span>
-                </div>
-                <span className="text-muted-foreground tabular-nums">{d.value}%</span>
-              </div>
-            ))}
-          </div>
+          <ConversionFunnel data={funnelData} />
         </div>
       </div>
 
