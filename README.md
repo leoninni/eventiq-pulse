@@ -1,6 +1,6 @@
 # EventIQ Pulse
 
-**EventIQ Pulse** is a recruiter intelligence dashboard for sourcing early technical talent from university hackathons and student events — focused on the DACH region. It tracks candidates from event opt-in to hire, shows which events produce qualified candidates at what cost, and surfaces the student ecosystem (universities, communities) that companies without insider access can't see.
+**EventIQ Pulse** is a recruiter intelligence dashboard for sourcing early technical talent from university hackathons and student events. It tracks candidates from event opt-in to hire, shows which events produce qualified candidates at what cost, and surfaces the student ecosystem (universities, communities) that companies without insider access can't see.
 
 Built as a fully self-contained frontend prototype with zero backend dependencies. All data is hardcoded mock data, making it ideal for VC demos and recruiter walkthroughs.
 
@@ -54,14 +54,6 @@ bun run dev
 ```
 
 The app will be available at **http://localhost:5173**
-
-### Other commands
-
-```bash
-bun run build    # Production build
-bun run preview  # Preview production build locally
-bun run lint     # Lint the codebase
-```
 
 ---
 
