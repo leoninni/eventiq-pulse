@@ -211,8 +211,6 @@ export function Ecosystem() {
   function onPointerUp() {
     isDragging.current = false;
     pointerStart.current = null;
-    // Resume auto-rotate only in world mode
-    if (selectedContinentId === null) autoRotateRef.current = true;
   }
 
   function applyZoom(factor: number) {
