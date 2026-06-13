@@ -229,7 +229,7 @@ export function Candidates() {
               {atsSync[open.id] ? (
                 <button
                   disabled
-                  className="px-3 py-2 text-sm rounded-md border border-[#B8E0C2] bg-[#DCEFE2] text-[#2F7A47] inline-flex items-center gap-1.5 cursor-default"
+                  className="px-3 py-2 text-sm rounded-md border border-[#B8E0C2] bg-[#DCEFE2] text-[#2F7A47] inline-flex items-center justify-center gap-1.5 cursor-default"
                 >
                   <Check className="w-3.5 h-3.5" /> Synced · {atsSync[open.id]}
                 </button>
