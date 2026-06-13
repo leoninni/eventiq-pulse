@@ -88,7 +88,7 @@ export const candidates: Candidate[] = [
       { skill: "Rust",          source: "START Hack systems track winner" },
       { skill: "WebAssembly",   source: "Mozilla Hacks open-source contributor" },
     ],
-    communityRoles: ["TU Darmstadt OS Lab"],
+    communityRoles: ["LMU Open Source Lab"],
   },
   {
     id: "c6", name: "Priya N.", university: "TU Munich",
