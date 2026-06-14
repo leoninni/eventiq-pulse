@@ -76,17 +76,17 @@ export function Candidates() {
   }, [candidates, eventFilter, statusFilter, query, activeCooperations]);
 
   return (
-    <div className="p-10 max-w-[1400px]">
+    <div className="p-4 md:p-10 max-w-[1400px]">
       <div className="mb-8">
         <h1 className="font-display text-4xl tracking-tight">Candidates</h1>
         <p className="text-sm text-muted-foreground mt-2">247 total · 34 in active pipeline</p>
       </div>
 
-      <div className="flex gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-4">
         <select
           value={eventFilter}
           onChange={(e) => setEventFilter(e.target.value)}
-          className="bg-card border border-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-primary"
+          className="bg-card border border-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-primary max-w-[160px] md:max-w-none"
         >
           <option value="all">All Events</option>
           {events.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
@@ -94,12 +94,12 @@ export function Candidates() {
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="bg-card border border-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-primary"
+          className="bg-card border border-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-primary max-w-[140px] md:max-w-none"
         >
           <option value="all">All Statuses</option>
           {statuses.map((s) => <option key={s} value={s}>{s}</option>)}
         </select>
-        <div className="flex-1 relative">
+        <div className="flex-1 min-w-[160px] relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
           <input
             value={query}
@@ -135,7 +135,7 @@ export function Candidates() {
                 </div>
                 <div className="text-xs italic text-muted-foreground mt-1 truncate">{c.projectTitle}</div>
               </div>
-              <div className="flex flex-col items-end gap-1.5 shrink-0">
+              <div className="flex flex-col items-end gap-1.5 shrink-0 max-w-[150px] md:max-w-none">
                 {(() => {
                   const best = matchScore(c, openRoles)[0];
                   return best && best.score >= 40 ? (
