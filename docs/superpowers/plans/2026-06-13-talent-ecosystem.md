@@ -13,6 +13,7 @@
 ### Task 1: Add UniversityProfile and StudentCommunity data to mockData
 
 **Files:**
+
 - Modify: `src/lib/eventiq/mockData.ts`
 
 - [ ] **Step 1: Add the two new interfaces at the end of the interfaces block (after the existing `FunnelStage` interface)**
@@ -31,7 +32,14 @@ export interface UniversityProfile {
 export interface StudentCommunity {
   id: string;
   name: string;
-  type: "AI/ML" | "Robotics" | "Entrepreneurship" | "Cloud/DevOps" | "Data" | "Open Source" | "Community";
+  type:
+    | "AI/ML"
+    | "Robotics"
+    | "Entrepreneurship"
+    | "Cloud/DevOps"
+    | "Data"
+    | "Open Source"
+    | "Community";
   university: string;
   members: number;
   topSkills: string[];
@@ -42,14 +50,78 @@ export interface StudentCommunity {
 
 ```ts
 export const universityProfiles: UniversityProfile[] = [
-  { id: "tum",          name: "TU Munich",       shortName: "TUM",         location: "Munich",     candidates: 67, topSkills: ["ML", "Python", "Robotics"],        roleAffinity: "ML/AI · Systems" },
-  { id: "eth",          name: "ETH Zürich",       shortName: "ETH",         location: "Zürich",     candidates: 48, topSkills: ["C++", "CUDA", "Rust"],             roleAffinity: "Systems · Research" },
-  { id: "tuberlin",     name: "TU Berlin",        shortName: "TU Berlin",   location: "Berlin",     candidates: 31, topSkills: ["React", "TypeScript", "Go"],        roleAffinity: "Frontend · Backend" },
-  { id: "kit",          name: "KIT",              shortName: "KIT",         location: "Karlsruhe",  candidates: 29, topSkills: ["Python", "Spark", "Embedded"],      roleAffinity: "Data · Embedded" },
-  { id: "rwth",         name: "RWTH Aachen",      shortName: "RWTH",        location: "Aachen",     candidates: 24, topSkills: ["Java", "NLP", "Systems"],           roleAffinity: "Backend" },
-  { id: "unistuttgart", name: "Uni Stuttgart",    shortName: "Stuttgart",   location: "Stuttgart",  candidates: 18, topSkills: ["Go", "Kubernetes", "DevOps"],       roleAffinity: "Backend · Infra" },
-  { id: "tudarmstadt",  name: "TU Darmstadt",     shortName: "TU Darmstadt",location: "Darmstadt",  candidates: 16, topSkills: ["C++", "Embedded", "RTOS"],          roleAffinity: "Systems" },
-  { id: "lmu",          name: "LMU Munich",       shortName: "LMU",         location: "Munich",     candidates: 14, topSkills: ["Rust", "WebAssembly", "Systems"],   roleAffinity: "Systems" },
+  {
+    id: "tum",
+    name: "TU Munich",
+    shortName: "TUM",
+    location: "Munich",
+    candidates: 67,
+    topSkills: ["ML", "Python", "Robotics"],
+    roleAffinity: "ML/AI · Systems",
+  },
+  {
+    id: "eth",
+    name: "ETH Zürich",
+    shortName: "ETH",
+    location: "Zürich",
+    candidates: 48,
+    topSkills: ["C++", "CUDA", "Rust"],
+    roleAffinity: "Systems · Research",
+  },
+  {
+    id: "tuberlin",
+    name: "TU Berlin",
+    shortName: "TU Berlin",
+    location: "Berlin",
+    candidates: 31,
+    topSkills: ["React", "TypeScript", "Go"],
+    roleAffinity: "Frontend · Backend",
+  },
+  {
+    id: "kit",
+    name: "KIT",
+    shortName: "KIT",
+    location: "Karlsruhe",
+    candidates: 29,
+    topSkills: ["Python", "Spark", "Embedded"],
+    roleAffinity: "Data · Embedded",
+  },
+  {
+    id: "rwth",
+    name: "RWTH Aachen",
+    shortName: "RWTH",
+    location: "Aachen",
+    candidates: 24,
+    topSkills: ["Java", "NLP", "Systems"],
+    roleAffinity: "Backend",
+  },
+  {
+    id: "unistuttgart",
+    name: "Uni Stuttgart",
+    shortName: "Stuttgart",
+    location: "Stuttgart",
+    candidates: 18,
+    topSkills: ["Go", "Kubernetes", "DevOps"],
+    roleAffinity: "Backend · Infra",
+  },
+  {
+    id: "tudarmstadt",
+    name: "TU Darmstadt",
+    shortName: "TU Darmstadt",
+    location: "Darmstadt",
+    candidates: 16,
+    topSkills: ["C++", "Embedded", "RTOS"],
+    roleAffinity: "Systems",
+  },
+  {
+    id: "lmu",
+    name: "LMU Munich",
+    shortName: "LMU",
+    location: "Munich",
+    candidates: 14,
+    topSkills: ["Rust", "WebAssembly", "Systems"],
+    roleAffinity: "Systems",
+  },
 ];
 ```
 
@@ -57,16 +129,86 @@ export const universityProfiles: UniversityProfile[] = [
 
 ```ts
 export const studentCommunities: StudentCommunity[] = [
-  { id: "tum-ai",         name: "TUM AI Society",                  type: "AI/ML",           university: "TU Munich",      members: 280, topSkills: ["Python", "LLMs"] },
-  { id: "tum-ml",         name: "TUM ML Society",                  type: "AI/ML",           university: "TU Munich",      members: 210, topSkills: ["PyTorch", "ML"] },
-  { id: "tum-robotics",   name: "TUM Robotics Club",               type: "Robotics",        university: "TU Munich",      members: 145, topSkills: ["C++", "ROS"] },
-  { id: "eth-robotics",   name: "ETH Robotics Society",            type: "Robotics",        university: "ETH Zürich",     members: 120, topSkills: ["C++", "CUDA"] },
-  { id: "eth-women",      name: "ETH Women in Tech",               type: "Community",       university: "ETH Zürich",     members: 340, topSkills: ["Python", "ML"] },
-  { id: "eth-entre",      name: "ETH Entrepreneurship Club",       type: "Entrepreneurship",university: "ETH Zürich",     members: 190, topSkills: ["React", "TypeScript"] },
-  { id: "kit-data",       name: "KIT Data Science Club",           type: "Data",            university: "KIT",            members: 95,  topSkills: ["Python", "Spark"] },
-  { id: "tud-robotics",   name: "TU Darmstadt Robotics Club",      type: "Robotics",        university: "TU Darmstadt",   members: 110, topSkills: ["C++", "Embedded"] },
-  { id: "stuttgart-cloud",name: "Uni Stuttgart Cloud Native Club", type: "Cloud/DevOps",    university: "Uni Stuttgart",  members: 75,  topSkills: ["Go", "Kubernetes"] },
-  { id: "lmu-oss",        name: "LMU Open Source Lab",             type: "Open Source",     university: "LMU Munich",     members: 85,  topSkills: ["Rust", "WebAssembly"] },
+  {
+    id: "tum-ai",
+    name: "TUM AI Society",
+    type: "AI/ML",
+    university: "TU Munich",
+    members: 280,
+    topSkills: ["Python", "LLMs"],
+  },
+  {
+    id: "tum-ml",
+    name: "TUM ML Society",
+    type: "AI/ML",
+    university: "TU Munich",
+    members: 210,
+    topSkills: ["PyTorch", "ML"],
+  },
+  {
+    id: "tum-robotics",
+    name: "TUM Robotics Club",
+    type: "Robotics",
+    university: "TU Munich",
+    members: 145,
+    topSkills: ["C++", "ROS"],
+  },
+  {
+    id: "eth-robotics",
+    name: "ETH Robotics Society",
+    type: "Robotics",
+    university: "ETH Zürich",
+    members: 120,
+    topSkills: ["C++", "CUDA"],
+  },
+  {
+    id: "eth-women",
+    name: "ETH Women in Tech",
+    type: "Community",
+    university: "ETH Zürich",
+    members: 340,
+    topSkills: ["Python", "ML"],
+  },
+  {
+    id: "eth-entre",
+    name: "ETH Entrepreneurship Club",
+    type: "Entrepreneurship",
+    university: "ETH Zürich",
+    members: 190,
+    topSkills: ["React", "TypeScript"],
+  },
+  {
+    id: "kit-data",
+    name: "KIT Data Science Club",
+    type: "Data",
+    university: "KIT",
+    members: 95,
+    topSkills: ["Python", "Spark"],
+  },
+  {
+    id: "tud-robotics",
+    name: "TU Darmstadt Robotics Club",
+    type: "Robotics",
+    university: "TU Darmstadt",
+    members: 110,
+    topSkills: ["C++", "Embedded"],
+  },
+  {
+    id: "stuttgart-cloud",
+    name: "Uni Stuttgart Cloud Native Club",
+    type: "Cloud/DevOps",
+    university: "Uni Stuttgart",
+    members: 75,
+    topSkills: ["Go", "Kubernetes"],
+  },
+  {
+    id: "lmu-oss",
+    name: "LMU Open Source Lab",
+    type: "Open Source",
+    university: "LMU Munich",
+    members: 85,
+    topSkills: ["Rust", "WebAssembly"],
+  },
 ];
 ```
 
@@ -90,6 +232,7 @@ git commit -m "feat: add UniversityProfile and StudentCommunity types and data"
 ### Task 2: Wire up the Ecosystem route in store, sidebar, and layout
 
 **Files:**
+
 - Modify: `src/lib/eventiq/store.tsx`
 - Modify: `src/components/eventiq/Sidebar.tsx`
 - Modify: `src/components/eventiq/AppLayout.tsx`
@@ -97,11 +240,13 @@ git commit -m "feat: add UniversityProfile and StudentCommunity types and data"
 - [ ] **Step 1: Add `"ecosystem"` to the `View` type in `store.tsx`**
 
 Find:
+
 ```ts
 type View = "overview" | "events" | "candidates" | "reports" | "recommendations";
 ```
 
 Replace with:
+
 ```ts
 type View = "overview" | "events" | "candidates" | "ecosystem" | "reports" | "recommendations";
 ```
@@ -109,34 +254,38 @@ type View = "overview" | "events" | "candidates" | "ecosystem" | "reports" | "re
 - [ ] **Step 2: Add the Ecosystem nav item to `Sidebar.tsx`**
 
 Find the existing import:
+
 ```ts
 import { Home, Calendar, Users, BarChart3, Sparkles } from "lucide-react";
 ```
 
 Replace with:
+
 ```ts
 import { Home, Calendar, Users, BarChart3, Sparkles, Network } from "lucide-react";
 ```
 
 Then find the `items` array:
+
 ```ts
 const items: { id: View; label: string; icon: typeof Home }[] = [
-  { id: "overview",        label: "Overview",        icon: Home },
-  { id: "events",          label: "Events",          icon: Calendar },
-  { id: "candidates",      label: "Candidates",      icon: Users },
-  { id: "reports",         label: "Reports",         icon: BarChart3 },
+  { id: "overview", label: "Overview", icon: Home },
+  { id: "events", label: "Events", icon: Calendar },
+  { id: "candidates", label: "Candidates", icon: Users },
+  { id: "reports", label: "Reports", icon: BarChart3 },
   { id: "recommendations", label: "Recommendations", icon: Sparkles },
 ];
 ```
 
 Replace with:
+
 ```ts
 const items: { id: View; label: string; icon: typeof Home }[] = [
-  { id: "overview",        label: "Overview",        icon: Home },
-  { id: "events",          label: "Events",          icon: Calendar },
-  { id: "candidates",      label: "Candidates",      icon: Users },
-  { id: "ecosystem",       label: "Ecosystem",       icon: Network },
-  { id: "reports",         label: "Reports",         icon: BarChart3 },
+  { id: "overview", label: "Overview", icon: Home },
+  { id: "events", label: "Events", icon: Calendar },
+  { id: "candidates", label: "Candidates", icon: Users },
+  { id: "ecosystem", label: "Ecosystem", icon: Network },
+  { id: "reports", label: "Reports", icon: BarChart3 },
   { id: "recommendations", label: "Recommendations", icon: Sparkles },
 ];
 ```
@@ -144,6 +293,7 @@ const items: { id: View; label: string; icon: typeof Home }[] = [
 - [ ] **Step 3: Add the Ecosystem render in `AppLayout.tsx`**
 
 Find the existing imports block:
+
 ```ts
 import { Overview } from "./views/Overview";
 import { Events } from "./views/Events";
@@ -153,6 +303,7 @@ import { Recommendations } from "./views/Recommendations";
 ```
 
 Replace with:
+
 ```ts
 import { Overview } from "./views/Overview";
 import { Events } from "./views/Events";
@@ -163,22 +314,46 @@ import { Recommendations } from "./views/Recommendations";
 ```
 
 Then find the render block in `Main`:
+
 ```tsx
-        {view === "overview" && <Overview />}
-        {view === "events" && <Events />}
-        {view === "candidates" && <Candidates />}
-        {view === "reports" && <Reports />}
-        {view === "recommendations" && <Recommendations />}
+{
+  view === "overview" && <Overview />;
+}
+{
+  view === "events" && <Events />;
+}
+{
+  view === "candidates" && <Candidates />;
+}
+{
+  view === "reports" && <Reports />;
+}
+{
+  view === "recommendations" && <Recommendations />;
+}
 ```
 
 Replace with:
+
 ```tsx
-        {view === "overview" && <Overview />}
-        {view === "events" && <Events />}
-        {view === "candidates" && <Candidates />}
-        {view === "ecosystem" && <Ecosystem />}
-        {view === "reports" && <Reports />}
-        {view === "recommendations" && <Recommendations />}
+{
+  view === "overview" && <Overview />;
+}
+{
+  view === "events" && <Events />;
+}
+{
+  view === "candidates" && <Candidates />;
+}
+{
+  view === "ecosystem" && <Ecosystem />;
+}
+{
+  view === "reports" && <Reports />;
+}
+{
+  view === "recommendations" && <Recommendations />;
+}
 ```
 
 - [ ] **Step 4: Verify TypeScript is clean**
@@ -201,21 +376,26 @@ git commit -m "feat: wire up Ecosystem route in store, sidebar, and layout"
 ### Task 3: Build the Ecosystem view component
 
 **Files:**
+
 - Create: `src/components/eventiq/views/Ecosystem.tsx`
 
 - [ ] **Step 1: Create `Ecosystem.tsx` with the full component**
 
 ```tsx
-import { universityProfiles, studentCommunities, type StudentCommunity } from "@/lib/eventiq/mockData";
+import {
+  universityProfiles,
+  studentCommunities,
+  type StudentCommunity,
+} from "@/lib/eventiq/mockData";
 
 const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
-  "AI/ML":            "bg-[#DCEFE2] text-[#1F4A2E]",
-  "Robotics":         "bg-[#E2E8F0] text-[#334155]",
-  "Entrepreneurship": "bg-[#F5E7CC] text-[#7A5712]",
-  "Cloud/DevOps":     "bg-[#E8F0F5] text-[#1A4A6E]",
-  "Data":             "bg-[#F0E8F5] text-[#4A1A6E]",
-  "Open Source":      "bg-[#F5F0E8] text-[#6E4A1A]",
-  "Community":        "bg-secondary text-muted-foreground",
+  "AI/ML": "bg-[#DCEFE2] text-[#1F4A2E]",
+  Robotics: "bg-[#E2E8F0] text-[#334155]",
+  Entrepreneurship: "bg-[#F5E7CC] text-[#7A5712]",
+  "Cloud/DevOps": "bg-[#E8F0F5] text-[#1A4A6E]",
+  Data: "bg-[#F0E8F5] text-[#4A1A6E]",
+  "Open Source": "bg-[#F5F0E8] text-[#6E4A1A]",
+  Community: "bg-secondary text-muted-foreground",
 };
 
 export function Ecosystem() {
@@ -237,7 +417,10 @@ export function Ecosystem() {
           { value: universityProfiles.length, label: "universities" },
           { value: studentCommunities.length, label: "communities" },
         ].map(({ value, label }) => (
-          <div key={label} className="bg-card border border-border rounded-lg px-5 py-3 flex items-baseline gap-2">
+          <div
+            key={label}
+            className="bg-card border border-border rounded-lg px-5 py-3 flex items-baseline gap-2"
+          >
             <span className="text-2xl font-bold tabular-nums">{value}</span>
             <span className="text-sm text-muted-foreground">{label}</span>
           </div>
@@ -260,7 +443,10 @@ export function Ecosystem() {
               <div className="text-xs text-muted-foreground mb-3">candidates</div>
               <div className="flex flex-wrap gap-1 mb-3">
                 {u.topSkills.slice(0, 3).map((s) => (
-                  <span key={s} className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary">
+                  <span
+                    key={s}
+                    className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary"
+                  >
                     {s}
                   </span>
                 ))}
@@ -283,7 +469,9 @@ export function Ecosystem() {
             <div key={c.id} className="bg-card border border-border rounded-lg p-4">
               <div className="flex items-start justify-between mb-2">
                 <div className="text-sm font-semibold leading-tight">{c.name}</div>
-                <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium shrink-0 ml-2 ${typeBadgeStyles[c.type]}`}>
+                <span
+                  className={`text-[10px] px-2 py-0.5 rounded-full font-medium shrink-0 ml-2 ${typeBadgeStyles[c.type]}`}
+                >
                   {c.type}
                 </span>
               </div>
@@ -292,7 +480,10 @@ export function Ecosystem() {
               <div className="text-xs text-muted-foreground mb-3">members</div>
               <div className="flex flex-wrap gap-1">
                 {c.topSkills.slice(0, 2).map((s) => (
-                  <span key={s} className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary">
+                  <span
+                    key={s}
+                    className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary"
+                  >
                     {s}
                   </span>
                 ))}
@@ -326,6 +517,7 @@ git commit -m "feat: add Ecosystem view with university and community cards"
 ## Self-Review
 
 **Spec coverage:**
+
 - ✅ `"ecosystem"` added to `View` type (Task 2)
 - ✅ `Network` icon imported, sidebar item between Candidates and Reports (Task 2)
 - ✅ `Ecosystem` imported and rendered in AppLayout (Task 2)

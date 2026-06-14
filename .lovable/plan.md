@@ -1,4 +1,3 @@
-
 # Make the world view an actual globe
 
 The flat SVG dot-map reads as colored rectangles, not a globe. Replace it with the same cobe 3D globe already used in continent mode, restyled light so it matches the page.

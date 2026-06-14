@@ -13,13 +13,13 @@ import { useStore } from "@/lib/eventiq/store";
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
-  "AI/ML":            "bg-[#DCEFE2] text-[#1F4A2E]",
-  "Robotics":         "bg-[#E2E8F0] text-[#334155]",
-  "Entrepreneurship": "bg-[#F5E7CC] text-[#7A5712]",
-  "Cloud/DevOps":     "bg-[#E8F0F5] text-[#1A4A6E]",
-  "Data":             "bg-[#F0E8F5] text-[#4A1A6E]",
-  "Open Source":      "bg-[#F5F0E8] text-[#6E4A1A]",
-  "Community":        "bg-secondary text-muted-foreground",
+  "AI/ML": "bg-[#DCEFE2] text-[#1F4A2E]",
+  Robotics: "bg-[#E2E8F0] text-[#334155]",
+  Entrepreneurship: "bg-[#F5E7CC] text-[#7A5712]",
+  "Cloud/DevOps": "bg-[#E8F0F5] text-[#1A4A6E]",
+  Data: "bg-[#F0E8F5] text-[#4A1A6E]",
+  "Open Source": "bg-[#F5F0E8] text-[#6E4A1A]",
+  Community: "bg-secondary text-muted-foreground",
 };
 
 function slotPill(p: ClubPartnership): { label: string; cls: string } {
@@ -31,23 +31,50 @@ function slotPill(p: ClubPartnership): { label: string; cls: string } {
 
 const statusBadge: Record<string, string> = {
   Confirmed: "bg-[#DCEFE2] text-[#1F4A2E]",
-  Pending:   "bg-amber-100 text-amber-800",
+  Pending: "bg-amber-100 text-amber-800",
   Completed: "bg-muted text-muted-foreground",
 };
 
-const TYPE_FILTERS = ["All", "AI/ML", "Robotics", "Entrepreneurship", "Cloud/DevOps", "Data", "Open Source"] as const;
+const TYPE_FILTERS = [
+  "All",
+  "AI/ML",
+  "Robotics",
+  "Entrepreneurship",
+  "Cloud/DevOps",
+  "Data",
+  "Open Source",
+] as const;
 const CITY_OPTIONS = [
   "All Cities",
-  "Munich", "Zürich", "Karlsruhe", "Aachen", "Stuttgart", "Darmstadt",
-  "Lausanne", "Delft", "Paris", "Vienna", "Stockholm", "Poznań", "Milan",
+  "Munich",
+  "Zürich",
+  "Karlsruhe",
+  "Aachen",
+  "Stuttgart",
+  "Darmstadt",
+  "Lausanne",
+  "Delft",
+  "Paris",
+  "Vienna",
+  "Stockholm",
+  "Poznań",
+  "Milan",
 ] as const;
 
 const CITY_ID_MAP: Record<string, string> = {
-  "Munich": "munich",     "Zürich": "zurich",       "Karlsruhe": "karlsruhe",
-  "Aachen": "aachen",     "Stuttgart": "stuttgart",  "Darmstadt": "darmstadt",
-  "Lausanne": "lausanne", "Delft": "delft",          "Paris": "paris",
-  "Vienna": "vienna",     "Stockholm": "stockholm",  "Poznań": "poznan",
-  "Milan": "milan",
+  Munich: "munich",
+  Zürich: "zurich",
+  Karlsruhe: "karlsruhe",
+  Aachen: "aachen",
+  Stuttgart: "stuttgart",
+  Darmstadt: "darmstadt",
+  Lausanne: "lausanne",
+  Delft: "delft",
+  Paris: "paris",
+  Vienna: "vienna",
+  Stockholm: "stockholm",
+  Poznań: "poznan",
+  Milan: "milan",
 };
 
 export function Cooperations() {
@@ -62,7 +89,7 @@ export function Cooperations() {
   const [challengeTopic, setChallengeTopic] = useState("");
 
   const partnerableClubs = studentCommunities.filter((c) =>
-    clubPartnerships.some((p) => p.clubId === c.id)
+    clubPartnerships.some((p) => p.clubId === c.id),
   );
 
   const filteredClubs = partnerableClubs.filter((c) => {
@@ -71,13 +98,20 @@ export function Cooperations() {
     return true;
   });
 
-  const selectedClub = selectedClubId ? studentCommunities.find((c) => c.id === selectedClubId) ?? null : null;
-  const selectedPartnership = selectedClubId ? clubPartnerships.find((p) => p.clubId === selectedClubId) ?? null : null;
-  const selectedFormat = selectedFormatId ? coopFormats.find((f) => f.id === selectedFormatId) ?? null : null;
+  const selectedClub = selectedClubId
+    ? (studentCommunities.find((c) => c.id === selectedClubId) ?? null)
+    : null;
+  const selectedPartnership = selectedClubId
+    ? (clubPartnerships.find((p) => p.clubId === selectedClubId) ?? null)
+    : null;
+  const selectedFormat = selectedFormatId
+    ? (coopFormats.find((f) => f.id === selectedFormatId) ?? null)
+    : null;
 
-  const studentsEngaged = selectedClub && selectedFormat
-    ? Math.round(selectedClub.members * selectedFormat.engagementRate)
-    : 0;
+  const studentsEngaged =
+    selectedClub && selectedFormat
+      ? Math.round(selectedClub.members * selectedFormat.engagementRate)
+      : 0;
   const pipelineCandidates = Math.round(studentsEngaged * 0.6);
 
   function handleSelectClub(clubId: string) {
@@ -105,8 +139,10 @@ export function Cooperations() {
     setChallengeTopic("");
   }
 
-  const getClubName = (clubId: string) => studentCommunities.find((c) => c.id === clubId)?.name ?? clubId;
-  const getFormatName = (formatId: string) => coopFormats.find((f) => f.id === formatId)?.name ?? formatId;
+  const getClubName = (clubId: string) =>
+    studentCommunities.find((c) => c.id === clubId)?.name ?? clubId;
+  const getFormatName = (formatId: string) =>
+    coopFormats.find((f) => f.id === formatId)?.name ?? formatId;
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
@@ -139,12 +175,16 @@ export function Cooperations() {
             onChange={(e) => setCityFilter(e.target.value)}
             className="ml-2 bg-card border border-border rounded-md px-3 py-1 text-xs focus:outline-none focus:border-primary"
           >
-            {CITY_OPTIONS.map((c) => <option key={c}>{c}</option>)}
+            {CITY_OPTIONS.map((c) => (
+              <option key={c}>{c}</option>
+            ))}
           </select>
         </div>
 
         {/* Club browser + configurator */}
-        <div className={`grid gap-4 grid-cols-1 ${selectedClubId ? "md:grid-cols-[1fr_400px]" : "md:grid-cols-2"}`}>
+        <div
+          className={`grid gap-4 grid-cols-1 ${selectedClubId ? "md:grid-cols-[1fr_400px]" : "md:grid-cols-2"}`}
+        >
           {/* Club cards */}
           <div className="grid grid-cols-1 gap-3 content-start">
             {filteredClubs.map((club) => {
@@ -156,7 +196,9 @@ export function Cooperations() {
                 <div
                   key={club.id}
                   className={`bg-card border rounded-lg p-4 transition-all ${
-                    isSelected ? "border-primary shadow-sm" : "border-border hover:border-primary/50"
+                    isSelected
+                      ? "border-primary shadow-sm"
+                      : "border-border hover:border-primary/50"
                   }`}
                 >
                   <div className="flex items-start justify-between mb-2">
@@ -164,7 +206,9 @@ export function Cooperations() {
                       <div className="font-semibold text-sm">{club.name}</div>
                       <div className="text-xs text-muted-foreground mt-0.5">{club.university}</div>
                     </div>
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium shrink-0 ml-2 ${typeBadgeStyles[club.type]}`}>
+                    <span
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-medium shrink-0 ml-2 ${typeBadgeStyles[club.type]}`}
+                    >
                       {club.type}
                     </span>
                   </div>
@@ -173,12 +217,19 @@ export function Cooperations() {
                     <span className="text-muted-foreground">·</span>
                     <div className="flex gap-1">
                       {club.topSkills.slice(0, 2).map((s) => (
-                        <span key={s} className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary">{s}</span>
+                        <span
+                          key={s}
+                          className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary"
+                        >
+                          {s}
+                        </span>
                       ))}
                     </div>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${pill.cls}`}>
+                    <span
+                      className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${pill.cls}`}
+                    >
                       {pill.label}
                     </span>
                     <div className="relative group">
@@ -221,7 +272,9 @@ export function Cooperations() {
               </div>
 
               {/* Format selector */}
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Format</div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                Format
+              </div>
               <div className="space-y-2 mb-4">
                 {coopFormats
                   .filter((f) => selectedPartnership.availableFormats.includes(f.id))
@@ -246,14 +299,18 @@ export function Cooperations() {
               </div>
 
               {/* Date picker */}
-              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">Date</div>
+              <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                Date
+              </div>
               <div className="flex gap-2 mb-4">
                 <select
                   value={selectedMonth}
                   onChange={(e) => setSelectedMonth(e.target.value)}
                   className="flex-1 bg-background border border-border rounded-md px-2 py-1.5 text-sm focus:outline-none focus:border-primary"
                 >
-                  {MONTHS.map((m) => <option key={m}>{m}</option>)}
+                  {MONTHS.map((m) => (
+                    <option key={m}>{m}</option>
+                  ))}
                 </select>
                 <select
                   value={selectedYear}
@@ -280,11 +337,15 @@ export function Cooperations() {
               {/* Yield projection */}
               {selectedFormat && (
                 <div className="bg-[#F0F7F2] border border-[#B8E0C2] rounded-lg p-3 mb-4">
-                  <div className="text-xs font-semibold text-[#1F4A2E] mb-1">Projected Talent Yield</div>
+                  <div className="text-xs font-semibold text-[#1F4A2E] mb-1">
+                    Projected Talent Yield
+                  </div>
                   <div className="text-sm font-medium text-[#2F7A47]">
                     ~{studentsEngaged} students engaged → ~{pipelineCandidates} pipeline candidates
                   </div>
-                  <div className="text-[10px] text-[#2F7A47]/80 mt-0.5">{selectedFormat.priceRange}</div>
+                  <div className="text-[10px] text-[#2F7A47]/80 mt-0.5">
+                    {selectedFormat.priceRange}
+                  </div>
                 </div>
               )}
 
@@ -316,44 +377,60 @@ export function Cooperations() {
           ) : (
             <div className="border border-border rounded-lg overflow-hidden">
               <div className="overflow-x-auto">
-              <table className="w-full text-sm">
-                <thead className="bg-muted/50 border-b border-border">
-                  <tr>
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-muted-foreground">Club</th>
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-muted-foreground">Format</th>
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-muted-foreground">Status</th>
-                    <th className="text-left px-4 py-2.5 text-xs font-semibold text-muted-foreground">Date</th>
-                    <th className="text-right px-4 py-2.5 text-xs font-semibold text-muted-foreground">Projected</th>
-                    <th className="px-4 py-2.5" />
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-border">
-                  {activeCooperations.map((coop) => (
-                    <tr key={coop.id} className="hover:bg-muted/20">
-                      <td className="px-4 py-3 font-medium">{getClubName(coop.clubId)}</td>
-                      <td className="px-4 py-3 text-muted-foreground">{getFormatName(coop.format)}</td>
-                      <td className="px-4 py-3">
-                        <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${statusBadge[coop.status] ?? "bg-muted text-muted-foreground"}`}>
-                          {coop.status}
-                        </span>
-                      </td>
-                      <td className="px-4 py-3 text-muted-foreground">{coop.date}</td>
-                      <td className="px-4 py-3 text-right tabular-nums">{coop.projectedCandidates}</td>
-                      <td className="px-4 py-3 text-right">
-                        <button
-                          onClick={() => {
-                            setEventFilter("coop-" + coop.id);
-                            setView("candidates");
-                          }}
-                          className="text-xs text-primary hover:underline font-medium"
-                        >
-                          View Candidates →
-                        </button>
-                      </td>
+                <table className="w-full text-sm">
+                  <thead className="bg-muted/50 border-b border-border">
+                    <tr>
+                      <th className="text-left px-4 py-2.5 text-xs font-semibold text-muted-foreground">
+                        Club
+                      </th>
+                      <th className="text-left px-4 py-2.5 text-xs font-semibold text-muted-foreground">
+                        Format
+                      </th>
+                      <th className="text-left px-4 py-2.5 text-xs font-semibold text-muted-foreground">
+                        Status
+                      </th>
+                      <th className="text-left px-4 py-2.5 text-xs font-semibold text-muted-foreground">
+                        Date
+                      </th>
+                      <th className="text-right px-4 py-2.5 text-xs font-semibold text-muted-foreground">
+                        Projected
+                      </th>
+                      <th className="px-4 py-2.5" />
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                  </thead>
+                  <tbody className="divide-y divide-border">
+                    {activeCooperations.map((coop) => (
+                      <tr key={coop.id} className="hover:bg-muted/20">
+                        <td className="px-4 py-3 font-medium">{getClubName(coop.clubId)}</td>
+                        <td className="px-4 py-3 text-muted-foreground">
+                          {getFormatName(coop.format)}
+                        </td>
+                        <td className="px-4 py-3">
+                          <span
+                            className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${statusBadge[coop.status] ?? "bg-muted text-muted-foreground"}`}
+                          >
+                            {coop.status}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-muted-foreground">{coop.date}</td>
+                        <td className="px-4 py-3 text-right tabular-nums">
+                          {coop.projectedCandidates}
+                        </td>
+                        <td className="px-4 py-3 text-right">
+                          <button
+                            onClick={() => {
+                              setEventFilter("coop-" + coop.id);
+                              setView("candidates");
+                            }}
+                            className="text-xs text-primary hover:underline font-medium"
+                          >
+                            View Candidates →
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           )}

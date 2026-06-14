@@ -19,14 +19,21 @@ interface SidebarProps {
 export function Sidebar({ open = false, onClose }: SidebarProps) {
   const { view, setView } = useStore();
   return (
-    <aside className={`w-[220px] shrink-0 bg-sidebar border-r border-border flex-col h-screen fixed inset-y-0 left-0 z-50 md:relative md:z-auto md:sticky md:top-0 ${open ? "flex" : "hidden md:flex"}`}>
+    <aside
+      className={`w-[220px] shrink-0 bg-sidebar border-r border-border flex-col h-screen fixed inset-y-0 left-0 z-50 md:relative md:z-auto md:sticky md:top-0 ${open ? "flex" : "hidden md:flex"}`}
+    >
       <div className="px-5 py-5 flex items-center gap-2">
         <div className="w-7 h-7 rounded-md bg-[#1A1F1A] flex items-center justify-center">
           <Sparkles className="w-3.5 h-3.5 text-[#B8E0C2]" />
         </div>
         <span className="font-display text-xl tracking-tight text-foreground">EventIQ</span>
-        <span className="ml-1 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-mint text-mint-ink font-medium">beta</span>
-        <button onClick={onClose} className="ml-auto md:hidden text-muted-foreground hover:text-foreground">
+        <span className="ml-1 text-[10px] uppercase tracking-wider px-1.5 py-0.5 rounded bg-mint text-mint-ink font-medium">
+          beta
+        </span>
+        <button
+          onClick={onClose}
+          className="ml-auto md:hidden text-muted-foreground hover:text-foreground"
+        >
           <X className="w-4 h-4" />
         </button>
       </div>
@@ -37,14 +44,19 @@ export function Sidebar({ open = false, onClose }: SidebarProps) {
           return (
             <button
               key={it.id}
-              onClick={() => { setView(it.id); onClose?.(); }}
+              onClick={() => {
+                setView(it.id);
+                onClose?.();
+              }}
               className={`relative w-full flex items-center gap-2.5 px-3 py-2 rounded-md text-sm transition-colors ${
                 active
                   ? "bg-mint/40 text-foreground font-medium"
                   : "text-muted-foreground hover:text-foreground hover:bg-muted"
               }`}
             >
-              {active && <span className="absolute left-0 top-1.5 bottom-1.5 w-[2px] rounded-r bg-mint-ink" />}
+              {active && (
+                <span className="absolute left-0 top-1.5 bottom-1.5 w-[2px] rounded-r bg-mint-ink" />
+              )}
               <Icon className="w-4 h-4" />
               {it.label}
             </button>

@@ -22,20 +22,20 @@ A geographically accurate, interactive globe that lets a recruiter go from "wher
 ### `EventItem` — add fields
 
 ```ts
-lat: number      // event venue latitude
-lng: number      // event venue longitude
-cityId: string   // links to a CityMarker id (or null if no city marker)
+lat: number; // event venue latitude
+lng: number; // event venue longitude
+cityId: string; // links to a CityMarker id (or null if no city marker)
 ```
 
 Populated values:
 
-| Event | lat | lng | cityId |
-|---|---|---|---|
-| HackTUM 2025 | 48.14 | 11.58 | munich |
-| START Hack 2025 | 47.42 | 9.37 | st-gallen |
-| CODE Berlin Hackathon | 52.52 | 13.41 | berlin |
-| ETH Build Night | 47.38 | 8.54 | zurich |
-| KIT Innovation Hack | 49.01 | 8.40 | karlsruhe |
+| Event                 | lat   | lng   | cityId    |
+| --------------------- | ----- | ----- | --------- |
+| HackTUM 2025          | 48.14 | 11.58 | munich    |
+| START Hack 2025       | 47.42 | 9.37  | st-gallen |
+| CODE Berlin Hackathon | 52.52 | 13.41 | berlin    |
+| ETH Build Night       | 47.38 | 8.54  | zurich    |
+| KIT Innovation Hack   | 49.01 | 8.40  | karlsruhe |
 
 ### `CityMarker` — add St. Gallen
 
@@ -85,7 +85,7 @@ Fixed: `theta = (c.lat / 90) * (Math.PI / 2 - 0.1)` — maps 0–90° lat to 0�
 `globe.update()` currently omits scale. Add:
 
 ```ts
-globe.update({ phi: phiRef.current, theta: thetaRef.current, scale: zoomRef.current })
+globe.update({ phi: phiRef.current, theta: thetaRef.current, scale: zoomRef.current });
 ```
 
 This keeps the canvas rendering resolution locked to the globe's logical size at all zoom levels, eliminating blur at zoom > 1.
@@ -93,9 +93,9 @@ This keeps the canvas rendering resolution locked to the globe's logical size at
 ### Default orientation
 
 ```ts
-const DEFAULT_PHI = -(10 * Math.PI) / 180   // center on ~10°E (central Europe)
-const DEFAULT_THETA = 0.35                    // slight northern tilt
-const DEFAULT_ZOOM = 1
+const DEFAULT_PHI = -(10 * Math.PI) / 180; // center on ~10°E (central Europe)
+const DEFAULT_THETA = 0.35; // slight northern tilt
+const DEFAULT_ZOOM = 1;
 ```
 
 DACH cities (Munich, Zürich, Berlin, Karlsruhe) are visible on load without any click.
@@ -197,6 +197,7 @@ Unchanged from current design — name, type badge, member count, university aff
 **Keep:** drag-to-rotate and scroll-to-zoom.
 
 **Keep:** hint text at bottom-left (update copy to reflect new interactions):
+
 - World view: `"Drag to spin · Click a continent to explore"`
 - Continent view: `"Click a city or event marker · Drag to rotate · Scroll to zoom"`
 
@@ -210,12 +211,12 @@ No changes needed. `eventFilter: string` and `setEventFilter` already exist in t
 
 ## Files Changed
 
-| File | Change |
-|---|---|
-| `src/lib/eventiq/mockData.ts` | Add lat/lng/cityId to EventItem; add St. Gallen CityMarker; update Europe continent anchor |
-| `src/lib/eventiq/store.tsx` | No changes needed — eventFilter already exists |
-| `src/components/eventiq/views/Ecosystem.tsx` | All globe fixes + new marker system + unified city card |
-| `src/components/eventiq/views/Candidates.tsx` | Verify eventFilter is already wired; no changes expected |
+| File                                          | Change                                                                                     |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| `src/lib/eventiq/mockData.ts`                 | Add lat/lng/cityId to EventItem; add St. Gallen CityMarker; update Europe continent anchor |
+| `src/lib/eventiq/store.tsx`                   | No changes needed — eventFilter already exists                                             |
+| `src/components/eventiq/views/Ecosystem.tsx`  | All globe fixes + new marker system + unified city card                                    |
+| `src/components/eventiq/views/Candidates.tsx` | Verify eventFilter is already wired; no changes expected                                   |
 
 ---
 

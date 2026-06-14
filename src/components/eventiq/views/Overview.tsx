@@ -3,19 +3,44 @@ import { ArrowUp, ArrowDown, UserCheck, FileText, Mail, Calendar, Users } from "
 import { events, recentActivity, funnelData, type FunnelStage } from "@/lib/eventiq/mockData";
 
 const chartData = [...events]
-  .map((e) => ({ name: e.name.replace(" 2025", "").replace(" 2024", ""), candidates: e.optIns, sponsorship: e.sponsorship, cpl: Math.round(e.sponsorship / e.optIns) }))
+  .map((e) => ({
+    name: e.name.replace(" 2025", "").replace(" 2024", ""),
+    candidates: e.optIns,
+    sponsorship: e.sponsorship,
+    cpl: Math.round(e.sponsorship / e.optIns),
+  }))
   .sort((a, b) => b.candidates - a.candidates);
 
-const iconMap = { "user-check": UserCheck, "file-text": FileText, mail: Mail, calendar: Calendar, users: Users };
+const iconMap = {
+  "user-check": UserCheck,
+  "file-text": FileText,
+  mail: Mail,
+  calendar: Calendar,
+  users: Users,
+};
 
-function Kpi({ label, value, delta, deltaPositive }: { label: string; value: string; delta?: string; deltaPositive?: boolean }) {
+function Kpi({
+  label,
+  value,
+  delta,
+  deltaPositive,
+}: {
+  label: string;
+  value: string;
+  delta?: string;
+  deltaPositive?: boolean;
+}) {
   return (
     <div className="bg-card border border-border rounded-xl p-5 shadow-[0_1px_2px_rgba(15,20,16,0.04)]">
-      <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-medium">{label}</div>
+      <div className="text-[11px] uppercase tracking-wider text-muted-foreground font-medium">
+        {label}
+      </div>
       <div className="mt-3 flex items-baseline gap-2">
         <div className="font-display text-4xl tabular-nums leading-none">{value}</div>
         {delta && (
-          <div className={`flex items-center gap-0.5 text-xs font-medium ${deltaPositive ? "text-mint-ink" : "text-destructive"}`}>
+          <div
+            className={`flex items-center gap-0.5 text-xs font-medium ${deltaPositive ? "text-mint-ink" : "text-destructive"}`}
+          >
             {deltaPositive ? <ArrowUp className="w-3 h-3" /> : <ArrowDown className="w-3 h-3" />}
             {delta}
           </div>
@@ -45,7 +70,10 @@ function ConversionFunnel({ data }: { data: FunnelStage[] }) {
                 {stage.value.toLocaleString()}
               </span>
               {stage.pct && (
-                <span className="text-[10px] tabular-nums" style={{ color: FUNNEL_FG[i], opacity: 0.75 }}>
+                <span
+                  className="text-[10px] tabular-nums"
+                  style={{ color: FUNNEL_FG[i], opacity: 0.75 }}
+                >
                   {stage.pct}
                 </span>
               )}
@@ -58,7 +86,13 @@ function ConversionFunnel({ data }: { data: FunnelStage[] }) {
 }
 
 export function Overview() {
-  const tooltipStyle = { background: "#FFFFFF", border: "1px solid #E3E8E3", borderRadius: 8, fontSize: 12, color: "#1A1F1A" };
+  const tooltipStyle = {
+    background: "#FFFFFF",
+    border: "1px solid #E3E8E3",
+    borderRadius: 8,
+    fontSize: 12,
+    color: "#1A1F1A",
+  };
 
   return (
     <div className="p-4 md:p-10 max-w-[1400px]">
@@ -66,7 +100,9 @@ export function Overview() {
         <h1 className="font-display text-3xl md:text-5xl leading-[1.05] tracking-tight max-w-3xl">
           Hiring intelligence for <span className="highlight-marker">technical talent</span>
         </h1>
-        <p className="text-sm text-muted-foreground mt-3">A snapshot of every sponsored event, candidate, and follow-up across your pipeline.</p>
+        <p className="text-sm text-muted-foreground mt-3">
+          A snapshot of every sponsored event, candidate, and follow-up across your pipeline.
+        </p>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
@@ -84,15 +120,38 @@ export function Overview() {
           </div>
           <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData} layout="vertical" margin={{ left: 30, right: 20, top: 8, bottom: 8 }}>
-                <XAxis type="number" tick={{ fill: "#5C6660", fontSize: 11 }} axisLine={false} tickLine={false} />
-                <YAxis dataKey="name" type="category" tick={{ fill: "#1A1F1A", fontSize: 12 }} axisLine={false} tickLine={false} width={130} />
+              <BarChart
+                data={chartData}
+                layout="vertical"
+                margin={{ left: 30, right: 20, top: 8, bottom: 8 }}
+              >
+                <XAxis
+                  type="number"
+                  tick={{ fill: "#5C6660", fontSize: 11 }}
+                  axisLine={false}
+                  tickLine={false}
+                />
+                <YAxis
+                  dataKey="name"
+                  type="category"
+                  tick={{ fill: "#1A1F1A", fontSize: 12 }}
+                  axisLine={false}
+                  tickLine={false}
+                  width={130}
+                />
                 <Tooltip
                   cursor={{ fill: "#F4F7F4" }}
                   contentStyle={tooltipStyle}
-                  formatter={(value: number, _name, item: { payload?: { sponsorship: number; cpl: number } }) => {
+                  formatter={(
+                    value: number,
+                    _name,
+                    item: { payload?: { sponsorship: number; cpl: number } },
+                  ) => {
                     const p = item?.payload;
-                    return [`${value} candidates · €${p?.sponsorship.toLocaleString()} spent · €${p?.cpl}/lead`, ""];
+                    return [
+                      `${value} candidates · €${p?.sponsorship.toLocaleString()} spent · €${p?.cpl}/lead`,
+                      "",
+                    ];
                   }}
                 />
                 <Bar dataKey="candidates" fill="#2F7A47" radius={[0, 6, 6, 0]} barSize={22} />

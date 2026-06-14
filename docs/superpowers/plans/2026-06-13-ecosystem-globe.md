@@ -13,6 +13,7 @@
 ### Task 1: Install cobe and update mockData with coordinates and city grouping
 
 **Files:**
+
 - Modify: `src/lib/eventiq/mockData.ts`
 
 - [ ] **Step 1: Install the `cobe` package**
@@ -50,7 +51,14 @@ Find the `StudentCommunity` interface and replace it with:
 export interface StudentCommunity {
   id: string;
   name: string;
-  type: "AI/ML" | "Robotics" | "Entrepreneurship" | "Cloud/DevOps" | "Data" | "Open Source" | "Community";
+  type:
+    | "AI/ML"
+    | "Robotics"
+    | "Entrepreneurship"
+    | "Cloud/DevOps"
+    | "Data"
+    | "Open Source"
+    | "Community";
   university: string;
   city: string;
   members: number;
@@ -62,14 +70,102 @@ export interface StudentCommunity {
 
 ```ts
 export const universityProfiles: UniversityProfile[] = [
-  { id: "tum",          name: "TU Munich",     shortName: "TUM",          location: "Munich",    city: "munich",    lat: 48.14, lng: 11.58, candidates: 67, topSkills: ["ML", "Python", "Robotics"],      roleAffinity: "ML/AI · Systems" },
-  { id: "eth",          name: "ETH Zürich",    shortName: "ETH",          location: "Zürich",    city: "zurich",    lat: 47.38, lng:  8.54, candidates: 48, topSkills: ["C++", "CUDA", "Rust"],           roleAffinity: "Systems · Research" },
-  { id: "tuberlin",     name: "TU Berlin",     shortName: "TU Berlin",    location: "Berlin",    city: "berlin",    lat: 52.52, lng: 13.41, candidates: 31, topSkills: ["React", "TypeScript", "Go"],      roleAffinity: "Frontend · Backend" },
-  { id: "kit",          name: "KIT",           shortName: "KIT",          location: "Karlsruhe", city: "karlsruhe", lat: 49.01, lng:  8.40, candidates: 29, topSkills: ["Python", "Spark", "Embedded"],    roleAffinity: "Data · Embedded" },
-  { id: "rwth",         name: "RWTH Aachen",   shortName: "RWTH",         location: "Aachen",    city: "aachen",    lat: 50.78, lng:  6.08, candidates: 24, topSkills: ["Java", "NLP", "Systems"],         roleAffinity: "Backend" },
-  { id: "unistuttgart", name: "Uni Stuttgart", shortName: "Stuttgart",    location: "Stuttgart", city: "stuttgart", lat: 48.78, lng:  9.18, candidates: 18, topSkills: ["Go", "Kubernetes", "DevOps"],     roleAffinity: "Backend · Infra" },
-  { id: "tudarmstadt",  name: "TU Darmstadt",  shortName: "TU Darmstadt", location: "Darmstadt", city: "darmstadt", lat: 49.88, lng:  8.66, candidates: 16, topSkills: ["C++", "Embedded", "RTOS"],        roleAffinity: "Systems" },
-  { id: "lmu",          name: "LMU Munich",    shortName: "LMU",          location: "Munich",    city: "munich",    lat: 48.14, lng: 11.58, candidates: 14, topSkills: ["Rust", "WebAssembly", "Systems"], roleAffinity: "Systems" },
+  {
+    id: "tum",
+    name: "TU Munich",
+    shortName: "TUM",
+    location: "Munich",
+    city: "munich",
+    lat: 48.14,
+    lng: 11.58,
+    candidates: 67,
+    topSkills: ["ML", "Python", "Robotics"],
+    roleAffinity: "ML/AI · Systems",
+  },
+  {
+    id: "eth",
+    name: "ETH Zürich",
+    shortName: "ETH",
+    location: "Zürich",
+    city: "zurich",
+    lat: 47.38,
+    lng: 8.54,
+    candidates: 48,
+    topSkills: ["C++", "CUDA", "Rust"],
+    roleAffinity: "Systems · Research",
+  },
+  {
+    id: "tuberlin",
+    name: "TU Berlin",
+    shortName: "TU Berlin",
+    location: "Berlin",
+    city: "berlin",
+    lat: 52.52,
+    lng: 13.41,
+    candidates: 31,
+    topSkills: ["React", "TypeScript", "Go"],
+    roleAffinity: "Frontend · Backend",
+  },
+  {
+    id: "kit",
+    name: "KIT",
+    shortName: "KIT",
+    location: "Karlsruhe",
+    city: "karlsruhe",
+    lat: 49.01,
+    lng: 8.4,
+    candidates: 29,
+    topSkills: ["Python", "Spark", "Embedded"],
+    roleAffinity: "Data · Embedded",
+  },
+  {
+    id: "rwth",
+    name: "RWTH Aachen",
+    shortName: "RWTH",
+    location: "Aachen",
+    city: "aachen",
+    lat: 50.78,
+    lng: 6.08,
+    candidates: 24,
+    topSkills: ["Java", "NLP", "Systems"],
+    roleAffinity: "Backend",
+  },
+  {
+    id: "unistuttgart",
+    name: "Uni Stuttgart",
+    shortName: "Stuttgart",
+    location: "Stuttgart",
+    city: "stuttgart",
+    lat: 48.78,
+    lng: 9.18,
+    candidates: 18,
+    topSkills: ["Go", "Kubernetes", "DevOps"],
+    roleAffinity: "Backend · Infra",
+  },
+  {
+    id: "tudarmstadt",
+    name: "TU Darmstadt",
+    shortName: "TU Darmstadt",
+    location: "Darmstadt",
+    city: "darmstadt",
+    lat: 49.88,
+    lng: 8.66,
+    candidates: 16,
+    topSkills: ["C++", "Embedded", "RTOS"],
+    roleAffinity: "Systems",
+  },
+  {
+    id: "lmu",
+    name: "LMU Munich",
+    shortName: "LMU",
+    location: "Munich",
+    city: "munich",
+    lat: 48.14,
+    lng: 11.58,
+    candidates: 14,
+    topSkills: ["Rust", "WebAssembly", "Systems"],
+    roleAffinity: "Systems",
+  },
 ];
 ```
 
@@ -77,16 +173,96 @@ export const universityProfiles: UniversityProfile[] = [
 
 ```ts
 export const studentCommunities: StudentCommunity[] = [
-  { id: "tum-ai",          name: "TUM AI Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    members: 280, topSkills: ["Python", "LLMs"] },
-  { id: "tum-ml",          name: "TUM ML Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    members: 210, topSkills: ["PyTorch", "ML"] },
-  { id: "tum-robotics",    name: "TUM Robotics Club",               type: "Robotics",         university: "TU Munich",     city: "munich",    members: 145, topSkills: ["C++", "ROS"] },
-  { id: "eth-robotics",    name: "ETH Robotics Society",            type: "Robotics",         university: "ETH Zürich",    city: "zurich",    members: 120, topSkills: ["C++", "CUDA"] },
-  { id: "eth-women",       name: "ETH Women in Tech",               type: "Community",        university: "ETH Zürich",    city: "zurich",    members: 340, topSkills: ["Python", "ML"] },
-  { id: "eth-entre",       name: "ETH Entrepreneurship Club",       type: "Entrepreneurship", university: "ETH Zürich",    city: "zurich",    members: 190, topSkills: ["React", "TypeScript"] },
-  { id: "kit-data",        name: "KIT Data Science Club",           type: "Data",             university: "KIT",           city: "karlsruhe", members:  95, topSkills: ["Python", "Spark"] },
-  { id: "tud-robotics",    name: "TU Darmstadt Robotics Club",      type: "Robotics",         university: "TU Darmstadt",  city: "darmstadt", members: 110, topSkills: ["C++", "Embedded"] },
-  { id: "stuttgart-cloud", name: "Uni Stuttgart Cloud Native Club", type: "Cloud/DevOps",     university: "Uni Stuttgart", city: "stuttgart", members:  75, topSkills: ["Go", "Kubernetes"] },
-  { id: "lmu-oss",         name: "LMU Open Source Lab",             type: "Open Source",      university: "LMU Munich",    city: "munich",    members:  85, topSkills: ["Rust", "WebAssembly"] },
+  {
+    id: "tum-ai",
+    name: "TUM AI Society",
+    type: "AI/ML",
+    university: "TU Munich",
+    city: "munich",
+    members: 280,
+    topSkills: ["Python", "LLMs"],
+  },
+  {
+    id: "tum-ml",
+    name: "TUM ML Society",
+    type: "AI/ML",
+    university: "TU Munich",
+    city: "munich",
+    members: 210,
+    topSkills: ["PyTorch", "ML"],
+  },
+  {
+    id: "tum-robotics",
+    name: "TUM Robotics Club",
+    type: "Robotics",
+    university: "TU Munich",
+    city: "munich",
+    members: 145,
+    topSkills: ["C++", "ROS"],
+  },
+  {
+    id: "eth-robotics",
+    name: "ETH Robotics Society",
+    type: "Robotics",
+    university: "ETH Zürich",
+    city: "zurich",
+    members: 120,
+    topSkills: ["C++", "CUDA"],
+  },
+  {
+    id: "eth-women",
+    name: "ETH Women in Tech",
+    type: "Community",
+    university: "ETH Zürich",
+    city: "zurich",
+    members: 340,
+    topSkills: ["Python", "ML"],
+  },
+  {
+    id: "eth-entre",
+    name: "ETH Entrepreneurship Club",
+    type: "Entrepreneurship",
+    university: "ETH Zürich",
+    city: "zurich",
+    members: 190,
+    topSkills: ["React", "TypeScript"],
+  },
+  {
+    id: "kit-data",
+    name: "KIT Data Science Club",
+    type: "Data",
+    university: "KIT",
+    city: "karlsruhe",
+    members: 95,
+    topSkills: ["Python", "Spark"],
+  },
+  {
+    id: "tud-robotics",
+    name: "TU Darmstadt Robotics Club",
+    type: "Robotics",
+    university: "TU Darmstadt",
+    city: "darmstadt",
+    members: 110,
+    topSkills: ["C++", "Embedded"],
+  },
+  {
+    id: "stuttgart-cloud",
+    name: "Uni Stuttgart Cloud Native Club",
+    type: "Cloud/DevOps",
+    university: "Uni Stuttgart",
+    city: "stuttgart",
+    members: 75,
+    topSkills: ["Go", "Kubernetes"],
+  },
+  {
+    id: "lmu-oss",
+    name: "LMU Open Source Lab",
+    type: "Open Source",
+    university: "LMU Munich",
+    city: "munich",
+    members: 85,
+    topSkills: ["Rust", "WebAssembly"],
+  },
 ];
 ```
 
@@ -101,13 +277,13 @@ export interface CityMarker {
 }
 
 export const cityMarkers: CityMarker[] = [
-  { id: "munich",    name: "Munich",    lat: 48.14, lng: 11.58 },
-  { id: "zurich",    name: "Zürich",    lat: 47.38, lng:  8.54 },
-  { id: "berlin",    name: "Berlin",    lat: 52.52, lng: 13.41 },
-  { id: "karlsruhe", name: "Karlsruhe", lat: 49.01, lng:  8.40 },
-  { id: "aachen",    name: "Aachen",    lat: 50.78, lng:  6.08 },
-  { id: "stuttgart", name: "Stuttgart", lat: 48.78, lng:  9.18 },
-  { id: "darmstadt", name: "Darmstadt", lat: 49.88, lng:  8.66 },
+  { id: "munich", name: "Munich", lat: 48.14, lng: 11.58 },
+  { id: "zurich", name: "Zürich", lat: 47.38, lng: 8.54 },
+  { id: "berlin", name: "Berlin", lat: 52.52, lng: 13.41 },
+  { id: "karlsruhe", name: "Karlsruhe", lat: 49.01, lng: 8.4 },
+  { id: "aachen", name: "Aachen", lat: 50.78, lng: 6.08 },
+  { id: "stuttgart", name: "Stuttgart", lat: 48.78, lng: 9.18 },
+  { id: "darmstadt", name: "Darmstadt", lat: 49.88, lng: 8.66 },
 ];
 ```
 
@@ -133,6 +309,7 @@ git commit -m "feat: install cobe and add lat/lng/city/cityMarkers to mockData"
 ### Task 2: Rewrite Ecosystem.tsx as interactive globe with two-panel layout
 
 **Files:**
+
 - Modify: `src/components/eventiq/views/Ecosystem.tsx`
 
 - [ ] **Step 1: Replace the entire contents of `Ecosystem.tsx` with the new component**
@@ -150,13 +327,13 @@ import {
 const GLOBE_SIZE = 580;
 
 const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
-  "AI/ML":            "bg-[#DCEFE2] text-[#1F4A2E]",
-  "Robotics":         "bg-[#E2E8F0] text-[#334155]",
-  "Entrepreneurship": "bg-[#F5E7CC] text-[#7A5712]",
-  "Cloud/DevOps":     "bg-[#E8F0F5] text-[#1A4A6E]",
-  "Data":             "bg-[#F0E8F5] text-[#4A1A6E]",
-  "Open Source":      "bg-[#F5F0E8] text-[#6E4A1A]",
-  "Community":        "bg-secondary text-muted-foreground",
+  "AI/ML": "bg-[#DCEFE2] text-[#1F4A2E]",
+  Robotics: "bg-[#E2E8F0] text-[#334155]",
+  Entrepreneurship: "bg-[#F5E7CC] text-[#7A5712]",
+  "Cloud/DevOps": "bg-[#E8F0F5] text-[#1A4A6E]",
+  Data: "bg-[#F0E8F5] text-[#4A1A6E]",
+  "Open Source": "bg-[#F5F0E8] text-[#6E4A1A]",
+  Community: "bg-secondary text-muted-foreground",
 };
 
 function projectToScreen(
@@ -164,7 +341,7 @@ function projectToScreen(
   lng: number,
   phi: number,
   theta: number,
-  size: number
+  size: number,
 ): { x: number; y: number; visible: boolean } {
   const latR = (lat * Math.PI) / 180;
   const lngR = (lng * Math.PI) / 180;
@@ -175,15 +352,15 @@ function projectToScreen(
 
   const cosPhi = Math.cos(phi);
   const sinPhi = Math.sin(phi);
-  const x1 =  x0 * cosPhi + z0 * sinPhi;
-  const y1 =  y0;
+  const x1 = x0 * cosPhi + z0 * sinPhi;
+  const y1 = y0;
   const z1 = -x0 * sinPhi + z0 * cosPhi;
 
   const cosTheta = Math.cos(theta);
   const sinTheta = Math.sin(theta);
-  const x2 =  x1;
-  const y2 =  y1 * cosTheta - z1 * sinTheta;
-  const z2 =  y1 * sinTheta + z1 * cosTheta;
+  const x2 = x1;
+  const y2 = y1 * cosTheta - z1 * sinTheta;
+  const z2 = y1 * sinTheta + z1 * cosTheta;
 
   const radius = size * 0.42;
   return {
@@ -197,41 +374,41 @@ type OverlayPos = { id: string; x: number; y: number; visible: boolean };
 
 export function Ecosystem() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const phiRef    = useRef(0.25);
-  const thetaRef  = useRef(0.25);
-  const isDragging   = useRef(false);
+  const phiRef = useRef(0.25);
+  const thetaRef = useRef(0.25);
+  const isDragging = useRef(false);
   const pointerStart = useRef<{ x: number; phi: number } | null>(null);
   const [overlayPositions, setOverlayPositions] = useState<OverlayPos[]>([]);
-  const [selectedCityId, setSelectedCityId]     = useState<string | null>(null);
+  const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
 
   useEffect(() => {
     if (!canvasRef.current) return;
     const globe = createGlobe(canvasRef.current, {
       devicePixelRatio: 2,
-      width:  GLOBE_SIZE * 2,
+      width: GLOBE_SIZE * 2,
       height: GLOBE_SIZE * 2,
-      phi:   phiRef.current,
+      phi: phiRef.current,
       theta: thetaRef.current,
       dark: 1,
       diffuse: 1.2,
       mapSamples: 16000,
       mapBrightness: 5,
-      baseColor:   [0.12, 0.16, 0.12],
+      baseColor: [0.12, 0.16, 0.12],
       markerColor: [0.69, 0.87, 0.76],
-      glowColor:   [0.18, 0.47, 0.28],
+      glowColor: [0.18, 0.47, 0.28],
       markers: cityMarkers.map((c) => ({
         location: [c.lat, c.lng] as [number, number],
         size: 0.04,
       })),
       onRender: (state) => {
         if (!isDragging.current) phiRef.current += 0.003;
-        state.phi   = phiRef.current;
+        state.phi = phiRef.current;
         state.theta = thetaRef.current;
         setOverlayPositions(
           cityMarkers.map((c) => ({
             id: c.id,
             ...projectToScreen(c.lat, c.lng, state.phi, state.theta, GLOBE_SIZE),
-          }))
+          })),
         );
       },
     });
@@ -253,11 +430,15 @@ export function Ecosystem() {
     pointerStart.current = null;
   }
 
-  const selectedCity      = selectedCityId ? cityMarkers.find((c) => c.id === selectedCityId) : null;
-  const cityUniversities  = selectedCityId ? universityProfiles.filter((u) => u.city === selectedCityId) : [];
-  const cityCommunities   = selectedCityId ? studentCommunities.filter((c) => c.city === selectedCityId) : [];
+  const selectedCity = selectedCityId ? cityMarkers.find((c) => c.id === selectedCityId) : null;
+  const cityUniversities = selectedCityId
+    ? universityProfiles.filter((u) => u.city === selectedCityId)
+    : [];
+  const cityCommunities = selectedCityId
+    ? studentCommunities.filter((c) => c.city === selectedCityId)
+    : [];
   const cityTotalCandidates = cityUniversities.reduce((s, u) => s + u.candidates, 0);
-  const totalCandidates     = universityProfiles.reduce((s, u) => s + u.candidates, 0);
+  const totalCandidates = universityProfiles.reduce((s, u) => s + u.candidates, 0);
 
   return (
     <div className="flex flex-col h-screen overflow-hidden">
@@ -271,7 +452,6 @@ export function Ecosystem() {
 
       {/* Two-panel body */}
       <div className="flex flex-1 min-h-0">
-
         {/* Left: Globe */}
         <div className="flex-1 flex items-center justify-center bg-[#0A0D0A] relative overflow-hidden">
           <div className="relative" style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }}>
@@ -356,8 +536,7 @@ export function Ecosystem() {
                 <div>
                   <h2 className="text-xl font-bold">{selectedCity.name}</h2>
                   <div className="text-xs text-muted-foreground mt-0.5">
-                    {cityTotalCandidates} candidates ·{" "}
-                    {cityUniversities.length}{" "}
+                    {cityTotalCandidates} candidates · {cityUniversities.length}{" "}
                     {cityUniversities.length === 1 ? "university" : "universities"}
                     {cityCommunities.length > 0 &&
                       ` · ${cityCommunities.length} ${
@@ -385,11 +564,16 @@ export function Ecosystem() {
                         <div className="text-sm font-semibold">{u.shortName}</div>
                         <div className="text-[10px] text-muted-foreground">{u.name}</div>
                       </div>
-                      <div className="text-xl font-bold tabular-nums">{u.candidates.toLocaleString()}</div>
+                      <div className="text-xl font-bold tabular-nums">
+                        {u.candidates.toLocaleString()}
+                      </div>
                       <div className="text-xs text-muted-foreground mb-2">candidates</div>
                       <div className="flex flex-wrap gap-1 mb-2">
                         {u.topSkills.map((s) => (
-                          <span key={s} className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary">
+                          <span
+                            key={s}
+                            className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary"
+                          >
                             {s}
                           </span>
                         ))}
@@ -413,15 +597,22 @@ export function Ecosystem() {
                       <div key={c.id} className="bg-card border border-border rounded-lg p-3">
                         <div className="flex items-start justify-between mb-1">
                           <div className="text-sm font-semibold leading-tight">{c.name}</div>
-                          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium shrink-0 ml-2 ${typeBadgeStyles[c.type]}`}>
+                          <span
+                            className={`text-[10px] px-2 py-0.5 rounded-full font-medium shrink-0 ml-2 ${typeBadgeStyles[c.type]}`}
+                          >
                             {c.type}
                           </span>
                         </div>
-                        <div className="text-lg font-bold tabular-nums">{c.members.toLocaleString()}</div>
+                        <div className="text-lg font-bold tabular-nums">
+                          {c.members.toLocaleString()}
+                        </div>
                         <div className="text-xs text-muted-foreground mb-2">members</div>
                         <div className="flex flex-wrap gap-1">
                           {c.topSkills.map((s) => (
-                            <span key={s} className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary">
+                            <span
+                              key={s}
+                              className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary"
+                            >
                               {s}
                             </span>
                           ))}
@@ -466,6 +657,7 @@ git commit -m "feat: replace Ecosystem card grid with interactive cobe globe"
 ## Self-Review
 
 **Spec coverage:**
+
 - ✅ `cobe` installed (Task 1, Step 1)
 - ✅ `lat`, `lng`, `city` added to `UniversityProfile` (Task 1, Steps 2+4)
 - ✅ `city` added to `StudentCommunity` (Task 1, Steps 3+5)

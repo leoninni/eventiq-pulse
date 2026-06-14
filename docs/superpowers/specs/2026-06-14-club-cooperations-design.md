@@ -29,12 +29,12 @@ export interface CooperationFormat {
   name: string;
   description: string;
   duration: string;
-  engagementRate: number;   // fraction of club members expected to engage
+  engagementRate: number; // fraction of club members expected to engage
   priceRange: string;
 }
 
 export interface ClubPartnership {
-  clubId: string;           // matches a studentCommunities id
+  clubId: string; // matches a studentCommunities id
   totalSlots: number;
   takenSlots: number;
   availableFormats: CooperationFormat["id"][];
@@ -45,7 +45,7 @@ export interface ActiveCooperation {
   clubId: string;
   format: CooperationFormat["id"];
   status: "Confirmed" | "Pending" | "Completed";
-  date: string;             // formatted as "Mon DD, YYYY", e.g. "Sep 15, 2026"
+  date: string; // formatted as "Mon DD, YYYY", e.g. "Sep 15, 2026"
   challengeTopic?: string;
   projectedCandidates: number;
 }
@@ -76,7 +76,7 @@ export const coopFormats: CooperationFormat[] = [
     name: "Private Hackathon",
     description: "Full-day exclusive event, company-designed tracks",
     duration: "full day",
-    engagementRate: 0.40,
+    engagementRate: 0.4,
     priceRange: "€5,000 – €10,000",
   },
 ];
@@ -86,14 +86,54 @@ export const coopFormats: CooperationFormat[] = [
 
 ```ts
 export const clubPartnerships: ClubPartnership[] = [
-  { clubId: "tum-robotics",    totalSlots: 3, takenSlots: 2, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
-  { clubId: "tum-ai",          totalSlots: 4, takenSlots: 1, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
-  { clubId: "eth-robotics",    totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },
-  { clubId: "eth-entre",       totalSlots: 3, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
-  { clubId: "kit-data",        totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
-  { clubId: "tud-robotics",    totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },
-  { clubId: "stuttgart-cloud", totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
-  { clubId: "lmu-oss",         totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
+  {
+    clubId: "tum-robotics",
+    totalSlots: 3,
+    takenSlots: 2,
+    availableFormats: ["workshop", "challenge-sprint", "private-hackathon"],
+  },
+  {
+    clubId: "tum-ai",
+    totalSlots: 4,
+    takenSlots: 1,
+    availableFormats: ["workshop", "challenge-sprint", "private-hackathon"],
+  },
+  {
+    clubId: "eth-robotics",
+    totalSlots: 2,
+    takenSlots: 1,
+    availableFormats: ["workshop", "private-hackathon"],
+  },
+  {
+    clubId: "eth-entre",
+    totalSlots: 3,
+    takenSlots: 0,
+    availableFormats: ["workshop", "challenge-sprint", "private-hackathon"],
+  },
+  {
+    clubId: "kit-data",
+    totalSlots: 2,
+    takenSlots: 0,
+    availableFormats: ["workshop", "challenge-sprint"],
+  },
+  {
+    clubId: "tud-robotics",
+    totalSlots: 2,
+    takenSlots: 1,
+    availableFormats: ["workshop", "private-hackathon"],
+  },
+  {
+    clubId: "stuttgart-cloud",
+    totalSlots: 2,
+    takenSlots: 0,
+    availableFormats: ["workshop", "challenge-sprint"],
+  },
+  {
+    clubId: "lmu-oss",
+    totalSlots: 2,
+    takenSlots: 0,
+    availableFormats: ["workshop", "challenge-sprint"],
+  },
 ];
 ```
 
@@ -102,7 +142,7 @@ export const clubPartnerships: ClubPartnership[] = [
 ```ts
 export const initialActiveCooperations: ActiveCooperation[] = [
   {
-    id: "1",   // plain id; filter value = "coop-1"
+    id: "1", // plain id; filter value = "coop-1"
     clubId: "tum-ai",
     format: "challenge-sprint",
     status: "Confirmed",
@@ -140,7 +180,14 @@ Add 2–3 candidates to the existing `candidates` array whose `communityRoles` i
 Add `"cooperations"` to the `View` union:
 
 ```ts
-type View = "overview" | "events" | "candidates" | "ecosystem" | "reports" | "recommendations" | "cooperations";
+type View =
+  | "overview"
+  | "events"
+  | "candidates"
+  | "ecosystem"
+  | "reports"
+  | "recommendations"
+  | "cooperations";
 ```
 
 ### Active cooperations state
@@ -170,6 +217,7 @@ p:  "Find exclusive talent partnerships with Europe's top student organizations.
 ### Club Browser
 
 **Filter row:**
+
 - Type chips: All / AI/ML / Robotics / Entrepreneurship / Cloud/DevOps / Data / Open Source. Active chip is filled green.
 - City dropdown: All Cities / Munich / Zürich / Karlsruhe / Aachen / Stuttgart / Darmstadt.
 - Filtering is done by joining `studentCommunities` (for name, type, city, members, topSkills) with `clubPartnerships` (for slot data). Only clubs present in `clubPartnerships` appear.
@@ -177,6 +225,7 @@ p:  "Find exclusive talent partnerships with Europe's top student organizations.
 **Club cards (2-column grid when no configurator open; single column when configurator open):**
 
 Each card shows:
+
 - Club name (font-semibold) + type badge (duplicate the `typeBadgeStyles` Record from `Ecosystem.tsx` into `Cooperations.tsx` — same values, no shared import needed for a demo)
 - University name (text-muted-foreground text-xs)
 - Member count + top 2 skills as small chips
@@ -196,6 +245,7 @@ State: `selectedFormatId`, `selectedMonth`, `selectedYear`, `challengeTopic`.
 **Format selector:** 3 radio cards from `coopFormats`. Each shows name, description, duration, price range. Selected card has green ring border. Only formats in `partnership.availableFormats` are shown.
 
 **Date picker:** two `<select>` dropdowns:
+
 - Month: Jan / Feb / Mar / Apr / May / Jun / Jul / Aug / Sep / Oct / Nov / Dec
 - Year: 2026 / 2027
 - Default: Sep / 2026
@@ -203,6 +253,7 @@ State: `selectedFormatId`, `selectedMonth`, `selectedYear`, `challengeTopic`.
 **Challenge topic:** `<input type="text">`, optional, placeholder "e.g. Build an LLM evaluation harness".
 
 **Live yield projection** (updates when format changes):
+
 ```
 studentsEngaged = Math.round(club.members × format.engagementRate)
 pipelineCandidates = Math.round(studentsEngaged × 0.6)
@@ -214,6 +265,7 @@ Display: "~{studentsEngaged} students engaged → ~{pipelineCandidates} pipeline
 **Submit button:** "Reserve Partnership Slot"
 
 On submit:
+
 1. Construct date string: `"{MonthName} 15, {Year}"` (hardcoded day 15 for demo)
 2. Generate a unique id: `const id = String(Date.now())` (plain timestamp, no prefix)
 3. Call `addCooperation({ id, clubId, format: selectedFormatId, status: "Pending", date, challengeTopic: challengeTopic || undefined, projectedCandidates: pipelineCandidates })`
@@ -259,17 +311,19 @@ Only show this link if the club has a partnership entry in `clubPartnerships` (i
 ### Filter logic extension
 
 Current logic (line ~53):
+
 ```ts
 if (eventFilter !== "all" && c.eventId !== eventFilter) return false;
 ```
 
 Extend to handle cooperation filter:
+
 ```ts
 if (eventFilter !== "all") {
   if (eventFilter.startsWith("coop-")) {
     // Find the cooperation and filter by communityRoles matching its clubId
-    const coopId = eventFilter.slice("coop-".length);  // strip prefix to get raw id
-    const coop = activeCooperations.find(ac => ac.id === coopId);
+    const coopId = eventFilter.slice("coop-".length); // strip prefix to get raw id
+    const coop = activeCooperations.find((ac) => ac.id === coopId);
     if (!coop) return false;
     if (!c.communityRoles?.includes(coop.clubId)) return false;
   } else {
@@ -285,11 +339,13 @@ if (eventFilter !== "all") {
 In the candidate row/drawer, when `eventFilter.startsWith("coop-")`, show an "Exclusive" chip next to the candidate name:
 
 ```tsx
-{isCoopFilter && candidate.communityRoles?.some(r => coopClubId === r) && (
-  <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#DCEFE2] text-[#1F4A2E] font-medium">
-    Exclusive · {clubName}
-  </span>
-)}
+{
+  isCoopFilter && candidate.communityRoles?.some((r) => coopClubId === r) && (
+    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#DCEFE2] text-[#1F4A2E] font-medium">
+      Exclusive · {clubName}
+    </span>
+  );
+}
 ```
 
 Where `clubName` is looked up from `studentCommunities` using the cooperation's `clubId`.
@@ -299,8 +355,11 @@ Where `clubName` is looked up from `studentCommunities` using the cooperation's 
 ## AppLayout (`src/components/eventiq/AppLayout.tsx`)
 
 Import `Cooperations` and add:
+
 ```tsx
-{view === "cooperations" && <Cooperations />}
+{
+  view === "cooperations" && <Cooperations />;
+}
 ```
 
 ---
@@ -308,6 +367,7 @@ Import `Cooperations` and add:
 ## Sidebar (`src/components/eventiq/Sidebar.tsx`)
 
 Add to the `items` array (after Ecosystem, before Reports):
+
 ```ts
 { id: "cooperations", label: "Cooperations", icon: Handshake },
 ```

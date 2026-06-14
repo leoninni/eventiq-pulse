@@ -17,15 +17,23 @@ function Main() {
   return (
     <div className="flex min-h-screen bg-background text-foreground">
       {sidebarOpen && (
-        <div className="fixed inset-0 z-40 bg-black/50 md:hidden" onClick={() => setSidebarOpen(false)} />
+        <div
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
       )}
       <Sidebar open={sidebarOpen} onClose={() => setSidebarOpen(false)} />
       <div className="flex-1 min-w-0 flex flex-col">
         <header className="flex items-center h-12 px-4 border-b border-border bg-background md:hidden shrink-0">
-          <button onClick={() => setSidebarOpen(true)} className="text-muted-foreground hover:text-foreground">
+          <button
+            onClick={() => setSidebarOpen(true)}
+            className="text-muted-foreground hover:text-foreground"
+          >
             <Menu className="w-5 h-5" />
           </button>
-          <span className="ml-3 font-display text-base tracking-tight text-foreground">EventIQ</span>
+          <span className="ml-3 font-display text-base tracking-tight text-foreground">
+            EventIQ
+          </span>
         </header>
         <main className="flex-1 min-w-0">
           {view === "overview" && <Overview />}

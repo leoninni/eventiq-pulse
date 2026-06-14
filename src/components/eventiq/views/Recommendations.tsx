@@ -8,7 +8,9 @@ export function Recommendations() {
     <div className="p-4 md:p-10 max-w-[1200px]">
       <div className="mb-8">
         <h1 className="font-display text-4xl tracking-tight">Recommendations</h1>
-        <p className="text-sm text-muted-foreground mt-2">AI-powered event suggestions based on your hiring history.</p>
+        <p className="text-sm text-muted-foreground mt-2">
+          AI-powered event suggestions based on your hiring history.
+        </p>
       </div>
 
       <div className="bg-mint/40 border border-mint rounded-xl p-4 mb-6 flex gap-3 items-start">
@@ -16,7 +18,10 @@ export function Recommendations() {
           <Sparkles className="w-4 h-4" />
         </div>
         <p className="text-sm">
-          Based on <span className="font-semibold">5 sponsored events</span>, <span className="font-semibold">247 candidates</span>, and your current pipeline data, here are the top events we recommend for <span className="font-semibold text-mint-ink">Q3 2025</span>.
+          Based on <span className="font-semibold">5 sponsored events</span>,{" "}
+          <span className="font-semibold">247 candidates</span>, and your current pipeline data,
+          here are the top events we recommend for{" "}
+          <span className="font-semibold text-mint-ink">Q3 2025</span>.
         </p>
       </div>
 
@@ -37,7 +42,9 @@ export function Recommendations() {
                 <div className="flex-1">
                   <div className="flex items-baseline gap-3 mb-1">
                     <h3 className="text-base font-semibold">{r.event}</h3>
-                    <span className="text-xs text-muted-foreground">{r.date} · {r.location}</span>
+                    <span className="text-xs text-muted-foreground">
+                      {r.date} · {r.location}
+                    </span>
                   </div>
                   <p className="text-sm text-muted-foreground mt-2 max-w-2xl">{r.why}</p>
                   <div className="grid grid-cols-3 gap-3 mt-4 max-w-xl">
@@ -48,8 +55,13 @@ export function Recommendations() {
                 </div>
                 <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-3 shrink-0 w-full md:w-auto">
                   <div className="text-left md:text-right">
-                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground">Match Score</div>
-                    <div className="text-2xl font-semibold tabular-nums text-cyan">{r.matchScore}<span className="text-muted-foreground text-sm">/100</span></div>
+                    <div className="text-[10px] uppercase tracking-wide text-muted-foreground">
+                      Match Score
+                    </div>
+                    <div className="text-2xl font-semibold tabular-nums text-cyan">
+                      {r.matchScore}
+                      <span className="text-muted-foreground text-sm">/100</span>
+                    </div>
                   </div>
                   <button
                     onClick={() => toggleShortlist(r.id)}
@@ -59,7 +71,13 @@ export function Recommendations() {
                         : "bg-primary text-primary-foreground hover:bg-primary/90"
                     }`}
                   >
-                    {isShort ? <><Check className="w-3 h-3" /> Shortlisted</> : "Add to Shortlist"}
+                    {isShort ? (
+                      <>
+                        <Check className="w-3 h-3" /> Shortlisted
+                      </>
+                    ) : (
+                      "Add to Shortlist"
+                    )}
                   </button>
                 </div>
               </div>
@@ -69,11 +87,22 @@ export function Recommendations() {
       </div>
 
       <div>
-        <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">How this works</div>
+        <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
+          How this works
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
-          <Tile icon={TrendingUp} text="Event yield model trained on your 5-event history and cross-company patterns across the EventIQ network" />
-          <Tile icon={Brain} text="Candidate quality scored from opt-in signals: skills, project complexity, university, and engagement" />
-          <Tile icon={RefreshCw} text="Recommendations update automatically after each new event report is generated" />
+          <Tile
+            icon={TrendingUp}
+            text="Event yield model trained on your 5-event history and cross-company patterns across the EventIQ network"
+          />
+          <Tile
+            icon={Brain}
+            text="Candidate quality scored from opt-in signals: skills, project complexity, university, and engagement"
+          />
+          <Tile
+            icon={RefreshCw}
+            text="Recommendations update automatically after each new event report is generated"
+          />
         </div>
       </div>
     </div>

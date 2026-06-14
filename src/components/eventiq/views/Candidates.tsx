@@ -1,5 +1,11 @@
 import { useMemo, useState, useEffect } from "react";
-import { events, openRoles, studentCommunities, type Status, type Candidate } from "@/lib/eventiq/mockData";
+import {
+  events,
+  openRoles,
+  studentCommunities,
+  type Status,
+  type Candidate,
+} from "@/lib/eventiq/mockData";
 import { useStore } from "@/lib/eventiq/store";
 import { StatusBadge } from "../StatusBadge";
 import { SlidePanel } from "../SlidePanel";
@@ -11,18 +17,26 @@ const statuses: Status[] = ["Interested", "In Review", "Interviewed", "Offer Ext
 
 const ATS_OPTIONS = [
   { name: "Greenhouse", color: "#23A47C", initial: "G" },
-  { name: "Personio",   color: "#1A56DB", initial: "P" },
-  { name: "Lever",      color: "#5865F2", initial: "L" },
-  { name: "Ashby",      color: "#FF6B35", initial: "A" },
+  { name: "Personio", color: "#1A56DB", initial: "P" },
+  { name: "Lever", color: "#5865F2", initial: "L" },
+  { name: "Ashby", color: "#FF6B35", initial: "A" },
 ] as const;
 
 export function Candidates() {
-  const { candidates, setStatus, eventFilter, setEventFilter, atsSync, syncToAts, activeCooperations } = useStore();
+  const {
+    candidates,
+    setStatus,
+    eventFilter,
+    setEventFilter,
+    atsSync,
+    syncToAts,
+    activeCooperations,
+  } = useStore();
   const isCoopFilter = eventFilter.startsWith("coop-");
   const coopId = isCoopFilter ? eventFilter.slice("coop-".length) : null;
-  const activeCoop = coopId ? activeCooperations.find((ac) => ac.id === coopId) ?? null : null;
+  const activeCoop = coopId ? (activeCooperations.find((ac) => ac.id === coopId) ?? null) : null;
   const coopClubName = activeCoop
-    ? studentCommunities.find((c) => c.id === activeCoop.clubId)?.name ?? ""
+    ? (studentCommunities.find((c) => c.id === activeCoop.clubId)?.name ?? "")
     : "";
 
   const [statusFilter, setStatusFilter] = useState<string>("all");
@@ -89,7 +103,11 @@ export function Candidates() {
           className="bg-card border border-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-primary max-w-[160px] md:max-w-none"
         >
           <option value="all">All Events</option>
-          {events.map((e) => <option key={e.id} value={e.id}>{e.name}</option>)}
+          {events.map((e) => (
+            <option key={e.id} value={e.id}>
+              {e.name}
+            </option>
+          ))}
         </select>
         <select
           value={statusFilter}
@@ -97,7 +115,11 @@ export function Candidates() {
           className="bg-card border border-border rounded-md px-3 py-1.5 text-sm focus:outline-none focus:border-primary max-w-[140px] md:max-w-none"
         >
           <option value="all">All Statuses</option>
-          {statuses.map((s) => <option key={s} value={s}>{s}</option>)}
+          {statuses.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
         </select>
         <div className="flex-1 min-w-[160px] relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
@@ -114,9 +136,15 @@ export function Candidates() {
         {filtered.map((c) => {
           const ev = events.find((e) => e.id === c.eventId);
           return (
-            <div key={c.id} className="bg-card border border-border rounded-lg p-3.5 flex items-center gap-4 hover:bg-card/70 hover:border-primary/30 transition-colors">
+            <div
+              key={c.id}
+              className="bg-card border border-border rounded-lg p-3.5 flex items-center gap-4 hover:bg-card/70 hover:border-primary/30 transition-colors"
+            >
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-cyan flex items-center justify-center text-xs font-semibold shrink-0">
-                {c.name.split(" ").map((s) => s[0]).join("")}
+                {c.name
+                  .split(" ")
+                  .map((s) => s[0])
+                  .join("")}
               </div>
               <div className="flex-1 min-w-0">
                 <div className="flex items-center gap-2 flex-wrap">
@@ -130,10 +158,17 @@ export function Candidates() {
                 </div>
                 <div className="flex gap-1 mt-1.5 flex-wrap">
                   {c.skills.map((s) => (
-                    <span key={s} className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary">{s}</span>
+                    <span
+                      key={s}
+                      className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary"
+                    >
+                      {s}
+                    </span>
                   ))}
                 </div>
-                <div className="text-xs italic text-muted-foreground mt-1 truncate">{c.projectTitle}</div>
+                <div className="text-xs italic text-muted-foreground mt-1 truncate">
+                  {c.projectTitle}
+                </div>
               </div>
               <div className="flex flex-col items-end gap-1.5 shrink-0 max-w-[150px] md:max-w-none">
                 {(() => {
@@ -141,7 +176,9 @@ export function Candidates() {
                   return best && best.score >= 40 ? (
                     <div className="flex items-center gap-1.5 bg-[#DCEFE2] border border-[#B8E0C2] rounded px-2 py-0.5">
                       <span className="w-1.5 h-1.5 rounded-full bg-[#2F7A47] shrink-0" />
-                      <span className="text-[11px] font-semibold text-[#1F4A2E] tabular-nums">{best.score}%</span>
+                      <span className="text-[11px] font-semibold text-[#1F4A2E] tabular-nums">
+                        {best.score}%
+                      </span>
                       <span className="text-[10px] text-[#2F7A47]">{best.roleTitle}</span>
                     </div>
                   ) : null;
@@ -172,7 +209,9 @@ export function Candidates() {
           );
         })}
         {filtered.length === 0 && (
-          <div className="text-center py-12 text-sm text-muted-foreground">No candidates match these filters.</div>
+          <div className="text-center py-12 text-sm text-muted-foreground">
+            No candidates match these filters.
+          </div>
         )}
       </div>
 
@@ -181,18 +220,25 @@ export function Candidates() {
           <div className="p-6">
             <div className="flex items-center gap-4 mb-4 mt-2">
               <div className="w-14 h-14 rounded-full bg-gradient-to-br from-primary to-cyan flex items-center justify-center text-sm font-semibold">
-                {open.name.split(" ").map((s) => s[0]).join("")}
+                {open.name
+                  .split(" ")
+                  .map((s) => s[0])
+                  .join("")}
               </div>
               <div>
                 <div className="flex items-center gap-2 flex-wrap">
                   <h2 className="text-lg font-semibold">{open.name}</h2>
-                  {isCoopFilter && activeCoop && open.communityRoles?.includes(activeCoop.clubId) && (
-                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#DCEFE2] text-[#1F4A2E] font-medium">
-                      Exclusive · {coopClubName}
-                    </span>
-                  )}
+                  {isCoopFilter &&
+                    activeCoop &&
+                    open.communityRoles?.includes(activeCoop.clubId) && (
+                      <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#DCEFE2] text-[#1F4A2E] font-medium">
+                        Exclusive · {coopClubName}
+                      </span>
+                    )}
                 </div>
-                <div className="text-xs text-muted-foreground">{open.university} · {openEvent.name}</div>
+                <div className="text-xs text-muted-foreground">
+                  {open.university} · {openEvent.name}
+                </div>
               </div>
             </div>
 
@@ -200,7 +246,10 @@ export function Candidates() {
               {open.skills.map((s) => {
                 const proof = open.skillProofs?.find((p) => p.skill === s);
                 return proof ? (
-                  <div key={s} className="flex flex-col px-2 py-1 rounded border border-[#B8E0C2] bg-[#F0F7F2]">
+                  <div
+                    key={s}
+                    className="flex flex-col px-2 py-1 rounded border border-[#B8E0C2] bg-[#F0F7F2]"
+                  >
                     <div className="flex items-center gap-1">
                       <ShieldCheck className="w-2.5 h-2.5 text-[#2F7A47] shrink-0" />
                       <span className="text-xs font-medium text-[#1F4A2E]">{s}</span>
@@ -208,17 +257,27 @@ export function Candidates() {
                     <span className="text-[10px] text-[#2F7A47] mt-0.5">{proof.source}</span>
                   </div>
                 ) : (
-                  <span key={s} className="text-xs px-2 py-0.5 rounded border border-primary/30 text-primary">{s}</span>
+                  <span
+                    key={s}
+                    className="text-xs px-2 py-0.5 rounded border border-primary/30 text-primary"
+                  >
+                    {s}
+                  </span>
                 );
               })}
             </div>
 
             {open.communityRoles && open.communityRoles.length > 0 && (
               <div className="mb-5">
-                <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Community</div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                  Community
+                </div>
                 <div className="flex gap-1.5 flex-wrap items-start">
                   {open.communityRoles.map((role, i) => (
-                    <div key={`${i}-${role}`} className="flex items-center gap-1.5 text-xs px-2 py-0.5 rounded border border-primary/20 bg-secondary/40 text-muted-foreground">
+                    <div
+                      key={`${i}-${role}`}
+                      className="flex items-center gap-1.5 text-xs px-2 py-0.5 rounded border border-primary/20 bg-secondary/40 text-muted-foreground"
+                    >
                       <Users className="w-3 h-3 shrink-0" />
                       {role}
                     </div>
@@ -228,21 +287,25 @@ export function Candidates() {
             )}
 
             <div className="mb-5">
-              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Role Match</div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                Role Match
+              </div>
               <div className="space-y-1.5">
                 {matchScore(open, openRoles).map((m, i) => (
                   <div
                     key={m.roleId}
                     className={`flex items-center justify-between px-3 py-1.5 rounded-md border ${
-                      i === 0
-                        ? "bg-[#DCEFE2] border-[#B8E0C2]"
-                        : "bg-secondary/40 border-border"
+                      i === 0 ? "bg-[#DCEFE2] border-[#B8E0C2]" : "bg-secondary/40 border-border"
                     }`}
                   >
-                    <span className={`text-xs ${i === 0 ? "font-medium text-[#1F4A2E]" : "text-muted-foreground"}`}>
+                    <span
+                      className={`text-xs ${i === 0 ? "font-medium text-[#1F4A2E]" : "text-muted-foreground"}`}
+                    >
                       {m.roleTitle}
                     </span>
-                    <span className={`text-sm font-semibold tabular-nums ${i === 0 ? "text-[#2F7A47]" : "text-muted-foreground"}`}>
+                    <span
+                      className={`text-sm font-semibold tabular-nums ${i === 0 ? "text-[#2F7A47]" : "text-muted-foreground"}`}
+                    >
                       {m.score}%
                     </span>
                   </div>
@@ -251,24 +314,34 @@ export function Candidates() {
             </div>
 
             <div className="mb-5">
-              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">Project</div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1">
+                Project
+              </div>
               <div className="text-sm font-medium">{open.projectTitle}</div>
               <p className="text-sm text-muted-foreground mt-1">{open.projectDescription}</p>
             </div>
 
             <div className="mb-5">
-              <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1 block">Status</label>
+              <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1 block">
+                Status
+              </label>
               <select
                 value={open.status}
                 onChange={(e) => setStatus(open.id, e.target.value as Status)}
                 className="w-full bg-secondary border border-border rounded-md px-3 py-2 text-sm focus:outline-none focus:border-primary"
               >
-                {statuses.map((s) => <option key={s} value={s}>{s}</option>)}
+                {statuses.map((s) => (
+                  <option key={s} value={s}>
+                    {s}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div className="mb-5">
-              <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1 block">Recruiter Notes</label>
+              <label className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-1 block">
+                Recruiter Notes
+              </label>
               <textarea
                 value={notes[open.id] || ""}
                 onChange={(e) => setNotes((n) => ({ ...n, [open.id]: e.target.value }))}
@@ -303,7 +376,9 @@ export function Candidates() {
             </div>
 
             <div>
-              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">Activity</div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-muted-foreground mb-2">
+                Activity
+              </div>
               <div className="space-y-2 text-xs">
                 <div className="flex gap-2 text-muted-foreground">
                   <span className="w-1 h-1 rounded-full bg-muted-foreground mt-1.5" />
@@ -322,13 +397,20 @@ export function Candidates() {
       {/* Email Modal */}
       {emailFor && (
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
-          <div onClick={() => setEmailFor(null)} className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+          <div
+            onClick={() => setEmailFor(null)}
+            className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          />
           <div className="relative bg-card border border-border rounded-lg w-full max-w-lg p-6 animate-in fade-in zoom-in-95 duration-200">
             <h3 className="text-base font-semibold mb-4">Send Follow-up Email</h3>
             <div className="space-y-3">
               <div>
                 <label className="text-xs text-muted-foreground">To</label>
-                <input readOnly value={`${emailFor.name.toLowerCase().replace(/[^a-z]/g, "")}@${emailFor.university.toLowerCase().replace(/[^a-z]/g, "")}.edu`} className="w-full bg-secondary border border-border rounded-md px-3 py-2 text-sm mt-1" />
+                <input
+                  readOnly
+                  value={`${emailFor.name.toLowerCase().replace(/[^a-z]/g, "")}@${emailFor.university.toLowerCase().replace(/[^a-z]/g, "")}.edu`}
+                  className="w-full bg-secondary border border-border rounded-md px-3 py-2 text-sm mt-1"
+                />
               </div>
               <div>
                 <label className="text-xs text-muted-foreground">Subject</label>
@@ -349,7 +431,12 @@ export function Candidates() {
               </div>
             </div>
             <div className="mt-5 flex justify-end gap-2">
-              <button onClick={() => setEmailFor(null)} className="px-3 py-2 text-sm rounded-md border border-border hover:bg-secondary transition-colors">Cancel</button>
+              <button
+                onClick={() => setEmailFor(null)}
+                className="px-3 py-2 text-sm rounded-md border border-border hover:bg-secondary transition-colors"
+              >
+                Cancel
+              </button>
               <button
                 onClick={() => {
                   const name = emailFor.name;
@@ -370,7 +457,6 @@ export function Candidates() {
         <div className="fixed inset-0 z-[60] flex items-center justify-center p-4">
           <div onClick={closeAtsModal} className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
           <div className="relative bg-card border border-border rounded-lg w-full max-w-sm p-6 animate-in fade-in zoom-in-95 duration-200">
-
             {atsStep === 1 && (
               <>
                 <h3 className="text-base font-semibold mb-4">Add to ATS</h3>
@@ -450,7 +536,6 @@ export function Candidates() {
                 </button>
               </>
             )}
-
           </div>
         </div>
       )}

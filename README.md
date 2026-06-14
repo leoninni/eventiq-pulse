@@ -25,17 +25,17 @@ Built as a fully self-contained frontend prototype with zero backend dependencie
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Framework | [TanStack Start](https://tanstack.com/start) (React meta-framework) |
-| Routing | TanStack React Router (file-based) |
-| UI Components | [shadcn/ui](https://ui.shadcn.com/) on Radix UI primitives |
-| Charts | [Recharts](https://recharts.org/) |
-| Globe | [cobe](https://cobe.vercel.app/) — 5KB WebGL globe |
-| Styling | [Tailwind CSS](https://tailwindcss.com/) v4 |
-| Icons | Lucide React |
-| Build tool | Vite + Bun |
-| Language | TypeScript 5 |
+| Layer         | Technology                                                          |
+| ------------- | ------------------------------------------------------------------- |
+| Framework     | [TanStack Start](https://tanstack.com/start) (React meta-framework) |
+| Routing       | TanStack React Router (file-based)                                  |
+| UI Components | [shadcn/ui](https://ui.shadcn.com/) on Radix UI primitives          |
+| Charts        | [Recharts](https://recharts.org/)                                   |
+| Globe         | [cobe](https://cobe.vercel.app/) — 5KB WebGL globe                  |
+| Styling       | [Tailwind CSS](https://tailwindcss.com/) v4                         |
+| Icons         | Lucide React                                                        |
+| Build tool    | Vite + Bun                                                          |
+| Language      | TypeScript 5                                                        |
 
 ---
 
@@ -95,26 +95,26 @@ src/
 
 Nature-inspired, sage green design language:
 
-| Token | Value |
-|---|---|
-| Background | `#EEF3EE` (sage green-tinted) |
-| Card | `#FFFFFF` |
-| Primary | `#0F1410` (near-black) |
-| Forest green | `#2F7A47` (accent, verified states) |
-| Mint | `#B8E0C2` / `#DCEFE2` (highlights, badges) |
-| Warning | `#B07A1F` |
-| Body font | Inter |
-| Display font | Instrument Serif / DM Serif Display |
+| Token        | Value                                      |
+| ------------ | ------------------------------------------ |
+| Background   | `#EEF3EE` (sage green-tinted)              |
+| Card         | `#FFFFFF`                                  |
+| Primary      | `#0F1410` (near-black)                     |
+| Forest green | `#2F7A47` (accent, verified states)        |
+| Mint         | `#B8E0C2` / `#DCEFE2` (highlights, badges) |
+| Warning      | `#B07A1F`                                  |
+| Body font    | Inter                                      |
+| Display font | Instrument Serif / DM Serif Display        |
 
 Candidate status colors (consistent across all views):
 
-| Status | Background | Dot |
-|---|---|---|
-| Interested | `#DCEFE2` | `#6BAE82` |
-| In Review | `#F5E7CC` | `#C99A3E` |
-| Interviewed | `#E2E8F0` | `#64748B` |
-| Offer Extended | `#B8E0C2` | `#2F7A47` |
-| Rejected | `#EFE3DC` | `#B07A5A` |
+| Status         | Background | Dot       |
+| -------------- | ---------- | --------- |
+| Interested     | `#DCEFE2`  | `#6BAE82` |
+| In Review      | `#F5E7CC`  | `#C99A3E` |
+| Interviewed    | `#E2E8F0`  | `#64748B` |
+| Offer Extended | `#B8E0C2`  | `#2F7A47` |
+| Rejected       | `#EFE3DC`  | `#B07A5A` |
 
 ---
 

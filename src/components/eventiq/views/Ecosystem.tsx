@@ -19,27 +19,27 @@ const THETA_LIMIT = Math.PI / 2 - 0.05;
 
 // phi = -π/2 - lng*π/180 centers that longitude at the globe front.
 // Default centers on ~10°E so DACH cities are visible on load.
-const DEFAULT_PHI   = -Math.PI / 2 - (10 * Math.PI) / 180;
+const DEFAULT_PHI = -Math.PI / 2 - (10 * Math.PI) / 180;
 const DEFAULT_THETA = 0.35;
-const DEFAULT_ZOOM  = 1;
+const DEFAULT_ZOOM = 1;
 
 const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
-  "AI/ML":            "bg-[#DCEFE2] text-[#1F4A2E]",
-  "Robotics":         "bg-[#E2E8F0] text-[#334155]",
-  "Entrepreneurship": "bg-[#F5E7CC] text-[#7A5712]",
-  "Cloud/DevOps":     "bg-[#E8F0F5] text-[#1A4A6E]",
-  "Data":             "bg-[#F0E8F5] text-[#4A1A6E]",
-  "Open Source":      "bg-[#F5F0E8] text-[#6E4A1A]",
-  "Community":        "bg-secondary text-muted-foreground",
+  "AI/ML": "bg-[#DCEFE2] text-[#1F4A2E]",
+  Robotics: "bg-[#E2E8F0] text-[#334155]",
+  Entrepreneurship: "bg-[#F5E7CC] text-[#7A5712]",
+  "Cloud/DevOps": "bg-[#E8F0F5] text-[#1A4A6E]",
+  Data: "bg-[#F0E8F5] text-[#4A1A6E]",
+  "Open Source": "bg-[#F5F0E8] text-[#6E4A1A]",
+  Community: "bg-secondary text-muted-foreground",
 };
 
 // Thresholds adjusted from spec (≤600/≤1000) to fit actual data range (€1600–€4000/hire).
 // HackTUM/START Hack → green, CODE Berlin/ETH → amber, KIT → gray.
 function eventRoiColor(e: (typeof events)[0]): string {
   const cph = Math.round(e.sponsorship / e.hires);
-  if (cph < 1700) return "#2F7A47";   // green — top performer
-  if (cph <= 2500) return "#D97706";  // amber — mid
-  return "#9CA3AF";                   // gray — lower
+  if (cph < 1700) return "#2F7A47"; // green — top performer
+  if (cph <= 2500) return "#D97706"; // amber — mid
+  return "#9CA3AF"; // gray — lower
 }
 
 // Projects a geographic point onto the globe canvas using cobe's exact
@@ -50,22 +50,24 @@ function projectGlobe(
   phi: number,
   theta: number,
   size: number,
-  zoom: number
+  zoom: number,
 ): { x: number; y: number; visible: boolean } {
   const latR = (lat * Math.PI) / 180;
   const lngR = (lng * Math.PI) / 180;
 
   // cobe's U([lat, lng]) coordinate system
-  const x0 =  Math.cos(latR) * Math.cos(lngR);
-  const y0 =  Math.sin(latR);
+  const x0 = Math.cos(latR) * Math.cos(lngR);
+  const y0 = Math.sin(latR);
   const z0 = -Math.cos(latR) * Math.sin(lngR);
 
-  const cP = Math.cos(phi), sP = Math.sin(phi);
-  const cT = Math.cos(theta), sT = Math.sin(theta);
+  const cP = Math.cos(phi),
+    sP = Math.sin(phi);
+  const cT = Math.cos(theta),
+    sT = Math.sin(theta);
 
   // cobe's O([x, y, z]) projection
-  const c   =  cP * x0 + sP * z0;
-  const s   =  sP * sT * x0 + cT * y0 - cP * sT * z0;
+  const c = cP * x0 + sP * z0;
+  const s = sP * sT * x0 + cT * y0 - cP * sT * z0;
   const dep = -sP * cT * x0 + sT * y0 + cP * cT * z0;
 
   const half = size / 2;
@@ -80,18 +82,18 @@ type OverlayPos = { id: string; x: number; y: number; visible: boolean };
 
 export function Ecosystem() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const phiRef    = useRef(DEFAULT_PHI);
-  const thetaRef  = useRef(DEFAULT_THETA);
-  const zoomRef   = useRef(DEFAULT_ZOOM);
+  const phiRef = useRef(DEFAULT_PHI);
+  const thetaRef = useRef(DEFAULT_THETA);
+  const zoomRef = useRef(DEFAULT_ZOOM);
 
   const targetRef = useRef<{ phi: number; theta: number; zoom: number } | null>(null);
   const autoRotateRef = useRef(true);
 
-  const isDragging   = useRef(false);
+  const isDragging = useRef(false);
   const pointerStart = useRef<{ x: number; y: number; phi: number; theta: number } | null>(null);
 
   const [continentOverlays, setContinentOverlays] = useState<OverlayPos[]>([]);
-  const [cityOverlays, setCityOverlays]           = useState<OverlayPos[]>([]);
+  const [cityOverlays, setCityOverlays] = useState<OverlayPos[]>([]);
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [selectedContinentId, setSelectedContinentId] = useState<ContinentId | null>(null);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
@@ -103,10 +105,22 @@ export function Ecosystem() {
   const inContinentMode = selectedContinentId !== null;
 
   // Aggregate counts
-  const continentCityCount: Record<ContinentId, number> = { "europe": 0, "north-america": 0, "asia": 0 };
-  const continentCandidateCount: Record<ContinentId, number> = { "europe": 0, "north-america": 0, "asia": 0 };
-  cityMarkers.forEach((c) => { continentCityCount[c.continent]++; });
-  universityProfiles.forEach((u) => { continentCandidateCount[u.continent] += u.candidates; });
+  const continentCityCount: Record<ContinentId, number> = {
+    europe: 0,
+    "north-america": 0,
+    asia: 0,
+  };
+  const continentCandidateCount: Record<ContinentId, number> = {
+    europe: 0,
+    "north-america": 0,
+    asia: 0,
+  };
+  cityMarkers.forEach((c) => {
+    continentCityCount[c.continent]++;
+  });
+  universityProfiles.forEach((u) => {
+    continentCandidateCount[u.continent] += u.candidates;
+  });
 
   // Per-city candidate count for marker sizing
   const cityCandidateCount: Record<string, number> = {};
@@ -132,9 +146,13 @@ export function Ecosystem() {
     ? cityMarkers.filter((c) => c.continent === selectedContinentId)
     : [];
 
-  const selectedCity      = selectedCityId ? cityMarkers.find((c) => c.id === selectedCityId) : null;
-  const cityUniversities  = selectedCityId ? universityProfiles.filter((u) => u.city === selectedCityId) : [];
-  const cityCommunities   = selectedCityId ? studentCommunities.filter((c) => c.city === selectedCityId) : [];
+  const selectedCity = selectedCityId ? cityMarkers.find((c) => c.id === selectedCityId) : null;
+  const cityUniversities = selectedCityId
+    ? universityProfiles.filter((u) => u.city === selectedCityId)
+    : [];
+  const cityCommunities = selectedCityId
+    ? studentCommunities.filter((c) => c.city === selectedCityId)
+    : [];
   const cityTotalCandidates = cityUniversities.reduce((s, u) => s + u.candidates, 0);
 
   const selectedContinent = selectedContinentId
@@ -149,9 +167,9 @@ export function Ecosystem() {
     } else {
       const c = continents.find((x) => x.id === selectedContinentId)!;
       targetRef.current = {
-        phi:   -Math.PI / 2 - (c.lng * Math.PI) / 180,
+        phi: -Math.PI / 2 - (c.lng * Math.PI) / 180,
         theta: (c.lat / 90) * (Math.PI / 2 - 0.1),
-        zoom:  c.zoom,
+        zoom: c.zoom,
       };
       autoRotateRef.current = false;
     }
@@ -164,17 +182,17 @@ export function Ecosystem() {
 
     const globe = createGlobe(canvasRef.current, {
       devicePixelRatio: 2,
-      width:  GLOBE_SIZE * 2,
+      width: GLOBE_SIZE * 2,
       height: GLOBE_SIZE * 2,
-      phi:   phiRef.current,
+      phi: phiRef.current,
       theta: thetaRef.current,
       dark: 0,
       diffuse: 1.0,
       mapSamples: 18000,
       mapBrightness: 1.5,
-      baseColor:   [0.92, 0.96, 0.93],
+      baseColor: [0.92, 0.96, 0.93],
       markerColor: [0.18, 0.48, 0.28],
-      glowColor:   [0.85, 0.92, 0.86],
+      glowColor: [0.85, 0.92, 0.86],
       markers: [
         ...continents.map((c) => ({ location: [c.lat, c.lng] as [number, number], size: 0.08 })),
         ...cityMarkers.map((c) => ({ location: [c.lat, c.lng] as [number, number], size: 0.04 })),
@@ -186,17 +204,17 @@ export function Ecosystem() {
       if (targetRef.current) {
         const t = targetRef.current;
         const k = 0.08;
-        phiRef.current   += (t.phi   - phiRef.current)   * k;
+        phiRef.current += (t.phi - phiRef.current) * k;
         thetaRef.current += (t.theta - thetaRef.current) * k;
-        zoomRef.current  += (t.zoom  - zoomRef.current)  * k;
+        zoomRef.current += (t.zoom - zoomRef.current) * k;
         if (
-          Math.abs(t.phi   - phiRef.current)   < 0.001 &&
+          Math.abs(t.phi - phiRef.current) < 0.001 &&
           Math.abs(t.theta - thetaRef.current) < 0.001 &&
-          Math.abs(t.zoom  - zoomRef.current)  < 0.005
+          Math.abs(t.zoom - zoomRef.current) < 0.005
         ) {
-          phiRef.current   = t.phi;
+          phiRef.current = t.phi;
           thetaRef.current = t.theta;
-          zoomRef.current  = t.zoom;
+          zoomRef.current = t.zoom;
           targetRef.current = null;
         }
         setZoom(zoomRef.current);
@@ -209,14 +227,28 @@ export function Ecosystem() {
       setContinentOverlays(
         continents.map((c) => ({
           id: c.id,
-          ...projectGlobe(c.lat, c.lng, phiRef.current, thetaRef.current, GLOBE_SIZE, zoomRef.current),
-        }))
+          ...projectGlobe(
+            c.lat,
+            c.lng,
+            phiRef.current,
+            thetaRef.current,
+            GLOBE_SIZE,
+            zoomRef.current,
+          ),
+        })),
       );
       setCityOverlays(
         cityMarkers.map((c) => ({
           id: c.id,
-          ...projectGlobe(c.lat, c.lng, phiRef.current, thetaRef.current, GLOBE_SIZE, zoomRef.current),
-        }))
+          ...projectGlobe(
+            c.lat,
+            c.lng,
+            phiRef.current,
+            thetaRef.current,
+            GLOBE_SIZE,
+            zoomRef.current,
+          ),
+        })),
       );
 
       rafId = requestAnimationFrame(frame);
@@ -234,8 +266,10 @@ export function Ecosystem() {
     targetRef.current = null;
     autoRotateRef.current = false;
     pointerStart.current = {
-      x: e.clientX, y: e.clientY,
-      phi: phiRef.current, theta: thetaRef.current,
+      x: e.clientX,
+      y: e.clientY,
+      phi: phiRef.current,
+      theta: thetaRef.current,
     };
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
   }
@@ -244,10 +278,10 @@ export function Ecosystem() {
     const dx = e.clientX - pointerStart.current.x;
     const dy = e.clientY - pointerStart.current.y;
     const scale = GLOBE_SIZE * zoomRef.current;
-    phiRef.current   = pointerStart.current.phi   - (dx / scale) * Math.PI * 2;
+    phiRef.current = pointerStart.current.phi - (dx / scale) * Math.PI * 2;
     thetaRef.current = Math.max(
       -THETA_LIMIT,
-      Math.min(THETA_LIMIT, pointerStart.current.theta + (dy / scale) * Math.PI * 2)
+      Math.min(THETA_LIMIT, pointerStart.current.theta + (dy / scale) * Math.PI * 2),
     );
   }
   function onPointerUp() {
@@ -292,10 +326,7 @@ export function Ecosystem() {
       <div className="flex flex-col md:flex-row flex-1 md:min-h-0">
         {/* Globe */}
         <div className="flex-1 h-[320px] md:h-auto flex items-center justify-center bg-background relative overflow-hidden">
-          <div
-            className="relative"
-            style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }}
-          >
+          <div className="relative" style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }}>
             <canvas
               ref={canvasRef}
               style={{
@@ -316,43 +347,42 @@ export function Ecosystem() {
             />
 
             {/* World mode: continent overlays */}
-            {!inContinentMode && continentOverlays.map((pos) => {
-              const c = continents.find((x) => x.id === pos.id)!;
-              return (
-                <button
-                  key={pos.id}
-                  style={{
-                    position: "absolute",
-                    left: pos.x,
-                    top: pos.y,
-                    transform: "translate(-50%, -100%)",
-                    pointerEvents: pos.visible ? "auto" : "none",
-                  }}
-                  className={`group flex flex-col items-center gap-1 transition-opacity ${
-                    pos.visible ? "opacity-100" : "opacity-0"
-                  }`}
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setSelectedContinentId(c.id);
-                  }}
-                >
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded whitespace-nowrap leading-none bg-white border border-[#2F7A47]/40 text-[#1A1F1A] shadow-sm group-hover:bg-[#1A1F1A] group-hover:text-white transition-colors">
-                    {c.name}
-                    <span className="ml-1 font-normal opacity-70 normal-case tracking-normal">
-                      · {continentCandidateCount[c.id]}
+            {!inContinentMode &&
+              continentOverlays.map((pos) => {
+                const c = continents.find((x) => x.id === pos.id)!;
+                return (
+                  <button
+                    key={pos.id}
+                    style={{
+                      position: "absolute",
+                      left: pos.x,
+                      top: pos.y,
+                      transform: "translate(-50%, -100%)",
+                      pointerEvents: pos.visible ? "auto" : "none",
+                    }}
+                    className={`group flex flex-col items-center gap-1 transition-opacity ${
+                      pos.visible ? "opacity-100" : "opacity-0"
+                    }`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedContinentId(c.id);
+                    }}
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded whitespace-nowrap leading-none bg-white border border-[#2F7A47]/40 text-[#1A1F1A] shadow-sm group-hover:bg-[#1A1F1A] group-hover:text-white transition-colors">
+                      {c.name}
+                      <span className="ml-1 font-normal opacity-70 normal-case tracking-normal">
+                        · {continentCandidateCount[c.id]}
+                      </span>
                     </span>
-                  </span>
-                  <div className="w-3.5 h-3.5 rounded-full bg-[#2F7A47] ring-2 ring-white shadow group-hover:scale-125 transition-transform" />
-                </button>
-              );
-            })}
+                    <div className="w-3.5 h-3.5 rounded-full bg-[#2F7A47] ring-2 ring-white shadow group-hover:scale-125 transition-transform" />
+                  </button>
+                );
+              })}
 
             {/* City circles — visible in both views, clickable only in continent mode */}
             {cityOverlays
               .filter((pos) =>
-                inContinentMode
-                  ? visibleCities.some((c) => c.id === pos.id)
-                  : true
+                inContinentMode ? visibleCities.some((c) => c.id === pos.id) : true,
               )
               .map((pos) => {
                 const city = cityMarkers.find((c) => c.id === pos.id)!;
@@ -366,7 +396,11 @@ export function Ecosystem() {
                   city.name,
                   [
                     cands ? `${cands} candidates` : null,
-                    cityEvts.length === 1 ? cityEvts[0].name : cityEvts.length > 1 ? `${cityEvts.length} events` : null,
+                    cityEvts.length === 1
+                      ? cityEvts[0].name
+                      : cityEvts.length > 1
+                        ? `${cityEvts.length} events`
+                        : null,
                   ]
                     .filter(Boolean)
                     .join(" · "),
@@ -395,11 +429,24 @@ export function Ecosystem() {
                     {/* Tooltip */}
                     {isHovered && (
                       <div
-                        style={{ position: "absolute", bottom: "calc(100% + 6px)", left: "50%", transform: "translateX(-50%)", zIndex: 30 }}
+                        style={{
+                          position: "absolute",
+                          bottom: "calc(100% + 6px)",
+                          left: "50%",
+                          transform: "translateX(-50%)",
+                          zIndex: 30,
+                        }}
                         className="bg-white border border-border rounded-md px-2 py-1 shadow-md pointer-events-none whitespace-nowrap"
                       >
                         {tooltipLines.map((line, i) => (
-                          <div key={i} className={i === 0 ? "text-[11px] font-semibold text-foreground" : "text-[10px] text-muted-foreground"}>
+                          <div
+                            key={i}
+                            className={
+                              i === 0
+                                ? "text-[11px] font-semibold text-foreground"
+                                : "text-[10px] text-muted-foreground"
+                            }
+                          >
                             {line}
                           </div>
                         ))}
@@ -426,63 +473,78 @@ export function Ecosystem() {
               })}
 
             {/* Event diamond markers — continent mode only */}
-            {inContinentMode && events
-              .filter((ev) => visibleCities.some((c) => c.id === ev.cityId))
-              .map((ev) => {
-                const cityPos = cityOverlays.find((p) => p.id === ev.cityId);
-                if (!cityPos || !cityPos.visible) return null;
-                const isHovered = hoveredMarkerId === `event-${ev.id}`;
-                const color = eventRoiColor(ev);
-                const evCandidates = candidates.filter((c) => c.eventId === ev.id);
-                return (
-                  <div
-                    key={ev.id}
-                    style={{
-                      position: "absolute",
-                      left: cityPos.x,
-                      top: cityPos.y - 12,
-                      transform: "translate(-50%, -50%)",
-                      pointerEvents: "auto",
-                      zIndex: 15,
-                      padding: 5,
-                    }}
-                    onMouseEnter={() => setHoveredMarkerId(`event-${ev.id}`)}
-                    onMouseLeave={() => setHoveredMarkerId(null)}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setSelectedCityId(ev.cityId);
-                      setTimeout(() => eventsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
-                    }}
-                  >
-                    {/* Tooltip */}
-                    {isHovered && (
-                      <div
-                        style={{ position: "absolute", bottom: "calc(100% + 6px)", left: "50%", transform: "translateX(-50%)", zIndex: 30 }}
-                        className="bg-white border border-border rounded-md px-2 py-1 shadow-md pointer-events-none whitespace-nowrap"
-                      >
-                        <div className="text-[11px] font-semibold text-foreground">{ev.name}</div>
-                        <div className="text-[10px] text-muted-foreground">
-                          {ev.hires} {ev.hires === 1 ? "hire" : "hires"} · €{Math.round(ev.sponsorship / ev.hires).toLocaleString()}/hire
-                          {evCandidates.length > 0 ? ` · ${evCandidates.length} in pipeline` : ""}
-                        </div>
-                      </div>
-                    )}
-                    {/* Diamond */}
+            {inContinentMode &&
+              events
+                .filter((ev) => visibleCities.some((c) => c.id === ev.cityId))
+                .map((ev) => {
+                  const cityPos = cityOverlays.find((p) => p.id === ev.cityId);
+                  if (!cityPos || !cityPos.visible) return null;
+                  const isHovered = hoveredMarkerId === `event-${ev.id}`;
+                  const color = eventRoiColor(ev);
+                  const evCandidates = candidates.filter((c) => c.eventId === ev.id);
+                  return (
                     <div
+                      key={ev.id}
                       style={{
-                        width: 10,
-                        height: 10,
-                        backgroundColor: color,
-                        border: "2px solid white",
-                        boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
-                        transform: `rotate(45deg) ${isHovered ? "scale(1.3)" : "scale(1)"}`,
-                        transition: "transform 150ms",
-                        cursor: "pointer",
+                        position: "absolute",
+                        left: cityPos.x,
+                        top: cityPos.y - 12,
+                        transform: "translate(-50%, -50%)",
+                        pointerEvents: "auto",
+                        zIndex: 15,
+                        padding: 5,
                       }}
-                    />
-                  </div>
-                );
-              })}
+                      onMouseEnter={() => setHoveredMarkerId(`event-${ev.id}`)}
+                      onMouseLeave={() => setHoveredMarkerId(null)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setSelectedCityId(ev.cityId);
+                        setTimeout(
+                          () =>
+                            eventsRef.current?.scrollIntoView({
+                              behavior: "smooth",
+                              block: "start",
+                            }),
+                          50,
+                        );
+                      }}
+                    >
+                      {/* Tooltip */}
+                      {isHovered && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            bottom: "calc(100% + 6px)",
+                            left: "50%",
+                            transform: "translateX(-50%)",
+                            zIndex: 30,
+                          }}
+                          className="bg-white border border-border rounded-md px-2 py-1 shadow-md pointer-events-none whitespace-nowrap"
+                        >
+                          <div className="text-[11px] font-semibold text-foreground">{ev.name}</div>
+                          <div className="text-[10px] text-muted-foreground">
+                            {ev.hires} {ev.hires === 1 ? "hire" : "hires"} · €
+                            {Math.round(ev.sponsorship / ev.hires).toLocaleString()}/hire
+                            {evCandidates.length > 0 ? ` · ${evCandidates.length} in pipeline` : ""}
+                          </div>
+                        </div>
+                      )}
+                      {/* Diamond */}
+                      <div
+                        style={{
+                          width: 10,
+                          height: 10,
+                          backgroundColor: color,
+                          border: "2px solid white",
+                          boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                          transform: `rotate(45deg) ${isHovered ? "scale(1.3)" : "scale(1)"}`,
+                          transition: "transform 150ms",
+                          cursor: "pointer",
+                        }}
+                      />
+                    </div>
+                  );
+                })}
           </div>
 
           {/* Zoom controls */}
@@ -491,7 +553,9 @@ export function Ecosystem() {
               onClick={resetView}
               className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-[16px] leading-none flex items-center justify-center shadow-sm"
               aria-label="Reset view"
-            >⟳</button>
+            >
+              ⟳
+            </button>
           </div>
 
           <div className="absolute bottom-4 left-4 text-[10px] text-muted-foreground">
@@ -518,7 +582,8 @@ export function Ecosystem() {
                     <div className="flex items-baseline justify-between mb-1">
                       <div className="text-sm font-semibold">{c.name}</div>
                       <div className="text-[10px] text-muted-foreground">
-                        {continentCityCount[c.id]} {continentCityCount[c.id] === 1 ? "city" : "cities"}
+                        {continentCityCount[c.id]}{" "}
+                        {continentCityCount[c.id] === 1 ? "city" : "cities"}
                       </div>
                     </div>
                     <div className="text-2xl font-bold tabular-nums">
@@ -536,7 +601,9 @@ export function Ecosystem() {
               <button
                 onClick={resetView}
                 className="text-xs text-muted-foreground hover:text-foreground mb-4 inline-flex items-center gap-1"
-              >← Back to world</button>
+              >
+                ← Back to world
+              </button>
               <h2 className="text-xl font-bold mb-1">{selectedContinent!.name}</h2>
               <div className="text-xs text-muted-foreground mb-5">
                 {continentCandidateCount[selectedContinent!.id]} candidates ·{" "}
@@ -572,7 +639,9 @@ export function Ecosystem() {
               <button
                 onClick={() => setSelectedCityId(null)}
                 className="text-xs text-muted-foreground hover:text-foreground mb-3 inline-flex items-center gap-1"
-              >← {selectedContinent!.name}</button>
+              >
+                ← {selectedContinent!.name}
+              </button>
 
               {/* City header */}
               <div className="mb-5">
@@ -580,7 +649,9 @@ export function Ecosystem() {
                 <div className="text-xs text-muted-foreground mt-0.5">
                   {[
                     cityTotalCandidates > 0 ? `${cityTotalCandidates} candidates` : null,
-                    cityUniversities.length > 0 ? `${cityUniversities.length} ${cityUniversities.length === 1 ? "university" : "universities"}` : null,
+                    cityUniversities.length > 0
+                      ? `${cityUniversities.length} ${cityUniversities.length === 1 ? "university" : "universities"}`
+                      : null,
                     (cityEvents[selectedCity.id] ?? []).length > 0
                       ? `${(cityEvents[selectedCity.id] ?? []).length} ${(cityEvents[selectedCity.id] ?? []).length === 1 ? "event" : "events"}`
                       : null,
@@ -593,7 +664,10 @@ export function Ecosystem() {
               {/* Section 1: Events */}
               {(cityEvents[selectedCity.id] ?? []).length > 0 && (
                 <>
-                  <div ref={eventsRef} className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                  <div
+                    ref={eventsRef}
+                    className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2"
+                  >
                     Events
                   </div>
                   <div className="space-y-3 mb-5">
@@ -614,11 +688,15 @@ export function Ecosystem() {
                             </div>
                             <div>
                               <span className="text-[10px] text-muted-foreground">Cost/hire</span>
-                              <div className="text-sm font-semibold tabular-nums">€{costPerHire.toLocaleString()}</div>
+                              <div className="text-sm font-semibold tabular-nums">
+                                €{costPerHire.toLocaleString()}
+                              </div>
                             </div>
                             <div>
                               <span className="text-[10px] text-muted-foreground">Pipeline</span>
-                              <div className="text-sm font-semibold tabular-nums">{ev.pipeline}</div>
+                              <div className="text-sm font-semibold tabular-nums">
+                                {ev.pipeline}
+                              </div>
                             </div>
                             <div>
                               <span className="text-[10px] text-muted-foreground">Hires</span>
@@ -633,7 +711,8 @@ export function Ecosystem() {
                               }}
                               className="w-full text-left text-xs text-primary hover:underline font-medium"
                             >
-                              View {evCandidates.length} {evCandidates.length === 1 ? "candidate" : "candidates"} →
+                              View {evCandidates.length}{" "}
+                              {evCandidates.length === 1 ? "candidate" : "candidates"} →
                             </button>
                           )}
                         </div>
@@ -654,12 +733,19 @@ export function Ecosystem() {
                       <div key={u.id} className="bg-card border border-border rounded-md p-3">
                         <div className="flex items-baseline justify-between mb-1">
                           <div className="text-sm font-semibold">{u.shortName}</div>
-                          <div className="text-xs tabular-nums text-muted-foreground">{u.candidates}</div>
+                          <div className="text-xs tabular-nums text-muted-foreground">
+                            {u.candidates}
+                          </div>
                         </div>
                         <div className="text-[11px] text-muted-foreground mb-2">{u.name}</div>
                         <div className="flex flex-wrap gap-1 mb-1.5">
                           {u.topSkills.slice(0, 3).map((s) => (
-                            <span key={s} className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary">{s}</span>
+                            <span
+                              key={s}
+                              className="text-[10px] px-1.5 py-0.5 rounded border border-primary/30 text-primary"
+                            >
+                              {s}
+                            </span>
                           ))}
                         </div>
                         <div className="text-[10px] px-2 py-0.5 rounded-full bg-primary/10 text-primary font-medium inline-block">
@@ -682,14 +768,20 @@ export function Ecosystem() {
                       <div key={c.id} className="bg-card border border-border rounded-md p-3">
                         <div className="flex items-baseline justify-between mb-1">
                           <div className="text-sm font-semibold">{c.name}</div>
-                          <div className="text-xs tabular-nums text-muted-foreground">{c.members}</div>
+                          <div className="text-xs tabular-nums text-muted-foreground">
+                            {c.members}
+                          </div>
                         </div>
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-2">
-                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${typeBadgeStyles[c.type]}`}>
+                            <span
+                              className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${typeBadgeStyles[c.type]}`}
+                            >
                               {c.type}
                             </span>
-                            <span className="text-[11px] text-muted-foreground">{c.university}</span>
+                            <span className="text-[11px] text-muted-foreground">
+                              {c.university}
+                            </span>
                           </div>
                           {clubPartnerships.some((p) => p.clubId === c.id) && (
                             <button

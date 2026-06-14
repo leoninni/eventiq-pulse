@@ -1,0 +1,598 @@
+<h2>UI Design: Three Features</h2>
+<p class="subtitle">
+  Visual treatment for each. Using the existing sage green design system throughout.
+</p>
+
+<!-- ── FEATURE 1: FUNNEL ── -->
+<div class="section">
+  <div class="label">Feature A · Overview</div>
+  <h3>Conversion Funnel — replaces donut chart</h3>
+  <div class="mockup">
+    <div class="mockup-header">Overview · Pipeline Status (right panel, col-span-2)</div>
+    <div
+      class="mockup-body"
+      style="background: #fff; padding: 20px; font-family: Inter, sans-serif"
+    >
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: baseline;
+          margin-bottom: 16px;
+        "
+      >
+        <span style="font-size: 16px; font-weight: 600; color: #0f1410">Hiring funnel</span>
+        <span style="font-size: 11px; color: #5c6660">All events · 2025</span>
+      </div>
+      <!-- Funnel stages -->
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <!-- Stage row -->
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span
+            style="font-size: 11px; color: #5c6660; width: 80px; text-align: right; flex-shrink: 0"
+            >Attendees</span
+          >
+          <div
+            style="flex: 1; background: #eef3ee; border-radius: 4px; overflow: hidden; height: 28px"
+          >
+            <div
+              style="
+                width: 100%;
+                background: #e3e8e3;
+                height: 100%;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+              "
+            >
+              <span style="font-size: 12px; font-weight: 600; color: #0f1410">1,760</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span
+            style="font-size: 11px; color: #5c6660; width: 80px; text-align: right; flex-shrink: 0"
+            >Opt-ins</span
+          >
+          <div
+            style="flex: 1; background: #eef3ee; border-radius: 4px; overflow: hidden; height: 28px"
+          >
+            <div
+              style="
+                width: 70%;
+                background: #b8e0c2;
+                height: 100%;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                gap: 8px;
+              "
+            >
+              <span style="font-size: 12px; font-weight: 600; color: #0f1410">247</span>
+              <span style="font-size: 10px; color: #2f7a47">14%</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span
+            style="font-size: 11px; color: #5c6660; width: 80px; text-align: right; flex-shrink: 0"
+            >Contacted</span
+          >
+          <div
+            style="flex: 1; background: #eef3ee; border-radius: 4px; overflow: hidden; height: 28px"
+          >
+            <div
+              style="
+                width: 50%;
+                background: #b8e0c2;
+                height: 100%;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                gap: 8px;
+              "
+            >
+              <span style="font-size: 12px; font-weight: 600; color: #0f1410">178</span>
+              <span style="font-size: 10px; color: #2f7a47">72%</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span
+            style="font-size: 11px; color: #5c6660; width: 80px; text-align: right; flex-shrink: 0"
+            >In Pipeline</span
+          >
+          <div
+            style="flex: 1; background: #eef3ee; border-radius: 4px; overflow: hidden; height: 28px"
+          >
+            <div
+              style="
+                width: 20%;
+                background: #6bae82;
+                height: 100%;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                gap: 8px;
+              "
+            >
+              <span style="font-size: 12px; font-weight: 600; color: #fff">34</span>
+              <span style="font-size: 10px; color: #dcefe2">19%</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span
+            style="font-size: 11px; color: #5c6660; width: 80px; text-align: right; flex-shrink: 0"
+            >Interviewed</span
+          >
+          <div
+            style="flex: 1; background: #eef3ee; border-radius: 4px; overflow: hidden; height: 28px"
+          >
+            <div
+              style="
+                width: 10%;
+                background: #2f7a47;
+                height: 100%;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+                gap: 8px;
+              "
+            >
+              <span style="font-size: 12px; font-weight: 600; color: #fff">12</span>
+            </div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 10px">
+          <span
+            style="font-size: 11px; color: #5c6660; width: 80px; text-align: right; flex-shrink: 0"
+            >Offers</span
+          >
+          <div
+            style="flex: 1; background: #eef3ee; border-radius: 4px; overflow: hidden; height: 28px"
+          >
+            <div
+              style="
+                width: 5%;
+                background: #0f1410;
+                height: 100%;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                padding: 0 10px;
+              "
+            >
+              <span style="font-size: 12px; font-weight: 600; color: #fff">3</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEATURE 2: MATCH SCORE ── -->
+<div class="section">
+  <div class="label">Feature B · Candidates</div>
+  <h3>Match score on candidate rows + role match in drawer</h3>
+  <div class="split">
+    <div class="mockup">
+      <div class="mockup-header">Candidate list row</div>
+      <div
+        class="mockup-body"
+        style="background: #fff; padding: 12px 14px; font-family: Inter, sans-serif"
+      >
+        <div style="display: flex; align-items: center; gap: 12px">
+          <div
+            style="
+              width: 38px;
+              height: 38px;
+              border-radius: 50%;
+              background: linear-gradient(135deg, #0f1410, #2f7a47);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              font-size: 11px;
+              font-weight: 600;
+              color: #fff;
+              flex-shrink: 0;
+            "
+          >
+            FM
+          </div>
+          <div style="flex: 1; min-width: 0">
+            <div style="display: flex; align-items: baseline; gap: 8px">
+              <span style="font-weight: 600; font-size: 13px; color: #0f1410">Felix M.</span>
+              <span style="font-size: 11px; color: #5c6660">TU Munich</span>
+            </div>
+            <div style="display: flex; gap: 4px; margin-top: 4px; flex-wrap: wrap">
+              <span
+                style="
+                  font-size: 10px;
+                  padding: 2px 6px;
+                  border: 1px solid rgba(47, 122, 71, 0.3);
+                  border-radius: 3px;
+                  color: #2f7a47;
+                "
+                >Python</span
+              >
+              <span
+                style="
+                  font-size: 10px;
+                  padding: 2px 6px;
+                  border: 1px solid rgba(47, 122, 71, 0.3);
+                  border-radius: 3px;
+                  color: #2f7a47;
+                "
+                >ML</span
+              >
+              <span
+                style="
+                  font-size: 10px;
+                  padding: 2px 6px;
+                  border: 1px solid rgba(47, 122, 71, 0.3);
+                  border-radius: 3px;
+                  color: #2f7a47;
+                "
+                >LLMs</span
+              >
+            </div>
+          </div>
+          <div
+            style="
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+              gap: 5px;
+              flex-shrink: 0;
+            "
+          >
+            <!-- Match score badge -->
+            <div
+              style="
+                background: #dcefe2;
+                border: 1px solid #b8e0c2;
+                border-radius: 5px;
+                padding: 3px 8px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+              "
+            >
+              <span
+                style="
+                  width: 6px;
+                  height: 6px;
+                  border-radius: 50%;
+                  background: #2f7a47;
+                  display: inline-block;
+                "
+              ></span>
+              <span style="font-size: 11px; font-weight: 600; color: #1f4a2e">92%</span>
+              <span style="font-size: 10px; color: #2f7a47">ML/AI Working Student</span>
+            </div>
+            <span
+              style="
+                font-size: 10px;
+                padding: 3px 7px;
+                background: #e2e8f0;
+                border-radius: 4px;
+                color: #334155;
+              "
+              >Interviewed</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-header">Drawer · Role Match section</div>
+      <div
+        class="mockup-body"
+        style="background: #fff; padding: 14px 16px; font-family: Inter, sans-serif"
+      >
+        <div
+          style="
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: #5c6660;
+            margin-bottom: 8px;
+          "
+        >
+          Role Match
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 7px 10px;
+              background: #dcefe2;
+              border: 1px solid #b8e0c2;
+              border-radius: 7px;
+            "
+          >
+            <span style="font-size: 12px; font-weight: 500; color: #1f4a2e"
+              >ML/AI Working Student</span
+            >
+            <span style="font-size: 13px; font-weight: 700; color: #2f7a47">92%</span>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 7px 10px;
+              background: #f8faf8;
+              border: 1px solid #e3e8e3;
+              border-radius: 7px;
+            "
+          >
+            <span style="font-size: 12px; color: #5c6660">Backend Engineering Intern</span>
+            <span style="font-size: 13px; font-weight: 600; color: #5c6660">24%</span>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 7px 10px;
+              background: #f8faf8;
+              border: 1px solid #e3e8e3;
+              border-radius: 7px;
+            "
+          >
+            <span style="font-size: 12px; color: #5c6660">Systems Engineering Intern</span>
+            <span style="font-size: 13px; font-weight: 600; color: #5c6660">18%</span>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
+              padding: 7px 10px;
+              background: #f8faf8;
+              border: 1px solid #e3e8e3;
+              border-radius: 7px;
+            "
+          >
+            <span style="font-size: 12px; color: #5c6660">Frontend Working Student</span>
+            <span style="font-size: 13px; font-weight: 600; color: #5c6660">8%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FEATURE 3: ATS MODAL ── -->
+<div class="section">
+  <div class="label">Feature C · ATS Integration</div>
+  <h3>Three-step modal — select ATS → syncing → success</h3>
+  <div style="display: flex; gap: 12px; flex-wrap: wrap">
+    <!-- Step 1 -->
+    <div class="mockup" style="flex: 1; min-width: 180px">
+      <div class="mockup-header">Step 1 · Choose ATS</div>
+      <div
+        class="mockup-body"
+        style="background: #fff; padding: 14px; font-family: Inter, sans-serif"
+      >
+        <div style="font-size: 13px; font-weight: 600; color: #0f1410; margin-bottom: 10px">
+          Add to ATS
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <div
+            style="
+              border: 2px solid #2f7a47;
+              border-radius: 8px;
+              padding: 9px 12px;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              background: #f5fbf7;
+              cursor: pointer;
+            "
+          >
+            <div
+              style="
+                width: 24px;
+                height: 24px;
+                background: #23a47c;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;
+                font-weight: 700;
+                color: #fff;
+              "
+            >
+              G
+            </div>
+            <span style="font-size: 12px; font-weight: 500; color: #0f1410">Greenhouse</span>
+            <span
+              style="
+                margin-left: auto;
+                width: 14px;
+                height: 14px;
+                border-radius: 50%;
+                background: #2f7a47;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              "
+            >
+              <span style="font-size: 8px; color: #fff">✓</span>
+            </span>
+          </div>
+          <div
+            style="
+              border: 1px solid #e3e8e3;
+              border-radius: 8px;
+              padding: 9px 12px;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              cursor: pointer;
+            "
+          >
+            <div
+              style="
+                width: 24px;
+                height: 24px;
+                background: #5865f2;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;
+                font-weight: 700;
+                color: #fff;
+              "
+            >
+              L
+            </div>
+            <span style="font-size: 12px; color: #5c6660">Lever</span>
+          </div>
+          <div
+            style="
+              border: 1px solid #e3e8e3;
+              border-radius: 8px;
+              padding: 9px 12px;
+              display: flex;
+              align-items: center;
+              gap: 8px;
+              cursor: pointer;
+            "
+          >
+            <div
+              style="
+                width: 24px;
+                height: 24px;
+                background: #ff6b35;
+                border-radius: 4px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 10px;
+                font-weight: 700;
+                color: #fff;
+              "
+            >
+              A
+            </div>
+            <span style="font-size: 12px; color: #5c6660">Ashby</span>
+          </div>
+        </div>
+        <div
+          style="
+            margin-top: 12px;
+            padding: 7px 12px;
+            background: #0f1410;
+            border-radius: 6px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 500;
+            color: #fff;
+            cursor: pointer;
+          "
+        >
+          Sync to Greenhouse
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="mockup" style="flex: 1; min-width: 180px">
+      <div class="mockup-header">Step 2 · Syncing</div>
+      <div
+        class="mockup-body"
+        style="
+          background: #fff;
+          padding: 14px;
+          font-family: Inter, sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 140px;
+          gap: 10px;
+        "
+      >
+        <div
+          style="
+            width: 32px;
+            height: 32px;
+            border: 3px solid #b8e0c2;
+            border-top-color: #2f7a47;
+            border-radius: 50%;
+          "
+        ></div>
+        <div style="font-size: 12px; color: #5c6660">Syncing Felix M. to Greenhouse...</div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="mockup" style="flex: 1; min-width: 180px">
+      <div class="mockup-header">Step 3 · Success</div>
+      <div
+        class="mockup-body"
+        style="
+          background: #fff;
+          padding: 14px;
+          font-family: Inter, sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 140px;
+          gap: 8px;
+        "
+      >
+        <div
+          style="
+            width: 36px;
+            height: 36px;
+            background: #dcefe2;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: #2f7a47;
+          "
+        >
+          ✓
+        </div>
+        <div style="font-size: 13px; font-weight: 600; color: #0f1410">Synced to Greenhouse</div>
+        <div style="font-size: 11px; color: #5c6660; text-align: center">
+          Felix M. added as a candidate<br />in your Greenhouse pipeline.
+        </div>
+        <!-- Row badge after sync -->
+        <div
+          style="
+            margin-top: 6px;
+            background: #dcefe2;
+            border: 1px solid #b8e0c2;
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 10px;
+            color: #2f7a47;
+            font-weight: 500;
+          "
+        >
+          Synced · Greenhouse
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

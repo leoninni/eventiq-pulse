@@ -30,7 +30,7 @@ export interface EventItem {
   pipeline: number;
   sponsorship: number;
   costPerLead: number;
-  hires: number;        // ← new
+  hires: number; // ← new
 }
 ```
 
@@ -38,13 +38,13 @@ export interface EventItem {
 
 All five events get a `hires` value. The numbers are chosen to tell a clear story — HackTUM wins on both volume and cost efficiency, KIT is the clear laggard:
 
-| ID | Name | Hires | Cost/Hire (sponsorship ÷ hires) |
-|---|---|---|---|
-| hacktum | HackTUM 2025 | 5 | €1,600 |
-| starthack | START Hack 2025 | 3 | €1,667 |
-| codeberlin | CODE Berlin Hackathon | 2 | €1,750 |
-| ethbuild | ETH Build Night | 1 | €2,500 |
-| kithack | KIT Innovation Hack | 1 | €4,000 |
+| ID         | Name                  | Hires | Cost/Hire (sponsorship ÷ hires) |
+| ---------- | --------------------- | ----- | ------------------------------- |
+| hacktum    | HackTUM 2025          | 5     | €1,600                          |
+| starthack  | START Hack 2025       | 3     | €1,667                          |
+| codeberlin | CODE Berlin Hackathon | 2     | €1,750                          |
+| ethbuild   | ETH Build Night       | 1     | €2,500                          |
+| kithack    | KIT Innovation Hack   | 1     | €4,000                          |
 
 `costPerHire` is derived at render time as `Math.round(event.sponsorship / event.hires)`. It is not stored in the data.
 
@@ -67,6 +67,7 @@ A new section inserted at the top of the Reports list view (the `return` branch 
 A `<table>` with six columns: Event, Opt-ins, Pipeline, Hires, Cost/Hire, Performance.
 
 **Columns:**
+
 - **Event** — event name, left-aligned
 - **Opt-ins** — `event.optIns`, right-aligned, tabular-nums
 - **Pipeline** — `event.pipeline`, right-aligned, tabular-nums
@@ -77,7 +78,7 @@ A `<table>` with six columns: Event, Opt-ins, Pipeline, Hires, Cost/Hire, Perfor
 ### Performance bar calculation
 
 ```ts
-const bestCostPerHire = Math.min(...events.map(e => e.sponsorship / e.hires));
+const bestCostPerHire = Math.min(...events.map((e) => e.sponsorship / e.hires));
 // For each event: barWidth = bestCostPerHire / (event.sponsorship / event.hires) * 100
 // HackTUM (€1,600) → 100%, KIT (€4,000) → 40%
 ```
@@ -85,6 +86,7 @@ const bestCostPerHire = Math.min(...events.map(e => e.sponsorship / e.hires));
 ### Row styling
 
 Three tiers based on cost/hire ranking:
+
 - **Best** (lowest cost/hire = HackTUM): left border `border-l-2 border-[#2F7A47]`, bar color `bg-[#2F7A47]`
 - **Middle** (START Hack, CODE Berlin, ETH Build Night): no border decoration, bar color `bg-[#6BAE82]`
 - **Worst** (highest cost/hire = KIT): left border `border-l-2 border-[#C99A3E]`, bar color `bg-[#C99A3E]`
@@ -95,9 +97,7 @@ Three tiers based on cost/hire ranking:
 
 ```tsx
 <div className="bg-card border border-border rounded-lg overflow-hidden mb-8">
-  <table className="w-full text-sm">
-    ...
-  </table>
+  <table className="w-full text-sm">...</table>
 </div>
 ```
 
@@ -133,9 +133,9 @@ In the drilldown view (Section 3 — Cost Analysis), add one new row after "Cost
 
 ## Files Changed
 
-| File | Change |
-|---|---|
-| `src/lib/eventiq/mockData.ts` | Add `hires` to `EventItem` interface; add `hires` values to all 5 events |
+| File                                       | Change                                                                                                                   |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| `src/lib/eventiq/mockData.ts`              | Add `hires` to `EventItem` interface; add `hires` values to all 5 events                                                 |
 | `src/components/eventiq/views/Reports.tsx` | Add ROI comparison table at top of list view; add Hires stat to event cards; add cost/hire row to drilldown cost section |
 
 No new files. No new dependencies (`recharts` is already installed but not used for this feature — pure Tailwind CSS table and bars).

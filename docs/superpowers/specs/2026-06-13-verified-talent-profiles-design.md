@@ -27,32 +27,34 @@ interface Candidate {
 **`skillProofs`** — Each entry maps one skill to a human-readable proof source. The `skill` value must exactly match a string in the candidate's existing `skills[]` array (for rendering lookup). Unmatched skills render as plain chips.
 
 Example:
+
 ```ts
 skillProofs: [
   { skill: "Python", source: "1st place · HackTUM 2025" },
-  { skill: "ML",     source: "ETH Build Night finalist" },
-]
+  { skill: "ML", source: "ETH Build Night finalist" },
+];
 ```
 
 **`communityRoles`** — Free-form strings displayed as tags. Empty or absent = section hidden.
 
 Example:
+
 ```ts
-communityRoles: ["Robotics Club Lead · TUM", "ETH Entrepreneurship Network"]
+communityRoles: ["Robotics Club Lead · TUM", "ETH Entrepreneurship Network"];
 ```
 
 ### Candidates updated with verified data (8 of 12)
 
-| ID | Name | Skill proofs | Community roles |
-|---|---|---|---|
-| c1 | Felix M. | Python → 1st HackTUM 2025; ML → HackTUM best AI project | TUM AI Society |
-| c2 | Anika S. | C++ → ETH Build Night systems winner; CUDA → ETH HPC course top project | TUM Robotics Club, ETH Women in Tech |
-| c4 | Lena K. | Python → KIT Innovation Hack finalist; Spark → KIT Data Engineering seminar | KIT Data Science Club |
-| c5 | Markus B. | Rust → START Hack systems track winner; WebAssembly → Mozilla Hacks contributor | TU Darmstadt OS Lab |
-| c6 | Priya N. | ML → HackTUM computer vision track 1st; PyTorch → NeurIPS workshop paper | TUM ML Society, Women in AI Munich |
-| c7 | Tim R. | Go → START Hack infra track winner; Kubernetes → CNCF student contributor | Uni Stuttgart Cloud Native Club |
-| c9 | Daniel H. | Java → TUM Software Engineering award; Microservices → HackTUM enterprise track | TUM Enterprise Software Group |
-| c11 | Lukas F. | C++ → CODE Berlin embedded track 1st; Embedded → TUM Robotics team lead | TUM Robotics Club Lead, FIRST Germany |
+| ID  | Name      | Skill proofs                                                                    | Community roles                       |
+| --- | --------- | ------------------------------------------------------------------------------- | ------------------------------------- |
+| c1  | Felix M.  | Python → 1st HackTUM 2025; ML → HackTUM best AI project                         | TUM AI Society                        |
+| c2  | Anika S.  | C++ → ETH Build Night systems winner; CUDA → ETH HPC course top project         | TUM Robotics Club, ETH Women in Tech  |
+| c4  | Lena K.   | Python → KIT Innovation Hack finalist; Spark → KIT Data Engineering seminar     | KIT Data Science Club                 |
+| c5  | Markus B. | Rust → START Hack systems track winner; WebAssembly → Mozilla Hacks contributor | TU Darmstadt OS Lab                   |
+| c6  | Priya N.  | ML → HackTUM computer vision track 1st; PyTorch → NeurIPS workshop paper        | TUM ML Society, Women in AI Munich    |
+| c7  | Tim R.    | Go → START Hack infra track winner; Kubernetes → CNCF student contributor       | Uni Stuttgart Cloud Native Club       |
+| c9  | Daniel H. | Java → TUM Software Engineering award; Microservices → HackTUM enterprise track | TUM Enterprise Software Group         |
+| c11 | Lukas F.  | C++ → CODE Berlin embedded track 1st; Embedded → TUM Robotics team lead         | TUM Robotics Club Lead, FIRST Germany |
 
 ---
 
@@ -77,6 +79,7 @@ Only rendered when `skillProofs?.length > 0`. Candidates with no proofs are unch
 Current: plain flex-wrap of skill name badges.
 
 New: if the candidate has `skillProofs`, render each skill as a two-line chip:
+
 - Line 1: skill name (existing style)
 - Line 2: proof source in `text-xs text-muted-foreground` below
 
@@ -104,9 +107,9 @@ Only rendered when `communityRoles` is non-empty.
 
 ## Files Changed
 
-| File | Change |
-|---|---|
-| `src/lib/eventiq/mockData.ts` | Add `skillProofs` and `communityRoles` to `Candidate` interface; populate 8 candidates |
+| File                                          | Change                                                                                  |
+| --------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `src/lib/eventiq/mockData.ts`                 | Add `skillProofs` and `communityRoles` to `Candidate` interface; populate 8 candidates  |
 | `src/components/eventiq/views/Candidates.tsx` | Add verified chip to list row; update skills rendering in drawer; add Community section |
 
 No new files. No routing changes. No store changes.

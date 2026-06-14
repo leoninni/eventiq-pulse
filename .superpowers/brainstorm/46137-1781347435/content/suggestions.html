@@ -1,0 +1,184 @@
+<h2>3 High-Impact Improvements for EventIQ Pulse</h2>
+<p class="subtitle">
+  Ranked by combined VC signal strength + customer utility. Pick which to build first.
+</p>
+
+<div class="options" data-multiselect>
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Candidate Match Score + Open Roles</h3>
+      <p>
+        Add 3–4 hardcoded open roles (e.g. "Senior ML Engineer", "Backend Infra") and show a
+        per-candidate match score on every row in the Candidates view — mirroring what the
+        Recommendations tab does for events. The candidate detail panel would show which role they
+        match and why (skill overlap).
+      </p>
+      <div style="display: flex; gap: 12px; margin-top: 10px">
+        <div
+          style="
+            flex: 1;
+            background: rgba(47, 122, 71, 0.08);
+            border: 1px solid rgba(47, 122, 71, 0.25);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11px;
+          "
+        >
+          <span
+            style="
+              font-weight: 700;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              color: #2f7a47;
+            "
+            >VC angle</span
+          ><br />
+          AI that produces a concrete hiring outcome, not just analytics. Makes the product
+          defensible — the match model is trained on your data.
+        </div>
+        <div
+          style="
+            flex: 1;
+            background: rgba(15, 20, 16, 0.04);
+            border: 1px solid #e3e8e3;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11px;
+          "
+        >
+          <span style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em"
+            >Customer angle</span
+          ><br />
+          "Which of these 247 people should I actually call?" is the real job-to-be-done. Right now
+          the product can't answer it.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>Pipeline Conversion Funnel</h3>
+      <p>
+        Replace the donut chart on Overview with a per-event conversion funnel: Attendees → Opt-ins
+        → Contacted → Interviewed → Offers. Show drop-off % at each stage and highlight which event
+        had the best funnel efficiency. The donut moves to a secondary position or disappears.
+      </p>
+      <div style="display: flex; gap: 12px; margin-top: 10px">
+        <div
+          style="
+            flex: 1;
+            background: rgba(47, 122, 71, 0.08);
+            border: 1px solid rgba(47, 122, 71, 0.25);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11px;
+          "
+        >
+          <span
+            style="
+              font-weight: 700;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              color: #2f7a47;
+            "
+            >VC angle</span
+          ><br />
+          Unit economics made visual. An investor can immediately see the TAM, retention, and
+          conversion thesis in one chart.
+        </div>
+        <div
+          style="
+            flex: 1;
+            background: rgba(15, 20, 16, 0.04);
+            border: 1px solid #e3e8e3;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11px;
+          "
+        >
+          <span style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em"
+            >Customer angle</span
+          ><br />
+          A Head of Talent can show the CFO exactly why a €8k sponsorship was worth it — or wasn't.
+          Justifies the budget conversation.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>ATS Integration Flow (Greenhouse / Lever / Ashby)</h3>
+      <p>
+        Make the "Add to ATS" button in the candidate drawer actually work in the demo. Show a modal
+        with ATS logos, a connection state, and a mock sync success. The candidate row gets a small
+        "Synced to Greenhouse" badge after. Current "coming soon" toast kills credibility in any
+        live demo.
+      </p>
+      <div style="display: flex; gap: 12px; margin-top: 10px">
+        <div
+          style="
+            flex: 1;
+            background: rgba(47, 122, 71, 0.08);
+            border: 1px solid rgba(47, 122, 71, 0.25);
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11px;
+          "
+        >
+          <span
+            style="
+              font-weight: 700;
+              text-transform: uppercase;
+              letter-spacing: 0.05em;
+              color: #2f7a47;
+            "
+            >VC angle</span
+          ><br />
+          Integration = distribution channel + switching costs. Shows enterprise GTM awareness.
+          Ashby/Greenhouse partnerships are a real moat.
+        </div>
+        <div
+          style="
+            flex: 1;
+            background: rgba(15, 20, 16, 0.04);
+            border: 1px solid #e3e8e3;
+            border-radius: 6px;
+            padding: 8px 10px;
+            font-size: 11px;
+          "
+        >
+          <span style="font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em"
+            >Customer angle</span
+          ><br />
+          Every recruiter lives in their ATS. Without this, EventIQ is a second tool they have to
+          maintain in parallel — a dealbreaker at procurement.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  style="
+    margin-top: 24px;
+    padding: 14px 16px;
+    background: rgba(15, 20, 16, 0.04);
+    border: 1px solid #e3e8e3;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #5c6660;
+  "
+>
+  <strong style="color: #1a1f1a">Also worth noting (lower effort, quick wins):</strong><br />
+  • The email template hardcodes "Syntara Engineering" — should be your company name for any real
+  demo<br />
+  • Bulk actions on the candidate list (select multiple → change status / export) feels table-stakes
+  for recruiters<br />
+  • The Recommendations shortlist has no CTA after shortlisting — what happens next? A "Request
+  Budget Approval" button would close the loop
+</div>

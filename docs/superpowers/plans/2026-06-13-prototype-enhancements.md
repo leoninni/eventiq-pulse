@@ -13,6 +13,7 @@
 ## Task 1: Extend mockData.ts with OpenRole and funnelData
 
 **Files:**
+
 - Modify: `src/lib/eventiq/mockData.ts`
 
 - [ ] **Step 1: Append OpenRole type and openRoles export**
@@ -28,9 +29,21 @@ export interface OpenRole {
 
 export const openRoles: OpenRole[] = [
   { id: "role-ml", title: "ML/AI Working Student", skills: ["Python", "ML", "PyTorch", "LLMs"] },
-  { id: "role-backend", title: "Backend Engineering Intern", skills: ["Go", "Java", "Node", "Microservices", "Spark"] },
-  { id: "role-systems", title: "Systems Engineering Intern", skills: ["C++", "CUDA", "Rust", "Embedded", "RTOS"] },
-  { id: "role-frontend", title: "Frontend Working Student", skills: ["React", "TypeScript", "GraphQL"] },
+  {
+    id: "role-backend",
+    title: "Backend Engineering Intern",
+    skills: ["Go", "Java", "Node", "Microservices", "Spark"],
+  },
+  {
+    id: "role-systems",
+    title: "Systems Engineering Intern",
+    skills: ["C++", "CUDA", "Rust", "Embedded", "RTOS"],
+  },
+  {
+    id: "role-frontend",
+    title: "Frontend Working Student",
+    skills: ["React", "TypeScript", "GraphQL"],
+  },
 ];
 ```
 
@@ -47,12 +60,12 @@ export interface FunnelStage {
 }
 
 export const funnelData: FunnelStage[] = [
-  { label: "Attendees",   value: 1760, widthPct: 100 },
-  { label: "Opt-ins",     value: 247,  pct: "14%", widthPct: 70 },
-  { label: "Contacted",   value: 178,  pct: "72%", widthPct: 50 },
-  { label: "In Pipeline", value: 34,   pct: "19%", widthPct: 20 },
-  { label: "Interviewed", value: 12,   pct: "35%", widthPct: 10 },
-  { label: "Offers",      value: 3,    pct: "25%", widthPct: 5  },
+  { label: "Attendees", value: 1760, widthPct: 100 },
+  { label: "Opt-ins", value: 247, pct: "14%", widthPct: 70 },
+  { label: "Contacted", value: 178, pct: "72%", widthPct: 50 },
+  { label: "In Pipeline", value: 34, pct: "19%", widthPct: 20 },
+  { label: "Interviewed", value: 12, pct: "35%", widthPct: 10 },
+  { label: "Offers", value: 3, pct: "25%", widthPct: 5 },
 ];
 ```
 
@@ -76,6 +89,7 @@ git commit -m "feat: add OpenRole, openRoles, FunnelStage, funnelData to mockDat
 ## Task 2: Add matchScore utility to utils.ts
 
 **Files:**
+
 - Modify: `src/lib/utils.ts`
 
 - [ ] **Step 1: Add RoleMatch interface and matchScore function**
@@ -140,6 +154,7 @@ git commit -m "feat: add matchScore utility to utils.ts"
 ## Task 3: Add atsSync state to store.tsx
 
 **Files:**
+
 - Modify: `src/lib/eventiq/store.tsx`
 
 - [ ] **Step 1: Extend StoreCtx interface**
@@ -196,6 +211,7 @@ git commit -m "feat: add atsSync state and syncToAts action to store"
 ## Task 4: Replace donut chart with ConversionFunnel in Overview.tsx
 
 **Files:**
+
 - Modify: `src/components/eventiq/views/Overview.tsx`
 
 - [ ] **Step 1: Update imports**
@@ -223,8 +239,19 @@ const statusCounts = candidates.reduce<Record<string, number>>((acc, c) => {
 }, {});
 const total = candidates.length;
 const order: Status[] = ["Interested", "In Review", "Interviewed", "Offer Extended", "Rejected"];
-const fixedPct: Record<Status, number> = { "Interested": 38, "In Review": 25, "Interviewed": 18, "Offer Extended": 6, "Rejected": 13 };
-const donutData = order.map((s) => ({ name: s, value: fixedPct[s], live: statusCounts[s] || 0, color: donutPalette[s] }));
+const fixedPct: Record<Status, number> = {
+  Interested: 38,
+  "In Review": 25,
+  Interviewed: 18,
+  "Offer Extended": 6,
+  Rejected: 13,
+};
+const donutData = order.map((s) => ({
+  name: s,
+  value: fixedPct[s],
+  live: statusCounts[s] || 0,
+  color: donutPalette[s],
+}));
 ```
 
 Also remove the `donutPalette` constant defined above the `Kpi` component:
@@ -232,11 +259,11 @@ Also remove the `donutPalette` constant defined above the `Kpi` component:
 ```typescript
 // DELETE this entire block:
 const donutPalette: Record<Status, string> = {
-  "Interested": "#6BAE82",
+  Interested: "#6BAE82",
   "In Review": "#C99A3E",
-  "Interviewed": "#64748B",
+  Interviewed: "#64748B",
   "Offer Extended": "#2F7A47",
-  "Rejected": "#B07A5A",
+  Rejected: "#B07A5A",
 };
 ```
 
@@ -283,6 +310,7 @@ function ConversionFunnel({ data }: { data: FunnelStage[] }) {
 Find and replace the entire `col-span-2` donut card in the Overview return JSX:
 
 Old block to replace:
+
 ```typescript
 <div className="col-span-2 bg-card border border-border rounded-xl p-6">
   <div className="flex items-center justify-between mb-5">
@@ -316,6 +344,7 @@ Old block to replace:
 ```
 
 New block:
+
 ```typescript
 <div className="col-span-2 bg-card border border-border rounded-xl p-6">
   <div className="flex items-center justify-between mb-5">
@@ -347,6 +376,7 @@ git commit -m "feat: replace pipeline donut with hiring conversion funnel"
 ## Task 5: Add match score badge (rows) and Role Match section (drawer) to Candidates.tsx
 
 **Files:**
+
 - Modify: `src/components/eventiq/views/Candidates.tsx`
 
 - [ ] **Step 1: Add new imports**
@@ -443,6 +473,7 @@ git commit -m "feat: add candidate match score badge and role match drawer secti
 ## Task 6: Add ATS integration modal to Candidates.tsx
 
 **Files:**
+
 - Modify: `src/components/eventiq/views/Candidates.tsx`
 
 - [ ] **Step 1: Update imports to add useEffect and Check**
@@ -465,9 +496,9 @@ Add this constant directly above the `export function Candidates()` line:
 ```typescript
 const ATS_OPTIONS = [
   { name: "Greenhouse", color: "#23A47C", initial: "G" },
-  { name: "Personio",   color: "#1A56DB", initial: "P" },
-  { name: "Lever",      color: "#5865F2", initial: "L" },
-  { name: "Ashby",      color: "#FF6B35", initial: "A" },
+  { name: "Personio", color: "#1A56DB", initial: "P" },
+  { name: "Lever", color: "#5865F2", initial: "L" },
+  { name: "Ashby", color: "#FF6B35", initial: "A" },
 ] as const;
 ```
 
@@ -512,6 +543,7 @@ const { candidates, setStatus, eventFilter, setEventFilter, atsSync, syncToAts }
 Find the existing "Add to ATS" button in the drawer's action row. Replace it:
 
 Old:
+
 ```typescript
 <button
   onClick={() => toast.info("ATS integration coming soon")}
@@ -522,6 +554,7 @@ Old:
 ```
 
 New:
+
 ```typescript
 {atsSync[open.id] ? (
   <button
@@ -656,6 +689,7 @@ bun run dev
 ```
 
 Test the full flow:
+
 1. Open any candidate drawer → click "Add to ATS"
 2. Step 1: four ATS cards appear (Greenhouse, Personio, Lever, Ashby) — click one, verify checkmark appears and button label updates
 3. Click "Sync to [ATS]" → Step 2: spinner appears, auto-advances after ~1.2s

@@ -13,6 +13,7 @@
 ### Task 1: Add `hires` field to EventItem and populate events
 
 **Files:**
+
 - Modify: `src/lib/eventiq/mockData.ts`
 
 - [ ] **Step 1: Add `hires: number` to the `EventItem` interface**
@@ -41,11 +42,71 @@ Find the `events` array and replace it with:
 
 ```ts
 export const events: EventItem[] = [
-  { id: "hacktum",   name: "HackTUM 2025",          date: "Apr 12, 2025", shortDate: "Apr 12", location: "Munich",     attendees: 600, optIns: 89, pipeline: 12, sponsorship: 8000, costPerLead: 667,  hires: 5 },
-  { id: "starthack", name: "START Hack 2025",        date: "Mar 1, 2025",  shortDate: "Mar 1",  location: "St. Gallen", attendees: 450, optIns: 61, pipeline: 8,  sponsorship: 5000, costPerLead: 625,  hires: 3 },
-  { id: "codeberlin",name: "CODE Berlin Hackathon",  date: "Feb 14, 2025", shortDate: "Feb 14", location: "Berlin",     attendees: 280, optIns: 48, pipeline: 7,  sponsorship: 3500, costPerLead: 500,  hires: 2 },
-  { id: "ethbuild",  name: "ETH Build Night",        date: "Jan 18, 2025", shortDate: "Jan 18", location: "Zürich",     attendees: 190, optIns: 17, pipeline: 4,  sponsorship: 2500, costPerLead: 625,  hires: 1 },
-  { id: "kithack",   name: "KIT Innovation Hack",    date: "Nov 22, 2024", shortDate: "Nov 22", location: "Karlsruhe",  attendees: 240, optIns: 32, pipeline: 3,  sponsorship: 4000, costPerLead: 1333, hires: 1 },
+  {
+    id: "hacktum",
+    name: "HackTUM 2025",
+    date: "Apr 12, 2025",
+    shortDate: "Apr 12",
+    location: "Munich",
+    attendees: 600,
+    optIns: 89,
+    pipeline: 12,
+    sponsorship: 8000,
+    costPerLead: 667,
+    hires: 5,
+  },
+  {
+    id: "starthack",
+    name: "START Hack 2025",
+    date: "Mar 1, 2025",
+    shortDate: "Mar 1",
+    location: "St. Gallen",
+    attendees: 450,
+    optIns: 61,
+    pipeline: 8,
+    sponsorship: 5000,
+    costPerLead: 625,
+    hires: 3,
+  },
+  {
+    id: "codeberlin",
+    name: "CODE Berlin Hackathon",
+    date: "Feb 14, 2025",
+    shortDate: "Feb 14",
+    location: "Berlin",
+    attendees: 280,
+    optIns: 48,
+    pipeline: 7,
+    sponsorship: 3500,
+    costPerLead: 500,
+    hires: 2,
+  },
+  {
+    id: "ethbuild",
+    name: "ETH Build Night",
+    date: "Jan 18, 2025",
+    shortDate: "Jan 18",
+    location: "Zürich",
+    attendees: 190,
+    optIns: 17,
+    pipeline: 4,
+    sponsorship: 2500,
+    costPerLead: 625,
+    hires: 1,
+  },
+  {
+    id: "kithack",
+    name: "KIT Innovation Hack",
+    date: "Nov 22, 2024",
+    shortDate: "Nov 22",
+    location: "Karlsruhe",
+    attendees: 240,
+    optIns: 32,
+    pipeline: 3,
+    sponsorship: 4000,
+    costPerLead: 1333,
+    hires: 1,
+  },
 ];
 ```
 
@@ -69,6 +130,7 @@ git commit -m "feat: add hires field to EventItem and populate events"
 ### Task 2: Add EventROIComparison component to Reports list view
 
 **Files:**
+
 - Modify: `src/components/eventiq/views/Reports.tsx`
 
 - [ ] **Step 1: Add the `EventROIComparison` function at the bottom of the file**
@@ -93,35 +155,65 @@ function EventROIComparison({ evs }: { evs: EventItem[] }) {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-border">
-              <th className="text-left font-medium text-xs text-muted-foreground px-4 py-2.5">Event</th>
-              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">Opt-ins</th>
-              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">Pipeline</th>
-              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">Hires</th>
-              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">Cost/Hire</th>
-              <th className="text-left font-medium text-xs text-muted-foreground px-4 py-2.5 w-36">Performance</th>
+              <th className="text-left font-medium text-xs text-muted-foreground px-4 py-2.5">
+                Event
+              </th>
+              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">
+                Opt-ins
+              </th>
+              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">
+                Pipeline
+              </th>
+              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">
+                Hires
+              </th>
+              <th className="text-right font-medium text-xs text-muted-foreground px-4 py-2.5">
+                Cost/Hire
+              </th>
+              <th className="text-left font-medium text-xs text-muted-foreground px-4 py-2.5 w-36">
+                Performance
+              </th>
             </tr>
           </thead>
           <tbody>
             {withCost.map((e) => {
-              const isBest  = e.costPerHire === minCPH;
+              const isBest = e.costPerHire === minCPH;
               const isWorst = e.costPerHire === maxCPH;
               const barWidth = Math.round((minCPH / e.costPerHire) * 100);
               const barColor = isBest ? "bg-[#2F7A47]" : isWorst ? "bg-[#C99A3E]" : "bg-[#6BAE82]";
-              const borderColor = isBest ? "border-l-[#2F7A47]" : isWorst ? "border-l-[#C99A3E]" : "border-l-transparent";
+              const borderColor = isBest
+                ? "border-l-[#2F7A47]"
+                : isWorst
+                  ? "border-l-[#C99A3E]"
+                  : "border-l-transparent";
               return (
-                <tr key={e.id} className="border-b border-border last:border-0 hover:bg-secondary/30 transition-colors">
+                <tr
+                  key={e.id}
+                  className="border-b border-border last:border-0 hover:bg-secondary/30 transition-colors"
+                >
                   <td className={`px-4 py-3 font-medium border-l-2 ${borderColor}`}>{e.name}</td>
-                  <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">{e.optIns}</td>
-                  <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">{e.pipeline}</td>
-                  <td className={`px-4 py-3 text-right tabular-nums font-semibold ${isBest ? "text-[#2F7A47]" : "text-foreground"}`}>
+                  <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">
+                    {e.optIns}
+                  </td>
+                  <td className="px-4 py-3 text-right tabular-nums text-muted-foreground">
+                    {e.pipeline}
+                  </td>
+                  <td
+                    className={`px-4 py-3 text-right tabular-nums font-semibold ${isBest ? "text-[#2F7A47]" : "text-foreground"}`}
+                  >
                     {e.hires}
                   </td>
-                  <td className={`px-4 py-3 text-right tabular-nums font-semibold ${isBest ? "text-[#2F7A47]" : isWorst ? "text-[#C99A3E]" : "text-foreground"}`}>
+                  <td
+                    className={`px-4 py-3 text-right tabular-nums font-semibold ${isBest ? "text-[#2F7A47]" : isWorst ? "text-[#C99A3E]" : "text-foreground"}`}
+                  >
                     €{e.costPerHire.toLocaleString()}
                   </td>
                   <td className="px-4 py-3">
                     <div className="w-32 bg-secondary rounded-full h-1.5">
-                      <div className={`${barColor} h-1.5 rounded-full`} style={{ width: `${barWidth}%` }} />
+                      <div
+                        className={`${barColor} h-1.5 rounded-full`}
+                        style={{ width: `${barWidth}%` }}
+                      />
                     </div>
                   </td>
                 </tr>
@@ -184,6 +276,7 @@ git commit -m "feat: add event ROI comparison table to Reports list view"
 ### Task 3: Add Hires stat to event cards and cost/hire to drilldown
 
 **Files:**
+
 - Modify: `src/components/eventiq/views/Reports.tsx`
 
 - [ ] **Step 1: Add Hires stat to each event card in the list view**
@@ -191,22 +284,22 @@ git commit -m "feat: add event ROI comparison table to Reports list view"
 Find this block inside the `{events.map((e) => ( ... ))}` list (the three `<Stat>` components in the right section of each card):
 
 ```tsx
-            <div className="flex gap-6 text-xs">
-              <Stat label="Opt-ins" value={e.optIns} />
-              <Stat label="Pipeline" value={e.pipeline} />
-              <Stat label="Cost/Lead" value={`€${e.costPerLead}`} />
-            </div>
+<div className="flex gap-6 text-xs">
+  <Stat label="Opt-ins" value={e.optIns} />
+  <Stat label="Pipeline" value={e.pipeline} />
+  <Stat label="Cost/Lead" value={`€${e.costPerLead}`} />
+</div>
 ```
 
 Replace with:
 
 ```tsx
-            <div className="flex gap-6 text-xs">
-              <Stat label="Opt-ins" value={e.optIns} />
-              <Stat label="Pipeline" value={e.pipeline} />
-              <Stat label="Hires" value={e.hires} />
-              <Stat label="Cost/Lead" value={`€${e.costPerLead}`} />
-            </div>
+<div className="flex gap-6 text-xs">
+  <Stat label="Opt-ins" value={e.optIns} />
+  <Stat label="Pipeline" value={e.pipeline} />
+  <Stat label="Hires" value={e.hires} />
+  <Stat label="Cost/Lead" value={`€${e.costPerLead}`} />
+</div>
 ```
 
 - [ ] **Step 2: Add cost/hire row to the drilldown Cost Analysis section**
@@ -254,6 +347,7 @@ git commit -m "feat: add Hires stat to event cards and cost/hire to drilldown"
 ## Self-Review
 
 **Spec coverage:**
+
 - ✅ `hires: number` added to `EventItem` interface (Task 1)
 - ✅ All 5 events populated with hires data (Task 1)
 - ✅ `EventROIComparison` component with 6-column table (Task 2)
