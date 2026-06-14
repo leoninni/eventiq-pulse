@@ -315,6 +315,7 @@ export function Cooperations() {
             </div>
           ) : (
             <div className="border border-border rounded-lg overflow-hidden">
+              <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead className="bg-muted/50 border-b border-border">
                   <tr>
@@ -353,6 +354,7 @@ export function Cooperations() {
                   ))}
                 </tbody>
               </table>
+              </div>
             </div>
           )}
         </div>

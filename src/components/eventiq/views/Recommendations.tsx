@@ -70,7 +70,7 @@ export function Recommendations() {
 
       <div>
         <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">How this works</div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
           <Tile icon={TrendingUp} text="Event yield model trained on your 5-event history and cross-company patterns across the EventIQ network" />
           <Tile icon={Brain} text="Candidate quality scored from opt-in signals: skills, project complexity, university, and engagement" />
           <Tile icon={RefreshCw} text="Recommendations update automatically after each new event report is generated" />
