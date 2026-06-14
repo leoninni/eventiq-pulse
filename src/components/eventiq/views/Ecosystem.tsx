@@ -484,28 +484,18 @@ export function Ecosystem() {
           </div>
 
           {/* Zoom controls */}
-          <div className="absolute bottom-4 right-4 flex flex-col gap-1.5">
-            <button
-              onClick={() => applyZoom(1.2)}
-              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-lg leading-none flex items-center justify-center shadow-sm"
-              aria-label="Zoom in"
-            >+</button>
-            <button
-              onClick={() => applyZoom(1 / 1.2)}
-              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-lg leading-none flex items-center justify-center shadow-sm"
-              aria-label="Zoom out"
-            >−</button>
+          <div className="absolute bottom-4 right-4">
             <button
               onClick={resetView}
-              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-[12px] leading-none flex items-center justify-center shadow-sm"
+              className="w-9 h-9 rounded-md bg-white border border-border text-foreground hover:bg-muted text-[16px] leading-none flex items-center justify-center shadow-sm"
               aria-label="Reset view"
             >⟳</button>
           </div>
 
           <div className="absolute bottom-4 left-4 text-[10px] text-muted-foreground">
             {inContinentMode
-              ? "Drag to rotate · Scroll to zoom · Click a city marker"
-              : "Click a continent to explore its cities · Drag to spin"}
+              ? "Click a city or event marker · Drag to rotate · Scroll to zoom"
+              : "Drag to spin · Click a continent to explore"}
           </div>
         </div>
 
@@ -576,20 +566,82 @@ export function Ecosystem() {
 
           {inContinentMode && selectedCity && (
             <div className="p-6">
+              {/* Breadcrumb */}
               <button
                 onClick={() => setSelectedCityId(null)}
                 className="text-xs text-muted-foreground hover:text-foreground mb-3 inline-flex items-center gap-1"
-              >← Back to {selectedContinent!.name}</button>
-              <div className="flex items-start justify-between mb-5">
-                <div>
-                  <h2 className="text-xl font-bold">{selectedCity.name}</h2>
-                  <div className="text-xs text-muted-foreground mt-0.5">
-                    {cityTotalCandidates} candidates · {cityUniversities.length}{" "}
-                    {cityUniversities.length === 1 ? "university" : "universities"}
-                  </div>
+              >← {selectedContinent!.name}</button>
+
+              {/* City header */}
+              <div className="mb-5">
+                <h2 className="text-xl font-bold">{selectedCity.name}</h2>
+                <div className="text-xs text-muted-foreground mt-0.5">
+                  {[
+                    cityTotalCandidates > 0 ? `${cityTotalCandidates} candidates` : null,
+                    cityUniversities.length > 0 ? `${cityUniversities.length} ${cityUniversities.length === 1 ? "university" : "universities"}` : null,
+                    (cityEvents[selectedCity.id] ?? []).length > 0
+                      ? `${(cityEvents[selectedCity.id] ?? []).length} ${(cityEvents[selectedCity.id] ?? []).length === 1 ? "event" : "events"}`
+                      : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" · ")}
                 </div>
               </div>
 
+              {/* Section 1: Events */}
+              {(cityEvents[selectedCity.id] ?? []).length > 0 && (
+                <>
+                  <div ref={eventsRef} className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
+                    Events
+                  </div>
+                  <div className="space-y-3 mb-5">
+                    {(cityEvents[selectedCity.id] ?? []).map((ev) => {
+                      const costPerHire = Math.round(ev.sponsorship / ev.hires);
+                      const optInPct = ((ev.optIns / ev.attendees) * 100).toFixed(1);
+                      const evCandidates = candidates.filter((c) => c.eventId === ev.id);
+                      return (
+                        <div key={ev.id} className="bg-card border border-border rounded-md p-3">
+                          <div className="flex items-baseline justify-between mb-2">
+                            <div className="text-sm font-semibold">{ev.name}</div>
+                            <div className="text-[10px] text-muted-foreground">{ev.date}</div>
+                          </div>
+                          <div className="grid grid-cols-2 gap-x-4 gap-y-1 mb-3">
+                            <div>
+                              <span className="text-[10px] text-muted-foreground">Opt-in rate</span>
+                              <div className="text-sm font-semibold tabular-nums">{optInPct}%</div>
+                            </div>
+                            <div>
+                              <span className="text-[10px] text-muted-foreground">Cost/hire</span>
+                              <div className="text-sm font-semibold tabular-nums">€{costPerHire.toLocaleString()}</div>
+                            </div>
+                            <div>
+                              <span className="text-[10px] text-muted-foreground">Pipeline</span>
+                              <div className="text-sm font-semibold tabular-nums">{ev.pipeline}</div>
+                            </div>
+                            <div>
+                              <span className="text-[10px] text-muted-foreground">Hires</span>
+                              <div className="text-sm font-semibold tabular-nums">{ev.hires}</div>
+                            </div>
+                          </div>
+                          {evCandidates.length > 0 && (
+                            <button
+                              onClick={() => {
+                                setEventFilter(ev.id);
+                                setView("candidates");
+                              }}
+                              className="w-full text-left text-xs text-primary hover:underline font-medium"
+                            >
+                              View {evCandidates.length} {evCandidates.length === 1 ? "candidate" : "candidates"} →
+                            </button>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+
+              {/* Section 2: Universities */}
               {cityUniversities.length > 0 && (
                 <>
                   <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
@@ -617,6 +669,7 @@ export function Ecosystem() {
                 </>
               )}
 
+              {/* Section 3: Communities */}
               {cityCommunities.length > 0 && (
                 <>
                   <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-2">
