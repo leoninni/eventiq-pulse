@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect } from "react";
-import { events, openRoles, type Status, type Candidate } from "@/lib/eventiq/mockData";
+import { events, openRoles, studentCommunities, type Status, type Candidate } from "@/lib/eventiq/mockData";
 import { useStore } from "@/lib/eventiq/store";
 import { StatusBadge } from "../StatusBadge";
 import { SlidePanel } from "../SlidePanel";
@@ -17,7 +17,14 @@ const ATS_OPTIONS = [
 ] as const;
 
 export function Candidates() {
-  const { candidates, setStatus, eventFilter, setEventFilter, atsSync, syncToAts } = useStore();
+  const { candidates, setStatus, eventFilter, setEventFilter, atsSync, syncToAts, activeCooperations } = useStore();
+  const isCoopFilter = eventFilter.startsWith("coop-");
+  const coopId = isCoopFilter ? eventFilter.slice("coop-".length) : null;
+  const activeCoop = coopId ? activeCooperations.find((ac) => ac.id === coopId) ?? null : null;
+  const coopClubName = activeCoop
+    ? studentCommunities.find((c) => c.id === activeCoop.clubId)?.name ?? ""
+    : "";
+
   const [statusFilter, setStatusFilter] = useState<string>("all");
   const [query, setQuery] = useState("");
   const [openId, setOpenId] = useState<string | null>(null);
@@ -50,7 +57,14 @@ export function Candidates() {
 
   const filtered = useMemo(() => {
     return candidates.filter((c) => {
-      if (eventFilter !== "all" && c.eventId !== eventFilter) return false;
+      if (eventFilter !== "all") {
+        if (isCoopFilter) {
+          if (!activeCoop) return false;
+          if (!c.communityRoles?.includes(activeCoop.clubId)) return false;
+        } else {
+          if (c.eventId !== eventFilter) return false;
+        }
+      }
       if (statusFilter !== "all" && c.status !== statusFilter) return false;
       if (query) {
         const q = query.toLowerCase();
@@ -59,7 +73,7 @@ export function Candidates() {
       }
       return true;
     });
-  }, [candidates, eventFilter, statusFilter, query]);
+  }, [candidates, eventFilter, statusFilter, query, activeCooperations, isCoopFilter, activeCoop]);
 
   return (
     <div className="p-10 max-w-[1400px]">
@@ -105,8 +119,13 @@ export function Candidates() {
                 {c.name.split(" ").map((s) => s[0]).join("")}
               </div>
               <div className="flex-1 min-w-0">
-                <div className="flex items-baseline gap-2">
+                <div className="flex items-center gap-2 flex-wrap">
                   <div className="font-semibold text-sm">{c.name}</div>
+                  {isCoopFilter && activeCoop && c.communityRoles?.includes(activeCoop.clubId) && (
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#DCEFE2] text-[#1F4A2E] font-medium">
+                      Exclusive · {coopClubName}
+                    </span>
+                  )}
                   <div className="text-xs text-muted-foreground">{c.university}</div>
                 </div>
                 <div className="flex gap-1 mt-1.5 flex-wrap">
