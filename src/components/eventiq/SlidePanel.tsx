@@ -29,7 +29,7 @@ export function SlidePanel({
       />
       <div
         style={{ width }}
-        className={`fixed top-0 right-0 h-screen bg-card border-l border-border z-50 transition-transform duration-200 ease-out overflow-y-auto ${
+        className={`fixed top-0 right-0 h-screen bg-card border-l border-border z-50 transition-transform duration-200 ease-out overflow-y-auto max-w-[100vw] ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
