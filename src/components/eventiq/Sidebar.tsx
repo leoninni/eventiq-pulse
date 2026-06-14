@@ -1,4 +1,4 @@
-import { Home, Calendar, Users, BarChart3, Sparkles, Network } from "lucide-react";
+import { Home, Calendar, Users, BarChart3, Sparkles, Network, Handshake } from "lucide-react";
 import { useStore, type View } from "@/lib/eventiq/store";
 
 const items: { id: View; label: string; icon: typeof Home }[] = [
@@ -6,6 +6,7 @@ const items: { id: View; label: string; icon: typeof Home }[] = [
   { id: "events", label: "Events", icon: Calendar },
   { id: "candidates", label: "Candidates", icon: Users },
   { id: "ecosystem", label: "Ecosystem", icon: Network },
+  { id: "cooperations", label: "Cooperations", icon: Handshake },
   { id: "reports", label: "Reports", icon: BarChart3 },
   { id: "recommendations", label: "Recommendations", icon: Sparkles },
 ];

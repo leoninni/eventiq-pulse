@@ -5,6 +5,7 @@ import { Overview } from "./views/Overview";
 import { Events } from "./views/Events";
 import { Candidates } from "./views/Candidates";
 import { Ecosystem } from "./views/Ecosystem";
+import { Cooperations } from "./views/Cooperations";
 import { Reports } from "./views/Reports";
 import { Recommendations } from "./views/Recommendations";
 
@@ -18,6 +19,7 @@ function Main() {
         {view === "events" && <Events />}
         {view === "candidates" && <Candidates />}
         {view === "ecosystem" && <Ecosystem />}
+        {view === "cooperations" && <Cooperations />}
         {view === "reports" && <Reports />}
         {view === "recommendations" && <Recommendations />}
       </main>
