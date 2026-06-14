@@ -163,6 +163,42 @@ export const candidates: Candidate[] = [
     projectDescription: "A browser-based code editor with sub-100ms multiplayer sync, Monaco integration, and language-server protocol support.",
     status: "Rejected", eventId: "codeberlin",
   },
+  {
+    id: "c-excl-1",
+    name: "Lena F.",
+    university: "TU Munich",
+    skills: ["Python", "LLMs", "Evaluation"],
+    projectTitle: "LLM benchmark suite for enterprise RAG",
+    projectDescription: "Built a modular evaluation harness for enterprise RAG pipelines that tracks faithfulness, relevance, and latency across 12 retrieval strategies.",
+    status: "Interested",
+    eventId: "hacktum",
+    communityRoles: ["tum-ai"],
+    skillProofs: [
+      { skill: "LLMs", source: "TUM AI Society — LLM evaluation project lead" },
+    ],
+  },
+  {
+    id: "c-excl-2",
+    name: "Tobias K.",
+    university: "TU Munich",
+    skills: ["Python", "PyTorch", "MLOps"],
+    projectTitle: "Distributed training monitor for large language models",
+    projectDescription: "Instrumented a distributed PyTorch training loop with real-time loss tracking and automatic checkpoint selection. Reduced wasted GPU hours by 40%.",
+    status: "In Review",
+    eventId: "hacktum",
+    communityRoles: ["tum-ai"],
+  },
+  {
+    id: "c-excl-3",
+    name: "Sara M.",
+    university: "TU Munich",
+    skills: ["TypeScript", "React", "Data Viz"],
+    projectTitle: "Interactive eval leaderboard for foundation models",
+    projectDescription: "A live dashboard that ingests benchmark results from HuggingFace and renders interactive comparison charts, making model selection decisions visual.",
+    status: "Interested",
+    eventId: "hacktum",
+    communityRoles: ["tum-ai"],
+  },
 ];
 
 export const eventCandidateMap: Record<string, string[]> = {
@@ -394,5 +430,83 @@ export const cityMarkers: CityMarker[] = [
   { id: "bangalore", name: "Bangalore", continent: "asia",          lat: 12.97, lng:  77.59 },
   { id: "beijing",   name: "Beijing",   continent: "asia",          lat: 39.90, lng: 116.40 },
   { id: "shanghai",  name: "Shanghai",  continent: "asia",          lat: 31.23, lng: 121.47 },
+];
+
+// ── Club Cooperations ────────────────────────────────────────────────────────
+
+export interface CooperationFormat {
+  id: "workshop" | "challenge-sprint" | "private-hackathon";
+  name: string;
+  description: string;
+  duration: string;
+  engagementRate: number;
+  priceRange: string;
+}
+
+export interface ClubPartnership {
+  clubId: string;
+  totalSlots: number;
+  takenSlots: number;
+  availableFormats: CooperationFormat["id"][];
+}
+
+export interface ActiveCooperation {
+  id: string;
+  clubId: string;
+  format: CooperationFormat["id"];
+  status: "Confirmed" | "Pending" | "Completed";
+  date: string;
+  challengeTopic?: string;
+  projectedCandidates: number;
+}
+
+export const coopFormats: CooperationFormat[] = [
+  {
+    id: "workshop",
+    name: "Workshop Night",
+    description: "Company engineers run a 3-hour hands-on session",
+    duration: "3 hours",
+    engagementRate: 0.15,
+    priceRange: "€1,500 – €3,000",
+  },
+  {
+    id: "challenge-sprint",
+    name: "Challenge Sprint",
+    description: "Company problem, students hack for half a day",
+    duration: "6 hours",
+    engagementRate: 0.25,
+    priceRange: "€3,000 – €6,000",
+  },
+  {
+    id: "private-hackathon",
+    name: "Private Hackathon",
+    description: "Full-day exclusive event, company-designed tracks",
+    duration: "full day",
+    engagementRate: 0.40,
+    priceRange: "€5,000 – €10,000",
+  },
+];
+
+export const clubPartnerships: ClubPartnership[] = [
+  { clubId: "tum-robotics",    totalSlots: 3, takenSlots: 2, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
+  { clubId: "tum-ai",          totalSlots: 4, takenSlots: 1, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
+  { clubId: "eth-robotics",    totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },
+  { clubId: "eth-entre",       totalSlots: 3, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
+  { clubId: "kit-data",        totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
+  { clubId: "tud-robotics",    totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },
+  { clubId: "stuttgart-cloud", totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
+  { clubId: "lmu-oss",         totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
+];
+
+export const initialActiveCooperations: ActiveCooperation[] = [
+  {
+    id: "1",
+    clubId: "tum-ai",
+    format: "challenge-sprint",
+    status: "Confirmed",
+    date: "Sep 15, 2026",
+    challengeTopic: "Build an LLM evaluation harness",
+    projectedCandidates: 52,
+  },
 ];
 
