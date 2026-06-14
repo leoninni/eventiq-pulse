@@ -12,13 +12,14 @@ export function Events() {
   const openCandidates = openEvent ? eventCandidateMap[openEvent.id].map((id) => candidates.find((c) => c.id === id)!).filter(Boolean) : [];
 
   return (
-    <div className="p-10 max-w-[1400px]">
+    <div className="p-4 md:p-10 max-w-[1400px]">
       <div className="mb-8">
         <h1 className="font-display text-4xl tracking-tight">Events</h1>
         <p className="text-sm text-muted-foreground mt-2">5 events sponsored · Q4 2024 – Q2 2025</p>
       </div>
 
       <div className="bg-card border border-border rounded-lg overflow-hidden">
+          <div className="overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-secondary/40 text-xs text-muted-foreground">
             <tr>
@@ -67,6 +68,7 @@ export function Events() {
             })}
           </tbody>
         </table>
+          </div>
       </div>
 
       <SlidePanel open={!!openEvent} onClose={() => setOpenEventId(null)} width={500}>
@@ -75,7 +77,7 @@ export function Events() {
             <div className="h-24 -mx-6 -mt-6 mb-6 bg-gradient-to-br from-primary/30 via-card to-cyan/20 border-b border-border" />
             <div className="text-xs text-muted-foreground">{openEvent.date} · {openEvent.location}</div>
             <h2 className="text-xl font-semibold mt-1">{openEvent.name}</h2>
-            <div className="grid grid-cols-4 gap-2 mt-5">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-2 mt-5">
               {[
                 { l: "Attendees", v: openEvent.attendees },
                 { l: "Opt-ins", v: openEvent.optIns },
