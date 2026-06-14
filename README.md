@@ -1,5 +1,7 @@
 # EventIQ Pulse
 
+**Live demo: [eventiq-pulse.vercel.app](https://eventiq-pulse-git-main-leoninnis-projects.vercel.app/)**
+
 **EventIQ Pulse** is a recruiter intelligence dashboard for sourcing early technical talent from university hackathons and student events. It tracks candidates from event opt-in to hire, shows which events produce qualified candidates at what cost, and surfaces the student ecosystem (universities, communities) that companies without insider access can't see.
 
 Built as a fully self-contained frontend prototype with zero backend dependencies. All data is hardcoded mock data, making it ideal for VC demos and recruiter walkthroughs.
@@ -135,6 +137,10 @@ To customize the prototype, edit this file directly. No API calls, no environmen
 
 ## Deployment
 
-Pure frontend — deploy after `bun run build`. Output goes to `dist/`.
+Deployed on Vercel. Uses TanStack Start with Nitro (preset: `vercel`), outputting to `.output/`.
 
-Works on: Vercel, Netlify, Cloudflare Pages, GitHub Pages.
+```bash
+bun run build   # outputs to .output/
+```
+
+To deploy your own fork, connect the repo to Vercel — it will pick up `vercel.json` automatically.
