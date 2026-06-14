@@ -14,9 +14,11 @@ const ZOOM_MIN = 0.8;
 const ZOOM_MAX = 4;
 const THETA_LIMIT = Math.PI / 2 - 0.05;
 
-const DEFAULT_PHI = 0;
-const DEFAULT_THETA = 0.3;
-const DEFAULT_ZOOM = 1;
+// phi = -π/2 - lng*π/180 centers that longitude at the globe front.
+// Default centers on ~10°E so DACH cities are visible on load.
+const DEFAULT_PHI   = -Math.PI / 2 - (10 * Math.PI) / 180;
+const DEFAULT_THETA = 0.35;
+const DEFAULT_ZOOM  = 1;
 
 const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
   "AI/ML":            "bg-[#DCEFE2] text-[#1F4A2E]",
@@ -28,8 +30,8 @@ const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
   "Community":        "bg-secondary text-muted-foreground",
 };
 
-// cobe convention: the front-center longitude equals phi (in radians).
-// Rotate world point by -phi about Y axis: effective_lng = lng - phi.
+// Projects a geographic point onto the globe canvas using cobe's exact
+// coordinate system (derived from cobe's U() and O() functions).
 function projectGlobe(
   lat: number,
   lng: number,
@@ -40,21 +42,25 @@ function projectGlobe(
 ): { x: number; y: number; visible: boolean } {
   const latR = (lat * Math.PI) / 180;
   const lngR = (lng * Math.PI) / 180;
-  const x0 = Math.cos(latR) * Math.sin(lngR);
-  const y0 = Math.sin(latR);
-  const z0 = Math.cos(latR) * Math.cos(lngR);
+
+  // cobe's U([lat, lng]) coordinate system
+  const x0 =  Math.cos(latR) * Math.cos(lngR);
+  const y0 =  Math.sin(latR);
+  const z0 = -Math.cos(latR) * Math.sin(lngR);
+
   const cP = Math.cos(phi), sP = Math.sin(phi);
-  const x1 = x0 * cP - z0 * sP;
-  const z1 = x0 * sP + z0 * cP;
-  const y1 = y0;
   const cT = Math.cos(theta), sT = Math.sin(theta);
-  const y2 = y1 * cT - z1 * sT;
-  const z2 = y1 * sT + z1 * cT;
-  const radius = size * 0.42 * zoom;
+
+  // cobe's O([x, y, z]) projection
+  const c   =  cP * x0 + sP * z0;
+  const s   =  sP * sT * x0 + cT * y0 - cP * sT * z0;
+  const dep = -sP * cT * x0 + sT * y0 + cP * cT * z0;
+
+  const half = size / 2;
   return {
-    x: size / 2 + x1 * radius,
-    y: size / 2 - y2 * radius,
-    visible: z2 > 0.05,
+    x: half + c * half * zoom,
+    y: half - s * half * zoom,
+    visible: dep > 0.05,
   };
 }
 
@@ -67,7 +73,7 @@ export function Ecosystem() {
   const zoomRef   = useRef(DEFAULT_ZOOM);
 
   const targetRef = useRef<{ phi: number; theta: number; zoom: number } | null>(null);
-  const autoRotateRef = useRef(false);
+  const autoRotateRef = useRef(true);
 
   const isDragging   = useRef(false);
   const pointerStart = useRef<{ x: number; y: number; phi: number; theta: number } | null>(null);
@@ -103,11 +109,11 @@ export function Ecosystem() {
   useEffect(() => {
     if (selectedContinentId === null) {
       targetRef.current = { phi: DEFAULT_PHI, theta: DEFAULT_THETA, zoom: DEFAULT_ZOOM };
-      autoRotateRef.current = false;
+      autoRotateRef.current = true;
     } else {
       const c = continents.find((x) => x.id === selectedContinentId)!;
       targetRef.current = {
-        phi:   (c.lng * Math.PI) / 180,
+        phi:   -Math.PI / 2 - (c.lng * Math.PI) / 180,
         theta: (c.lat * Math.PI) / 180,
         zoom:  c.zoom,
       };
@@ -162,7 +168,7 @@ export function Ecosystem() {
         phiRef.current += 0.0015;
       }
 
-      globe.update({ phi: phiRef.current, theta: thetaRef.current });
+      globe.update({ phi: phiRef.current, theta: thetaRef.current, scale: zoomRef.current });
 
       setContinentOverlays(
         continents.map((c) => ({
