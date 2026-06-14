@@ -73,7 +73,7 @@ export function Candidates() {
       }
       return true;
     });
-  }, [candidates, eventFilter, statusFilter, query, activeCooperations, isCoopFilter, activeCoop]);
+  }, [candidates, eventFilter, statusFilter, query, activeCooperations]);
 
   return (
     <div className="p-10 max-w-[1400px]">
