@@ -33,7 +33,7 @@ function ConversionFunnel({ data }: { data: FunnelStage[] }) {
     <div className="space-y-2">
       {data.map((stage, i) => (
         <div key={stage.label} className="flex items-center gap-3">
-          <span className="text-[11px] text-muted-foreground w-[90px] shrink-0 text-right tabular-nums">
+          <span className="text-[11px] text-muted-foreground w-[70px] md:w-[90px] shrink-0 text-right tabular-nums">
             {stage.label}
           </span>
           <div className="flex-1 bg-secondary rounded h-7 overflow-hidden">
@@ -61,23 +61,23 @@ export function Overview() {
   const tooltipStyle = { background: "#FFFFFF", border: "1px solid #E3E8E3", borderRadius: 8, fontSize: 12, color: "#1A1F1A" };
 
   return (
-    <div className="p-10 max-w-[1400px]">
+    <div className="p-4 md:p-10 max-w-[1400px]">
       <div className="mb-8">
-        <h1 className="font-display text-5xl leading-[1.05] tracking-tight max-w-3xl">
+        <h1 className="font-display text-3xl md:text-5xl leading-[1.05] tracking-tight max-w-3xl">
           Hiring intelligence for <span className="highlight-marker">technical talent</span>
         </h1>
         <p className="text-sm text-muted-foreground mt-3">A snapshot of every sponsored event, candidate, and follow-up across your pipeline.</p>
       </div>
 
-      <div className="grid grid-cols-4 gap-3 mb-6">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
         <Kpi label="Candidates captured" value="247" delta="18% vs last quarter" deltaPositive />
         <Kpi label="Events sponsored" value="5" />
         <Kpi label="In active pipeline" value="35" />
         <Kpi label="Avg cost per lead" value="€312" delta="22% vs last quarter" deltaPositive />
       </div>
 
-      <div className="grid grid-cols-5 gap-3 mb-6">
-        <div className="col-span-3 bg-card border border-border rounded-xl p-6">
+      <div className="grid grid-cols-1 md:grid-cols-5 gap-3 mb-6">
+        <div className="col-span-1 md:col-span-3 bg-card border border-border rounded-xl p-6">
           <div className="flex items-center justify-between mb-5">
             <h3 className="font-display text-2xl">Candidates by event</h3>
             <span className="text-xs text-muted-foreground">Opt-ins per event</span>
@@ -101,7 +101,7 @@ export function Overview() {
           </div>
         </div>
 
-        <div className="col-span-2 bg-card border border-border rounded-xl p-6">
+        <div className="col-span-1 md:col-span-2 bg-card border border-border rounded-xl p-6">
           <div className="flex items-center justify-between mb-5">
             <h3 className="font-display text-2xl">Hiring funnel</h3>
             <span className="text-xs text-muted-foreground">All events · 2025</span>
