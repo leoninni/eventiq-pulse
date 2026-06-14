@@ -32,6 +32,14 @@ const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
   "Community":        "bg-secondary text-muted-foreground",
 };
 
+// Helper: cost-per-hire color tier
+function eventRoiColor(e: (typeof events)[0]): string {
+  const cph = Math.round(e.sponsorship / e.hires);
+  if (cph < 1700) return "#2F7A47";   // green — top performer
+  if (cph <= 2500) return "#D97706";  // amber — mid
+  return "#9CA3AF";                   // gray — lower
+}
+
 // Projects a geographic point onto the globe canvas using cobe's exact
 // coordinate system (derived from cobe's U() and O() functions).
 function projectGlobe(
@@ -111,14 +119,6 @@ export function Ecosystem() {
     if (!cityEvents[e.cityId]) cityEvents[e.cityId] = [];
     cityEvents[e.cityId].push(e);
   });
-
-  // Helper: cost-per-hire color tier
-  function eventRoiColor(e: (typeof events)[0]): string {
-    const cph = Math.round(e.sponsorship / e.hires);
-    if (cph < 1700) return "#2F7A47";   // green — top performer
-    if (cph <= 2500) return "#D97706";  // amber — mid
-    return "#9CA3AF";                   // gray — lower
-  }
 
   // Helper: city marker dot size in px
   function cityDotSize(cityId: string): number {
@@ -292,7 +292,7 @@ export function Ecosystem() {
         <div className="flex-1 flex items-center justify-center bg-background relative overflow-hidden">
           <div
             className="relative"
-            style={{ width: GLOBE_SIZE, height: GLOBE_SIZE, overflow: "hidden" }}
+            style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }}
           >
             <canvas
               ref={canvasRef}
@@ -442,6 +442,7 @@ export function Ecosystem() {
                       transform: "translate(-50%, -50%)",
                       pointerEvents: "auto",
                       zIndex: 15,
+                      padding: 5,
                     }}
                     onMouseEnter={() => setHoveredMarkerId(`event-${ev.id}`)}
                     onMouseLeave={() => setHoveredMarkerId(null)}
