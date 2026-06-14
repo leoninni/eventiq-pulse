@@ -385,6 +385,7 @@ export const studentCommunities: StudentCommunity[] = [
   { id: "kit-kaira",       name: "KAIRA",                              type: "Robotics",         university: "KIT",                          city: "karlsruhe", continent: "europe", members:  85, topSkills: ["C++", "Python"] },
   { id: "tud-robotics",    name: "DARE ROBOTICS",                      type: "Robotics",         university: "TU Darmstadt",                 city: "darmstadt", continent: "europe", members:  90, topSkills: ["C++", "Embedded"] },
   { id: "stuttgart-ksat",  name: "KSat e.V.",                          type: "Robotics",         university: "Uni Stuttgart",                city: "stuttgart", continent: "europe", members:  80, topSkills: ["Python", "Embedded"] },
+  { id: "tuberlin-rctub", name: "RCTUB",                              type: "Robotics",         university: "TU Berlin",                    city: "berlin",    continent: "europe", members:  80, topSkills: ["C++", "ROS"] },
   // ── Europe — Switzerland ────────────────────────────────────────────────────
   { id: "eth-robotics",    name: "ETH Robotics Club",                  type: "Robotics",         university: "ETH Zürich",                   city: "zurich",    continent: "europe", members: 120, topSkills: ["C++", "CUDA"] },        // ESRA member
   { id: "eth-csnow",       name: "CSNOW",                              type: "Community",        university: "ETH Zürich",                   city: "zurich",    continent: "europe", members: 180, topSkills: ["Python", "ML"] },
@@ -525,6 +526,8 @@ export const clubPartnerships: ClubPartnership[] = [
   { clubId: "kit-kaira",     totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },                      // KAIRA
   { clubId: "tud-robotics",  totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },                    // DARE ROBOTICS
   { clubId: "stuttgart-ksat",totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },                     // KSat e.V.
+  // Berlin
+  { clubId: "tuberlin-rctub", totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // RCTUB
   // Switzerland
   { clubId: "eth-robotics",  totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },                    // ETH Robotics Club — ESRA
   { clubId: "eth-entre",     totalSlots: 3, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // ETH Entrepreneur Club
