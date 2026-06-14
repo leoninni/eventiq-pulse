@@ -184,7 +184,14 @@ export function Candidates() {
                 {open.name.split(" ").map((s) => s[0]).join("")}
               </div>
               <div>
-                <h2 className="text-lg font-semibold">{open.name}</h2>
+                <div className="flex items-center gap-2 flex-wrap">
+                  <h2 className="text-lg font-semibold">{open.name}</h2>
+                  {isCoopFilter && activeCoop && open.communityRoles?.includes(activeCoop.clubId) && (
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-[#DCEFE2] text-[#1F4A2E] font-medium">
+                      Exclusive · {coopClubName}
+                    </span>
+                  )}
+                </div>
                 <div className="text-xs text-muted-foreground">{open.university} · {openEvent.name}</div>
               </div>
             </div>
