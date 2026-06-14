@@ -5,9 +5,11 @@ import {
   studentCommunities,
   cityMarkers,
   continents,
+  events,
   type StudentCommunity,
   type ContinentId,
 } from "@/lib/eventiq/mockData";
+import { useStore } from "@/lib/eventiq/store";
 
 const GLOBE_SIZE = 560;
 const ZOOM_MIN = 0.8;
@@ -83,6 +85,10 @@ export function Ecosystem() {
   const [zoom, setZoom] = useState(DEFAULT_ZOOM);
   const [selectedContinentId, setSelectedContinentId] = useState<ContinentId | null>(null);
   const [selectedCityId, setSelectedCityId] = useState<string | null>(null);
+  const [hoveredMarkerId, setHoveredMarkerId] = useState<string | null>(null);
+  const eventsRef = useRef<HTMLDivElement>(null);
+
+  const { setView, setEventFilter, candidates } = useStore();
 
   const inContinentMode = selectedContinentId !== null;
 
@@ -91,6 +97,34 @@ export function Ecosystem() {
   const continentCandidateCount: Record<ContinentId, number> = { "europe": 0, "north-america": 0, "asia": 0 };
   cityMarkers.forEach((c) => { continentCityCount[c.continent]++; });
   universityProfiles.forEach((u) => { continentCandidateCount[u.continent] += u.candidates; });
+
+  // Per-city candidate count for marker sizing
+  const cityCandidateCount: Record<string, number> = {};
+  universityProfiles.forEach((u) => {
+    cityCandidateCount[u.city] = (cityCandidateCount[u.city] ?? 0) + u.candidates;
+  });
+  const maxCandidates = Math.max(1, ...Object.values(cityCandidateCount));
+
+  // Events grouped by cityId for city cards and event markers
+  const cityEvents: Record<string, typeof events> = {};
+  events.forEach((e) => {
+    if (!cityEvents[e.cityId]) cityEvents[e.cityId] = [];
+    cityEvents[e.cityId].push(e);
+  });
+
+  // Helper: cost-per-hire color tier
+  function eventRoiColor(e: (typeof events)[0]): string {
+    const cph = Math.round(e.sponsorship / e.hires);
+    if (cph < 1700) return "#2F7A47";   // green — top performer
+    if (cph <= 2500) return "#D97706";  // amber — mid
+    return "#9CA3AF";                   // gray — lower
+  }
+
+  // Helper: city marker dot size in px
+  function cityDotSize(cityId: string): number {
+    const count = cityCandidateCount[cityId] ?? 0;
+    return 6 + Math.sqrt(count / maxCandidates) * 8;
+  }
 
   const visibleCities = inContinentMode
     ? cityMarkers.filter((c) => c.continent === selectedContinentId)
@@ -311,47 +345,139 @@ export function Ecosystem() {
               );
             })}
 
-            {/* Continent mode: city overlays */}
-            {inContinentMode && cityOverlays
-              .filter((pos) => visibleCities.some((c) => c.id === pos.id))
+            {/* City circles — visible in both views, clickable only in continent mode */}
+            {cityOverlays
+              .filter((pos) =>
+                inContinentMode
+                  ? visibleCities.some((c) => c.id === pos.id)
+                  : true
+              )
               .map((pos) => {
                 const city = cityMarkers.find((c) => c.id === pos.id)!;
                 const isSelected = selectedCityId === pos.id;
+                const dotSize = cityDotSize(city.id);
+                const cityEvts = cityEvents[city.id] ?? [];
+                const cands = cityCandidateCount[city.id] ?? 0;
+                const isHovered = hoveredMarkerId === city.id;
+
+                const tooltipLines = [
+                  city.name,
+                  [
+                    cands ? `${cands} candidates` : null,
+                    cityEvts.length === 1 ? cityEvts[0].name : cityEvts.length > 1 ? `${cityEvts.length} events` : null,
+                  ]
+                    .filter(Boolean)
+                    .join(" · "),
+                ].filter(Boolean);
+
                 return (
-                  <button
-                    key={pos.id}
+                  <div
+                    key={city.id}
                     style={{
                       position: "absolute",
                       left: pos.x,
                       top: pos.y,
-                      transform: "translate(-50%, -100%)",
-                      pointerEvents: pos.visible ? "auto" : "none",
+                      transform: "translate(-50%, -50%)",
+                      pointerEvents: pos.visible && inContinentMode ? "auto" : "none",
+                      zIndex: isSelected ? 20 : 10,
                     }}
-                    className={`group flex flex-col items-center gap-0.5 transition-opacity ${
-                      pos.visible ? "opacity-100" : "opacity-0"
-                    }`}
+                    className={`transition-opacity ${pos.visible ? "opacity-100" : "opacity-0"}`}
+                    onMouseEnter={() => setHoveredMarkerId(city.id)}
+                    onMouseLeave={() => setHoveredMarkerId(null)}
                     onClick={(e) => {
+                      if (!inContinentMode) return;
                       e.stopPropagation();
-                      setSelectedCityId(isSelected ? null : pos.id);
+                      setSelectedCityId(isSelected ? null : city.id);
                     }}
                   >
-                    <span
-                      className={`text-[10px] font-semibold px-1.5 py-0.5 rounded whitespace-nowrap leading-none transition-all shadow-sm ${
-                        isSelected
-                          ? "text-white bg-[#1A1F1A]"
-                          : "text-[#1A1F1A] bg-white border border-[#2F7A47]/40 group-hover:bg-[#1A1F1A] group-hover:text-white"
-                      }`}
-                    >
-                      {city.name}
-                    </span>
+                    {/* Tooltip */}
+                    {isHovered && (
+                      <div
+                        style={{ position: "absolute", bottom: "calc(100% + 6px)", left: "50%", transform: "translateX(-50%)", zIndex: 30 }}
+                        className="bg-white border border-border rounded-md px-2 py-1 shadow-md pointer-events-none whitespace-nowrap"
+                      >
+                        {tooltipLines.map((line, i) => (
+                          <div key={i} className={i === 0 ? "text-[11px] font-semibold text-foreground" : "text-[10px] text-muted-foreground"}>
+                            {line}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {/* Dot */}
                     <div
-                      className={`rounded-full transition-all duration-150 shadow ${
-                        isSelected
-                          ? "w-3 h-3 bg-[#2F7A47] ring-2 ring-white scale-125"
-                          : "w-2.5 h-2.5 bg-[#2F7A47] ring-2 ring-white group-hover:scale-125"
-                      }`}
+                      style={{
+                        width: dotSize,
+                        height: dotSize,
+                        borderRadius: "50%",
+                        backgroundColor: "#2F7A47",
+                        border: `2px solid white`,
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                        cursor: inContinentMode ? "pointer" : "default",
+                        transform: isSelected || isHovered ? "scale(1.3)" : "scale(1)",
+                        transition: "transform 150ms",
+                        outline: isSelected ? "2px solid #2F7A47" : "none",
+                        outlineOffset: 2,
+                      }}
                     />
-                  </button>
+                  </div>
+                );
+              })}
+
+            {/* Event diamond markers — continent mode only */}
+            {inContinentMode && events
+              .filter((ev) => visibleCities.some((c) => c.id === ev.cityId))
+              .map((ev) => {
+                const cityPos = cityOverlays.find((p) => p.id === ev.cityId);
+                if (!cityPos || !cityPos.visible) return null;
+                const isHovered = hoveredMarkerId === `event-${ev.id}`;
+                const color = eventRoiColor(ev);
+                const evCandidates = candidates.filter((c) => c.eventId === ev.id);
+                return (
+                  <div
+                    key={ev.id}
+                    style={{
+                      position: "absolute",
+                      left: cityPos.x,
+                      top: cityPos.y - 12,
+                      transform: "translate(-50%, -50%)",
+                      pointerEvents: "auto",
+                      zIndex: 15,
+                    }}
+                    onMouseEnter={() => setHoveredMarkerId(`event-${ev.id}`)}
+                    onMouseLeave={() => setHoveredMarkerId(null)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setSelectedCityId(ev.cityId);
+                      setTimeout(() => eventsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" }), 50);
+                    }}
+                  >
+                    {/* Tooltip */}
+                    {isHovered && (
+                      <div
+                        style={{ position: "absolute", bottom: "calc(100% + 6px)", left: "50%", transform: "translateX(-50%)", zIndex: 30 }}
+                        className="bg-white border border-border rounded-md px-2 py-1 shadow-md pointer-events-none whitespace-nowrap"
+                      >
+                        <div className="text-[11px] font-semibold text-foreground">{ev.name}</div>
+                        <div className="text-[10px] text-muted-foreground">
+                          {ev.hires} {ev.hires === 1 ? "hire" : "hires"} · €{Math.round(ev.sponsorship / ev.hires).toLocaleString()}/hire
+                          {evCandidates.length > 0 ? ` · ${evCandidates.length} in pipeline` : ""}
+                        </div>
+                      </div>
+                    )}
+                    {/* Diamond */}
+                    <div
+                      style={{
+                        width: 10,
+                        height: 10,
+                        backgroundColor: color,
+                        border: "2px solid white",
+                        boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+                        transform: `rotate(45deg) ${isHovered ? "scale(1.3)" : "scale(1)"}`,
+                        transition: "transform 150ms",
+                        cursor: "pointer",
+                      }}
+                    />
+                  </div>
                 );
               })}
           </div>
