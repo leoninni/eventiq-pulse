@@ -281,17 +281,17 @@ export function Ecosystem() {
   const canvasCssSize = GLOBE_SIZE * zoom;
 
   return (
-    <div className="flex flex-col h-screen overflow-hidden">
-      <div className="px-8 py-5 border-b border-border shrink-0">
+    <div className="flex flex-col md:h-screen md:overflow-hidden">
+      <div className="px-4 py-4 md:px-8 md:py-5 border-b border-border shrink-0">
         <h1 className="font-display text-3xl tracking-tight">Talent Ecosystem</h1>
         <p className="text-xs text-muted-foreground mt-1">
           University talent pools and student communities in your recruiting network.
         </p>
       </div>
 
-      <div className="flex flex-1 min-h-0">
+      <div className="flex flex-col md:flex-row flex-1 md:min-h-0">
         {/* Globe */}
-        <div className="flex-1 flex items-center justify-center bg-background relative overflow-hidden">
+        <div className="flex-1 h-[320px] md:h-auto flex items-center justify-center bg-background relative overflow-hidden">
           <div
             className="relative"
             style={{ width: GLOBE_SIZE, height: GLOBE_SIZE }}
@@ -502,7 +502,7 @@ export function Ecosystem() {
         </div>
 
         {/* Right panel */}
-        <div className="w-[400px] shrink-0 border-l border-border overflow-y-auto bg-card">
+        <div className="w-full md:w-[400px] md:shrink-0 border-t md:border-t-0 md:border-l border-border overflow-y-auto bg-card">
           {!inContinentMode && (
             <div className="p-6">
               <div className="text-xs font-semibold uppercase tracking-wider text-muted-foreground mb-3">
