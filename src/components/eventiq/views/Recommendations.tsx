@@ -5,7 +5,7 @@ import { Sparkles, Check, TrendingUp, Brain, RefreshCw } from "lucide-react";
 export function Recommendations() {
   const { shortlist, toggleShortlist } = useStore();
   return (
-    <div className="p-10 max-w-[1200px]">
+    <div className="p-4 md:p-10 max-w-[1200px]">
       <div className="mb-8">
         <h1 className="font-display text-4xl tracking-tight">Recommendations</h1>
         <p className="text-sm text-muted-foreground mt-2">AI-powered event suggestions based on your hiring history.</p>
@@ -33,7 +33,7 @@ export function Recommendations() {
                   Top Pick
                 </div>
               )}
-              <div className="flex items-start gap-5">
+              <div className="flex flex-col md:flex-row md:items-start md:gap-5 gap-4">
                 <div className="flex-1">
                   <div className="flex items-baseline gap-3 mb-1">
                     <h3 className="text-base font-semibold">{r.event}</h3>
@@ -46,8 +46,8 @@ export function Recommendations() {
                     <Mini label="Estimated cost" value={r.cost} />
                   </div>
                 </div>
-                <div className="flex flex-col items-end gap-3 shrink-0">
-                  <div className="text-right">
+                <div className="flex flex-row md:flex-col items-center md:items-end justify-between md:justify-start gap-3 shrink-0 w-full md:w-auto">
+                  <div className="text-left md:text-right">
                     <div className="text-[10px] uppercase tracking-wide text-muted-foreground">Match Score</div>
                     <div className="text-2xl font-semibold tabular-nums text-cyan">{r.matchScore}<span className="text-muted-foreground text-sm">/100</span></div>
                   </div>
