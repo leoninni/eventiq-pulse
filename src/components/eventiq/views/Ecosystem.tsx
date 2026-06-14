@@ -32,7 +32,8 @@ const typeBadgeStyles: Record<StudentCommunity["type"], string> = {
   "Community":        "bg-secondary text-muted-foreground",
 };
 
-// Helper: cost-per-hire color tier
+// Thresholds adjusted from spec (≤600/≤1000) to fit actual data range (€1600–€4000/hire).
+// HackTUM/START Hack → green, CODE Berlin/ETH → amber, KIT → gray.
 function eventRoiColor(e: (typeof events)[0]): string {
   const cph = Math.round(e.sponsorship / e.hires);
   if (cph < 1700) return "#2F7A47";   // green — top performer
@@ -148,7 +149,7 @@ export function Ecosystem() {
       const c = continents.find((x) => x.id === selectedContinentId)!;
       targetRef.current = {
         phi:   -Math.PI / 2 - (c.lng * Math.PI) / 180,
-        theta: (c.lat * Math.PI) / 180,
+        theta: (c.lat / 90) * (Math.PI / 2 - 0.1),
         zoom:  c.zoom,
       };
       autoRotateRef.current = false;
@@ -199,7 +200,7 @@ export function Ecosystem() {
         }
         setZoom(zoomRef.current);
       } else if (autoRotateRef.current && !isDragging.current) {
-        phiRef.current += 0.0015;
+        phiRef.current += 0.0008;
       }
 
       globe.update({ phi: phiRef.current, theta: thetaRef.current, scale: zoomRef.current });
