@@ -343,7 +343,14 @@ export const universityProfiles: UniversityProfile[] = [
   { id: "rwth",         name: "RWTH Aachen",   shortName: "RWTH",         location: "Aachen",    city: "aachen",    continent: "europe",        lat: 50.78, lng:   6.08, candidates: 24, topSkills: ["Java", "NLP", "Systems"],        roleAffinity: "Backend" },
   { id: "unistuttgart", name: "Uni Stuttgart", shortName: "Stuttgart",    location: "Stuttgart", city: "stuttgart", continent: "europe",        lat: 48.78, lng:   9.18, candidates: 18, topSkills: ["Go", "Kubernetes", "DevOps"],    roleAffinity: "Backend · Infra" },
   { id: "tudarmstadt",  name: "TU Darmstadt",  shortName: "TU Darmstadt", location: "Darmstadt", city: "darmstadt", continent: "europe",        lat: 49.88, lng:   8.66, candidates: 16, topSkills: ["C++", "Embedded", "RTOS"],       roleAffinity: "Systems" },
-  { id: "lmu",          name: "LMU Munich",    shortName: "LMU",          location: "Munich",    city: "munich",    continent: "europe",        lat: 48.14, lng:  11.58, candidates: 14, topSkills: ["Rust", "WebAssembly", "Systems"], roleAffinity: "Systems" },
+  { id: "lmu",          name: "LMU Munich",            shortName: "LMU",      location: "Munich",    city: "munich",    continent: "europe", lat: 48.14, lng:  11.58, candidates: 14, topSkills: ["Rust", "WebAssembly", "Systems"], roleAffinity: "Systems" },
+  { id: "epfl",         name: "EPFL",                  shortName: "EPFL",     location: "Lausanne",  city: "lausanne",  continent: "europe", lat: 46.52, lng:   6.63, candidates: 55, topSkills: ["Python", "Robotics", "ROS"],      roleAffinity: "Robotics · ML/AI" },
+  { id: "tudelft",      name: "TU Delft",              shortName: "TU Delft", location: "Delft",     city: "delft",     continent: "europe", lat: 52.01, lng:   4.36, candidates: 45, topSkills: ["C++", "ROS", "Computer Vision"],  roleAffinity: "Robotics · Systems" },
+  { id: "ecole-poly",   name: "École Polytechnique",   shortName: "X",        location: "Paris",     city: "paris",     continent: "europe", lat: 48.71, lng:   2.21, candidates: 40, topSkills: ["Python", "ML", "Robotics"],        roleAffinity: "ML/AI · Robotics" },
+  { id: "tuwien",       name: "TU Wien",               shortName: "TU Wien",  location: "Vienna",    city: "vienna",    continent: "europe", lat: 48.20, lng:  16.36, candidates: 30, topSkills: ["C++", "Embedded", "Robotics"],    roleAffinity: "Robotics · Embedded" },
+  { id: "kth",          name: "KTH Royal Institute of Technology", shortName: "KTH", location: "Stockholm", city: "stockholm", continent: "europe", lat: 59.35, lng: 18.07, candidates: 35, topSkills: ["C++", "ROS", "Python"], roleAffinity: "Robotics · Systems" },
+  { id: "put",          name: "Poznań University of Technology", shortName: "PUT", location: "Poznań", city: "poznan",    continent: "europe", lat: 52.41, lng:  16.93, candidates: 25, topSkills: ["Python", "Embedded", "C++"],   roleAffinity: "Robotics" },
+  { id: "polimi",       name: "Politecnico di Milano",  shortName: "PoliMi",  location: "Milan",     city: "milan",     continent: "europe", lat: 45.48, lng:   9.23, candidates: 40, topSkills: ["Python", "C++", "Automation"],   roleAffinity: "Robotics · Automation" },
   // North America
   { id: "mit",          name: "MIT",                  shortName: "MIT",       location: "Boston",    city: "boston",    continent: "north-america", lat: 42.36, lng:  -71.09, candidates: 42, topSkills: ["ML", "Systems", "Research"],    roleAffinity: "ML/AI · Research" },
   { id: "harvard",      name: "Harvard",              shortName: "Harvard",   location: "Boston",    city: "boston",    continent: "north-america", lat: 42.37, lng:  -71.12, candidates: 18, topSkills: ["CS Theory", "Python"],          roleAffinity: "Research" },
@@ -369,32 +376,48 @@ export const universityProfiles: UniversityProfile[] = [
 ];
 
 export const studentCommunities: StudentCommunity[] = [
-  // Europe
-  { id: "tum-ai",          name: "TUM AI Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    continent: "europe",        members: 280, topSkills: ["Python", "LLMs"] },
-  { id: "tum-ml",          name: "TUM ML Society",                  type: "AI/ML",            university: "TU Munich",     city: "munich",    continent: "europe",        members: 210, topSkills: ["PyTorch", "ML"] },
-  { id: "tum-robotics",    name: "TUM Robotics Club",               type: "Robotics",         university: "TU Munich",     city: "munich",    continent: "europe",        members: 145, topSkills: ["C++", "ROS"] },
-  { id: "eth-robotics",    name: "ETH Robotics Society",            type: "Robotics",         university: "ETH Zürich",    city: "zurich",    continent: "europe",        members: 120, topSkills: ["C++", "CUDA"] },
-  { id: "eth-women",       name: "ETH Women in Tech",               type: "Community",        university: "ETH Zürich",    city: "zurich",    continent: "europe",        members: 340, topSkills: ["Python", "ML"] },
-  { id: "eth-entre",       name: "ETH Entrepreneurship Club",       type: "Entrepreneurship", university: "ETH Zürich",    city: "zurich",    continent: "europe",        members: 190, topSkills: ["React", "TypeScript"] },
-  { id: "kit-data",        name: "KIT Data Science Club",           type: "Data",             university: "KIT",           city: "karlsruhe", continent: "europe",        members:  95, topSkills: ["Python", "Spark"] },
-  { id: "tud-robotics",    name: "TU Darmstadt Robotics Club",      type: "Robotics",         university: "TU Darmstadt",  city: "darmstadt", continent: "europe",        members: 110, topSkills: ["C++", "Embedded"] },
-  { id: "stuttgart-cloud", name: "Uni Stuttgart Cloud Native Club", type: "Cloud/DevOps",     university: "Uni Stuttgart", city: "stuttgart", continent: "europe",        members:  75, topSkills: ["Go", "Kubernetes"] },
-  { id: "lmu-oss",         name: "LMU Open Source Lab",             type: "Open Source",      university: "LMU Munich",    city: "munich",    continent: "europe",        members:  85, topSkills: ["Rust", "WebAssembly"] },
-  // North America
-  { id: "mit-ai",          name: "MIT AI Club",                     type: "AI/ML",            university: "MIT",                  city: "boston",   continent: "north-america", members: 220, topSkills: ["ML", "PyTorch"] },
-  { id: "harvard-cs",      name: "Harvard CS50 Community",          type: "Community",        university: "Harvard",              city: "boston",   continent: "north-america", members: 180, topSkills: ["Python", "C"] },
-  { id: "stanford-ml",     name: "Stanford ML Group",               type: "AI/ML",            university: "Stanford",             city: "sf-bay",   continent: "north-america", members: 310, topSkills: ["LLMs", "Python"] },
-  { id: "berkeley-rise",   name: "Berkeley RISE Lab",               type: "Data",             university: "UC Berkeley",          city: "sf-bay",   continent: "north-america", members: 140, topSkills: ["Spark", "Ray"] },
-  { id: "columbia-data",   name: "Columbia Data Science Society",   type: "Data",             university: "Columbia",             city: "nyc",      continent: "north-america", members: 160, topSkills: ["Python", "SQL"] },
-  { id: "uoft-ai",         name: "UofT AI",                         type: "AI/ML",            university: "Univ. of Toronto",     city: "toronto",  continent: "north-america", members: 230, topSkills: ["PyTorch", "ML"] },
-  { id: "waterloo-hack",   name: "Hack the North",                  type: "Entrepreneurship", university: "Univ. of Waterloo",    city: "waterloo", continent: "north-america", members: 410, topSkills: ["Full-Stack", "Go"] },
-  { id: "uw-systems",      name: "UW Systems Lab",                  type: "Cloud/DevOps",     university: "Univ. of Washington",  city: "seattle",  continent: "north-america", members:  90, topSkills: ["Cloud", "Go"] },
-  // Asia
-  { id: "nus-hackers",     name: "NUS Hackers",                     type: "Open Source",      university: "NUS",                  city: "singapore", continent: "asia", members: 180, topSkills: ["Python", "Cloud"] },
-  { id: "utokyo-robo",     name: "UTokyo Robotics Lab",             type: "Robotics",         university: "Univ. of Tokyo",       city: "tokyo",     continent: "asia", members: 130, topSkills: ["C++", "ROS"] },
-  { id: "kaist-ai",        name: "KAIST AI Society",                type: "AI/ML",            university: "KAIST",                city: "seoul",     continent: "asia", members: 200, topSkills: ["ML", "Python"] },
-  { id: "iisc-ml",         name: "IISc Machine Learning Group",     type: "AI/ML",            university: "IISc Bangalore",       city: "bangalore", continent: "asia", members: 250, topSkills: ["ML", "Python"] },
-  { id: "tsinghua-sys",    name: "Tsinghua Systems Group",          type: "Open Source",      university: "Tsinghua University",  city: "beijing",   continent: "asia", members: 170, topSkills: ["Systems", "C++"] },
+  // ── Europe — Germany ────────────────────────────────────────────────────────
+  { id: "tum-ai",          name: "TUM.ai",                             type: "AI/ML",            university: "TU Munich",                    city: "munich",    continent: "europe", members: 300, topSkills: ["Python", "LLMs"] },
+  { id: "tum-hackatum",    name: "Hack@TUM",                           type: "Entrepreneurship", university: "TU Munich",                    city: "munich",    continent: "europe", members: 180, topSkills: ["Full-Stack", "Python"] },
+  { id: "tum-robotics",    name: "RoboTUM",                            type: "Robotics",         university: "TU Munich",                    city: "munich",    continent: "europe", members: 150, topSkills: ["C++", "ROS"] },         // ESRA member
+  { id: "lmu-start",       name: "START Munich",                       type: "Entrepreneurship", university: "LMU Munich",                   city: "munich",    continent: "europe", members: 250, topSkills: ["Python", "Product"] },
+  { id: "rwth-robotics",   name: "Robotics Collective Aachen",         type: "Robotics",         university: "RWTH Aachen",                  city: "aachen",    continent: "europe", members: 120, topSkills: ["C++", "ROS"] },         // ESRA member
+  { id: "kit-kaira",       name: "KAIRA",                              type: "Robotics",         university: "KIT",                          city: "karlsruhe", continent: "europe", members:  85, topSkills: ["C++", "Python"] },
+  { id: "tud-robotics",    name: "DARE ROBOTICS",                      type: "Robotics",         university: "TU Darmstadt",                 city: "darmstadt", continent: "europe", members:  90, topSkills: ["C++", "Embedded"] },
+  { id: "stuttgart-ksat",  name: "KSat e.V.",                          type: "Robotics",         university: "Uni Stuttgart",                city: "stuttgart", continent: "europe", members:  80, topSkills: ["Python", "Embedded"] },
+  // ── Europe — Switzerland ────────────────────────────────────────────────────
+  { id: "eth-robotics",    name: "ETH Robotics Club",                  type: "Robotics",         university: "ETH Zürich",                   city: "zurich",    continent: "europe", members: 120, topSkills: ["C++", "CUDA"] },        // ESRA member
+  { id: "eth-csnow",       name: "CSNOW",                              type: "Community",        university: "ETH Zürich",                   city: "zurich",    continent: "europe", members: 180, topSkills: ["Python", "ML"] },
+  { id: "eth-entre",       name: "ETH Entrepreneur Club",              type: "Entrepreneurship", university: "ETH Zürich",                   city: "zurich",    continent: "europe", members: 200, topSkills: ["React", "TypeScript"] },
+  { id: "epfl-ai",         name: "EPFL AI Team",                       type: "Robotics",         university: "EPFL",                         city: "lausanne",  continent: "europe", members: 170, topSkills: ["Python", "ROS", "ML"] }, // ESRA member
+  // ── Europe — Netherlands ───────────────────────────────────────────────────
+  { id: "delft-polar",     name: "Team Polar",                         type: "Robotics",         university: "TU Delft",                     city: "delft",     continent: "europe", members: 140, topSkills: ["C++", "ROS"] },         // ESRA member
+  { id: "delft-rsa",       name: "Delft Robotics Student Association", type: "Robotics",         university: "TU Delft",                     city: "delft",     continent: "europe", members: 110, topSkills: ["Python", "Embedded"] }, // ESRA member
+  // ── Europe — Austria ───────────────────────────────────────────────────────
+  { id: "wien-robotics",   name: "TU Wien Robotics Club",              type: "Robotics",         university: "TU Wien",                      city: "vienna",    continent: "europe", members: 130, topSkills: ["C++", "ROS"] },         // ESRA member
+  // ── Europe — France ────────────────────────────────────────────────────────
+  { id: "paris-unaite",    name: "Unaite",                             type: "Robotics",         university: "Grandes Écoles Paris",         city: "paris",     continent: "europe", members: 200, topSkills: ["Python", "ML", "Robotics"] }, // ESRA member
+  // ── Europe — Sweden ────────────────────────────────────────────────────────
+  { id: "kth-robotics",    name: "KTH Robotics",                       type: "Robotics",         university: "KTH",                          city: "stockholm", continent: "europe", members: 160, topSkills: ["C++", "ROS"] },         // ESRA member
+  // ── Europe — Poland ────────────────────────────────────────────────────────
+  { id: "put-cybair",      name: "KN CybAiR",                          type: "Robotics",         university: "Poznań University of Technology", city: "poznan", continent: "europe", members:  95, topSkills: ["Python", "Embedded", "C++"] }, // ESRA member
+  // ── Europe — Italy ─────────────────────────────────────────────────────────
+  { id: "polimi-aea",      name: "AEA Polimi",                         type: "Robotics",         university: "Politecnico di Milano",        city: "milan",     continent: "europe", members: 150, topSkills: ["Python", "C++", "Automation"] }, // ESRA member
+  // ── North America ──────────────────────────────────────────────────────────
+  { id: "mit-ai",          name: "MIT AI Club",                        type: "AI/ML",            university: "MIT",                          city: "boston",    continent: "north-america", members: 220, topSkills: ["ML", "PyTorch"] },
+  { id: "harvard-hcs",     name: "Harvard Computer Society",           type: "Community",        university: "Harvard",                      city: "boston",    continent: "north-america", members: 300, topSkills: ["Python", "C"] },
+  { id: "stanford-ml",     name: "Stanford AI",                        type: "AI/ML",            university: "Stanford",                     city: "sf-bay",    continent: "north-america", members: 310, topSkills: ["LLMs", "Python"] },
+  { id: "berkeley-ml",     name: "ML@Berkeley",                        type: "AI/ML",            university: "UC Berkeley",                  city: "sf-bay",    continent: "north-america", members: 180, topSkills: ["ML", "Python"] },
+  { id: "columbia-data",   name: "Columbia Data Science Society",      type: "Data",             university: "Columbia",                     city: "nyc",       continent: "north-america", members: 160, topSkills: ["Python", "SQL"] },
+  { id: "uoft-utmist",     name: "UTMIST",                             type: "AI/ML",            university: "Univ. of Toronto",             city: "toronto",   continent: "north-america", members: 2200, topSkills: ["PyTorch", "ML"] },
+  { id: "waterloo-hack",   name: "Hack the North",                     type: "Entrepreneurship", university: "Univ. of Waterloo",            city: "waterloo",  continent: "north-america", members: 410, topSkills: ["Full-Stack", "Go"] },
+  { id: "uw-robotics",     name: "UW Robotics",                        type: "Robotics",         university: "Univ. of Washington",          city: "seattle",   continent: "north-america", members:  90, topSkills: ["C++", "ROS"] },
+  // ── Asia ───────────────────────────────────────────────────────────────────
+  { id: "nus-hackers",     name: "NUS Hackers",                        type: "Open Source",      university: "NUS",                          city: "singapore", continent: "asia", members: 180, topSkills: ["Python", "Cloud"] },
+  { id: "utokyo-robo",     name: "UTokyo Robotics Lab",                type: "Robotics",         university: "Univ. of Tokyo",               city: "tokyo",     continent: "asia", members: 130, topSkills: ["C++", "ROS"] },
+  { id: "kaist-ai",        name: "KAIST AI Society",                   type: "AI/ML",            university: "KAIST",                        city: "seoul",     continent: "asia", members: 200, topSkills: ["ML", "Python"] },
+  { id: "iisc-ml",         name: "IISc Machine Learning Group",        type: "AI/ML",            university: "IISc Bangalore",               city: "bangalore", continent: "asia", members: 250, topSkills: ["ML", "Python"] },
+  { id: "tsinghua-sys",    name: "Tsinghua Systems Group",             type: "Open Source",      university: "Tsinghua University",          city: "beijing",   continent: "asia", members: 170, topSkills: ["Systems", "C++"] },
 ];
 
 export interface CityMarker {
@@ -415,6 +438,13 @@ export const cityMarkers: CityMarker[] = [
   { id: "stuttgart",  name: "Stuttgart",  continent: "europe",        lat: 48.78, lng:   9.18 },
   { id: "darmstadt",  name: "Darmstadt",  continent: "europe",        lat: 49.88, lng:   8.66 },
   { id: "st-gallen",  name: "St. Gallen", continent: "europe",        lat: 47.42, lng:   9.37 },
+  { id: "lausanne",   name: "Lausanne",   continent: "europe",        lat: 46.52, lng:   6.63 },
+  { id: "delft",      name: "Delft",      continent: "europe",        lat: 52.01, lng:   4.36 },
+  { id: "paris",      name: "Paris",      continent: "europe",        lat: 48.85, lng:   2.35 },
+  { id: "vienna",     name: "Vienna",     continent: "europe",        lat: 48.21, lng:  16.37 },
+  { id: "stockholm",  name: "Stockholm",  continent: "europe",        lat: 59.33, lng:  18.07 },
+  { id: "poznan",     name: "Poznań",     continent: "europe",        lat: 52.41, lng:  16.93 },
+  { id: "milan",      name: "Milan",      continent: "europe",        lat: 45.46, lng:   9.19 },
   // North America
   { id: "boston",    name: "Boston",    continent: "north-america", lat: 42.36, lng:  -71.09 },
   { id: "sf-bay",    name: "SF Bay",    continent: "north-america", lat: 37.77, lng: -122.42 },
@@ -488,14 +518,30 @@ export const coopFormats: CooperationFormat[] = [
 ];
 
 export const clubPartnerships: ClubPartnership[] = [
-  { clubId: "tum-robotics",    totalSlots: 3, takenSlots: 2, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
-  { clubId: "tum-ai",          totalSlots: 4, takenSlots: 1, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
-  { clubId: "eth-robotics",    totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },
-  { clubId: "eth-entre",       totalSlots: 3, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] },
-  { clubId: "kit-data",        totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
-  { clubId: "tud-robotics",    totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },
-  { clubId: "stuttgart-cloud", totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
-  { clubId: "lmu-oss",         totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },
+  // Germany
+  { clubId: "tum-robotics",  totalSlots: 3, takenSlots: 2, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // RoboTUM — ESRA
+  { clubId: "tum-ai",        totalSlots: 4, takenSlots: 1, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // TUM.ai
+  { clubId: "rwth-robotics", totalSlots: 3, takenSlots: 1, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // Robotics Collective Aachen — ESRA
+  { clubId: "kit-kaira",     totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },                      // KAIRA
+  { clubId: "tud-robotics",  totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },                    // DARE ROBOTICS
+  { clubId: "stuttgart-ksat",totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },                     // KSat e.V.
+  // Switzerland
+  { clubId: "eth-robotics",  totalSlots: 2, takenSlots: 1, availableFormats: ["workshop", "private-hackathon"] },                    // ETH Robotics Club — ESRA
+  { clubId: "eth-entre",     totalSlots: 3, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // ETH Entrepreneur Club
+  { clubId: "epfl-ai",       totalSlots: 3, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // EPFL AI Team — ESRA
+  // Netherlands
+  { clubId: "delft-polar",   totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // Team Polar — ESRA
+  { clubId: "delft-rsa",     totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },                     // Delft RSA — ESRA
+  // Austria
+  { clubId: "wien-robotics", totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // TU Wien Robotics Club — ESRA
+  // France
+  { clubId: "paris-unaite",  totalSlots: 3, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // Unaite — ESRA
+  // Sweden
+  { clubId: "kth-robotics",  totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // KTH Robotics — ESRA
+  // Poland
+  { clubId: "put-cybair",    totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint"] },                     // KN CybAiR — ESRA
+  // Italy
+  { clubId: "polimi-aea",    totalSlots: 2, takenSlots: 0, availableFormats: ["workshop", "challenge-sprint", "private-hackathon"] }, // AEA Polimi — ESRA
 ];
 
 export const initialActiveCooperations: ActiveCooperation[] = [

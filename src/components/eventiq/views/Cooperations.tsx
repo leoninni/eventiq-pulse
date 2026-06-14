@@ -36,11 +36,18 @@ const statusBadge: Record<string, string> = {
 };
 
 const TYPE_FILTERS = ["All", "AI/ML", "Robotics", "Entrepreneurship", "Cloud/DevOps", "Data", "Open Source"] as const;
-const CITY_OPTIONS = ["All Cities", "Munich", "Zürich", "Karlsruhe", "Aachen", "Stuttgart", "Darmstadt"] as const;
+const CITY_OPTIONS = [
+  "All Cities",
+  "Munich", "Zürich", "Karlsruhe", "Aachen", "Stuttgart", "Darmstadt",
+  "Lausanne", "Delft", "Paris", "Vienna", "Stockholm", "Poznań", "Milan",
+] as const;
 
 const CITY_ID_MAP: Record<string, string> = {
-  "Munich": "munich", "Zürich": "zurich", "Karlsruhe": "karlsruhe",
-  "Aachen": "aachen", "Stuttgart": "stuttgart", "Darmstadt": "darmstadt",
+  "Munich": "munich",     "Zürich": "zurich",       "Karlsruhe": "karlsruhe",
+  "Aachen": "aachen",     "Stuttgart": "stuttgart",  "Darmstadt": "darmstadt",
+  "Lausanne": "lausanne", "Delft": "delft",          "Paris": "paris",
+  "Vienna": "vienna",     "Stockholm": "stockholm",  "Poznań": "poznan",
+  "Milan": "milan",
 };
 
 export function Cooperations() {
