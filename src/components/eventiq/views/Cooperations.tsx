@@ -111,14 +111,14 @@ export function Cooperations() {
   return (
     <div className="flex flex-col h-screen overflow-hidden">
       {/* Header */}
-      <div className="px-8 py-5 border-b border-border shrink-0">
+      <div className="px-4 py-4 md:px-8 md:py-5 border-b border-border shrink-0">
         <h1 className="font-display text-3xl tracking-tight">Club Cooperations</h1>
         <p className="text-xs text-muted-foreground mt-1">
           Find exclusive talent partnerships with Europe's top student organizations.
         </p>
       </div>
 
-      <div className="flex-1 overflow-y-auto px-8 py-6 space-y-8">
+      <div className="flex-1 overflow-y-auto px-4 py-4 md:px-8 md:py-6 space-y-8">
         {/* Filter row */}
         <div className="flex items-center gap-2 flex-wrap">
           {TYPE_FILTERS.map((t) => (
@@ -144,7 +144,7 @@ export function Cooperations() {
         </div>
 
         {/* Club browser + configurator */}
-        <div className={`grid gap-4 ${selectedClubId ? "grid-cols-[1fr_400px]" : "grid-cols-2"}`}>
+        <div className={`grid gap-4 grid-cols-1 ${selectedClubId ? "md:grid-cols-[1fr_400px]" : "md:grid-cols-2"}`}>
           {/* Club cards */}
           <div className="grid grid-cols-1 gap-3 content-start">
             {filteredClubs.map((club) => {
