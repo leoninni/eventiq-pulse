@@ -6,6 +6,7 @@ import {
   cityMarkers,
   continents,
   events,
+  clubPartnerships,
   type StudentCommunity,
   type ContinentId,
 } from "@/lib/eventiq/mockData";
@@ -683,11 +684,21 @@ export function Ecosystem() {
                           <div className="text-sm font-semibold">{c.name}</div>
                           <div className="text-xs tabular-nums text-muted-foreground">{c.members}</div>
                         </div>
-                        <div className="flex items-center gap-2">
-                          <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${typeBadgeStyles[c.type]}`}>
-                            {c.type}
-                          </span>
-                          <span className="text-[11px] text-muted-foreground">{c.university}</span>
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2">
+                            <span className={`text-[10px] px-2 py-0.5 rounded-full font-medium ${typeBadgeStyles[c.type]}`}>
+                              {c.type}
+                            </span>
+                            <span className="text-[11px] text-muted-foreground">{c.university}</span>
+                          </div>
+                          {clubPartnerships.some((p) => p.clubId === c.id) && (
+                            <button
+                              onClick={() => setView("cooperations")}
+                              className="text-[10px] text-primary hover:underline font-medium shrink-0"
+                            >
+                              Partner →
+                            </button>
+                          )}
                         </div>
                       </div>
                     ))}
