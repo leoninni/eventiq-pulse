@@ -1,7 +1,13 @@
 import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
-import { candidates as initialCandidates, type Candidate, type Status } from "./mockData";
+import {
+  candidates as initialCandidates,
+  initialActiveCooperations,
+  type Candidate,
+  type Status,
+  type ActiveCooperation,
+} from "./mockData";
 
-type View = "overview" | "events" | "candidates" | "ecosystem" | "reports" | "recommendations";
+type View = "overview" | "events" | "candidates" | "ecosystem" | "reports" | "recommendations" | "cooperations";
 
 interface StoreCtx {
   view: View;
@@ -14,6 +20,8 @@ interface StoreCtx {
   toggleShortlist: (id: string) => void;
   atsSync: Record<string, string>;
   syncToAts: (candidateId: string, atsName: string) => void;
+  activeCooperations: ActiveCooperation[];
+  addCooperation: (c: ActiveCooperation) => void;
 }
 
 const Ctx = createContext<StoreCtx | null>(null);
@@ -24,6 +32,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [eventFilter, setEventFilter] = useState<string>("all");
   const [shortlist, setShortlist] = useState<Set<string>>(new Set());
   const [atsSync, setAtsSync] = useState<Record<string, string>>({});
+  const [activeCooperations, setActiveCooperations] = useState<ActiveCooperation[]>(initialActiveCooperations);
 
   const value = useMemo<StoreCtx>(() => ({
     view,
@@ -43,7 +52,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       }),
     atsSync,
     syncToAts: (id, atsName) => setAtsSync((prev) => ({ ...prev, [id]: atsName })),
-  }), [view, candidates, eventFilter, shortlist, atsSync]);
+    activeCooperations,
+    addCooperation: (c: ActiveCooperation) =>
+      setActiveCooperations((prev) => [...prev, c]),
+  }), [view, candidates, eventFilter, shortlist, atsSync, activeCooperations]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
