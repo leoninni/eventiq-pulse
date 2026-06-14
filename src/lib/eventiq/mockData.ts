@@ -6,6 +6,9 @@ export interface EventItem {
   date: string;
   shortDate: string;
   location: string;
+  lat: number;
+  lng: number;
+  cityId: string;
   attendees: number;
   optIns: number;
   pipeline: number;
@@ -28,11 +31,11 @@ export interface Candidate {
 }
 
 export const events: EventItem[] = [
-  { id: "hacktum",    name: "HackTUM 2025",         date: "Apr 12, 2025", shortDate: "Apr 12", location: "Munich",     attendees: 600, optIns: 89, pipeline: 12, sponsorship: 8000, costPerLead: 667,  hires: 5 },
-  { id: "starthack",  name: "START Hack 2025",       date: "Mar 1, 2025",  shortDate: "Mar 1",  location: "St. Gallen", attendees: 450, optIns: 61, pipeline: 8,  sponsorship: 5000, costPerLead: 625,  hires: 3 },
-  { id: "codeberlin", name: "CODE Berlin Hackathon", date: "Feb 14, 2025", shortDate: "Feb 14", location: "Berlin",     attendees: 280, optIns: 48, pipeline: 7,  sponsorship: 3500, costPerLead: 500,  hires: 2 },
-  { id: "ethbuild",   name: "ETH Build Night",       date: "Jan 18, 2025", shortDate: "Jan 18", location: "Zürich",     attendees: 190, optIns: 17, pipeline: 4,  sponsorship: 2500, costPerLead: 625,  hires: 1 },
-  { id: "kithack",    name: "KIT Innovation Hack",   date: "Nov 22, 2024", shortDate: "Nov 22", location: "Karlsruhe",  attendees: 240, optIns: 32, pipeline: 3,  sponsorship: 4000, costPerLead: 1333, hires: 1 },
+  { id: "hacktum",    name: "HackTUM 2025",         date: "Apr 12, 2025", shortDate: "Apr 12", location: "Munich",     lat: 48.14, lng:  11.58, cityId: "munich",     attendees: 600, optIns: 89, pipeline: 12, sponsorship: 8000, costPerLead: 667,  hires: 5 },
+  { id: "starthack",  name: "START Hack 2025",       date: "Mar 1, 2025",  shortDate: "Mar 1",  location: "St. Gallen", lat: 47.42, lng:   9.37, cityId: "st-gallen",  attendees: 450, optIns: 61, pipeline: 8,  sponsorship: 5000, costPerLead: 625,  hires: 3 },
+  { id: "codeberlin", name: "CODE Berlin Hackathon", date: "Feb 14, 2025", shortDate: "Feb 14", location: "Berlin",     lat: 52.52, lng:  13.41, cityId: "berlin",     attendees: 280, optIns: 48, pipeline: 7,  sponsorship: 3500, costPerLead: 500,  hires: 2 },
+  { id: "ethbuild",   name: "ETH Build Night",       date: "Jan 18, 2025", shortDate: "Jan 18", location: "Zürich",     lat: 47.38, lng:   8.54, cityId: "zurich",     attendees: 190, optIns: 17, pipeline: 4,  sponsorship: 2500, costPerLead: 625,  hires: 1 },
+  { id: "kithack",    name: "KIT Innovation Hack",   date: "Nov 22, 2024", shortDate: "Nov 22", location: "Karlsruhe",  lat: 49.01, lng:   8.40, cityId: "karlsruhe",  attendees: 240, optIns: 32, pipeline: 3,  sponsorship: 4000, costPerLead: 1333, hires: 1 },
 ];
 
 export const candidates: Candidate[] = [
@@ -265,7 +268,7 @@ export interface Continent {
 }
 
 export const continents: Continent[] = [
-  { id: "europe",        name: "Europe",        lat: 50, lng:  10, zoom: 2.6 },
+  { id: "europe",        name: "Europe",        lat: 48, lng:  10, zoom: 2.8 },
   { id: "north-america", name: "North America", lat: 40, lng: -95, zoom: 2.4 },
   { id: "asia",          name: "Asia",          lat: 20, lng: 100, zoom: 2.2 },
 ];
@@ -368,13 +371,14 @@ export interface CityMarker {
 
 export const cityMarkers: CityMarker[] = [
   // Europe
-  { id: "munich",    name: "Munich",    continent: "europe",        lat: 48.14, lng:  11.58 },
-  { id: "zurich",    name: "Zürich",    continent: "europe",        lat: 47.38, lng:   8.54 },
-  { id: "berlin",    name: "Berlin",    continent: "europe",        lat: 52.52, lng:  13.41 },
-  { id: "karlsruhe", name: "Karlsruhe", continent: "europe",        lat: 49.01, lng:   8.40 },
-  { id: "aachen",    name: "Aachen",    continent: "europe",        lat: 50.78, lng:   6.08 },
-  { id: "stuttgart", name: "Stuttgart", continent: "europe",        lat: 48.78, lng:   9.18 },
-  { id: "darmstadt", name: "Darmstadt", continent: "europe",        lat: 49.88, lng:   8.66 },
+  { id: "munich",     name: "Munich",     continent: "europe",        lat: 48.14, lng:  11.58 },
+  { id: "zurich",     name: "Zürich",     continent: "europe",        lat: 47.38, lng:   8.54 },
+  { id: "berlin",     name: "Berlin",     continent: "europe",        lat: 52.52, lng:  13.41 },
+  { id: "karlsruhe",  name: "Karlsruhe",  continent: "europe",        lat: 49.01, lng:   8.40 },
+  { id: "aachen",     name: "Aachen",     continent: "europe",        lat: 50.78, lng:   6.08 },
+  { id: "stuttgart",  name: "Stuttgart",  continent: "europe",        lat: 48.78, lng:   9.18 },
+  { id: "darmstadt",  name: "Darmstadt",  continent: "europe",        lat: 49.88, lng:   8.66 },
+  { id: "st-gallen",  name: "St. Gallen", continent: "europe",        lat: 47.42, lng:   9.37 },
   // North America
   { id: "boston",    name: "Boston",    continent: "north-america", lat: 42.36, lng:  -71.09 },
   { id: "sf-bay",    name: "SF Bay",    continent: "north-america", lat: 37.77, lng: -122.42 },
